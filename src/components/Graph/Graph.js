@@ -22,11 +22,17 @@ const Graph = (props) => {
 
     const renderGraph = () => {
         return (
-            <ForceGraph2D 
+            <div>
+                <ForceGraph2D 
                 graphData={{nodes,links}}
                 nodeLabel="statement"
                 linkLabel="type"
-            />
+                />
+                <div>
+                    This is a side tag.
+                </div>
+            </div>
+                
         )
     }
 
