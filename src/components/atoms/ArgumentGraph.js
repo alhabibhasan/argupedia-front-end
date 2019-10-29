@@ -27,7 +27,12 @@ const ArgumentGraph = (props) => {
                     }
                     ctx.fill(); 
                 }}
-                onNodeClick={props.onNodeClick}
+                onNodeClick={(node, event) => {
+                    node.fy = node.y
+                    node.fx = node.x
+                    props.onNodeClick(node, event)
+                }}
+                enableZoomPanInteraction={false}
                 />
                 <div>
                     This is a side tag.
