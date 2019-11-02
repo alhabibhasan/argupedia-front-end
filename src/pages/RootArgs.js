@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import ViewArgs from '../components/molecules/ViewArgs'
+import ViewArgs from '../components/molecules/ViewArgsGraph'
 import Loading from '../components/atoms/Loading'
 import {getArgumentRoots} from '../data/api/Api'
 import redirectTo from '../util/redirect';

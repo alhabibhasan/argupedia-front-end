@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import ViewArgs from '../components/molecules/ViewArgs'
+import ViewArgsGraph from '../components/molecules/ViewArgsGraph'
+import ViewArgsRegular from '../components/molecules/ViewArgsRegular'
 import Loading from '../components/atoms/Loading'
 import {getArgumentChain} from '../data/api/Api'
 
@@ -34,10 +35,15 @@ const ArgChain = (props) => {
         <div>
             {loading ? <Loading/> 
                 : 
-            <ViewArgs 
-                nodes={nodes}
-                links={links}
-                nodeModalContents={modalContents}/>
+            <div>
+                <ViewArgsGraph 
+                    nodes={nodes}
+                    links={links}
+                    nodeModalContents={modalContents}/>
+                <ViewArgsRegular
+                    nodes={nodes}
+                    links={links}/>
+            </div>
             }
         </div>
     )

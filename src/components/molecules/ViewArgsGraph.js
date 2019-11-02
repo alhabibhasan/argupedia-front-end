@@ -1,11 +1,8 @@
-import React, {useState, useEffect, useRef} from 'react'
-import {getArgumentRoots} from '../../data/api/Api'
-import { ForceGraph2D } from 'react-force-graph'
+import React, {useState, useEffect} from 'react'
 import Loading from '../atoms/Loading'
 import ArgumentGraph from '../atoms/ArgumentGraph'
 import Modal from 'react-modal'
 
-import redirectTo from '../../util/redirect'
 
 const modalStyle = {
     content : {
@@ -20,7 +17,7 @@ const modalStyle = {
   
 Modal.setAppElement('#root')
 
-const ViewArgs = (props) => {
+const ViewArgsGraph = (props) => {
     const [showModal, setModal] = useState(false)
     const [selectedNode, setSelectedNode] = useState()
 
@@ -56,4 +53,4 @@ const ViewArgs = (props) => {
     )
 }
 
-export default ViewArgs
+export default ViewArgsGraph
