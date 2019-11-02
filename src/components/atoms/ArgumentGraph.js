@@ -5,11 +5,10 @@ import { getArgumentChain } from '../../data/api/Api'
 
 /* Component */
 const ArgumentGraph = (props) => {
-
     const renderGraph = () => {
         return (
             <div>
-                <ForceGraph2D 
+                <ForceGraph2D
                 graphData={{
                     nodes: props.nodes,
                     links: props.links
@@ -34,9 +33,6 @@ const ArgumentGraph = (props) => {
                 }}
                 enableZoomPanInteraction={false}
                 />
-                <div>
-                    This is a side tag.
-                </div>
             </div>
                 
         )
