@@ -1,8 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import ViewArgs from '../components/molecules/ViewArgsGraph'
-import Loading from '../components/atoms/Loading'
-import {getArgumentRoots} from '../data/api/Api'
-import redirectTo from '../util/redirect';
+import ViewArgs from '../organisms/ViewArgsGraph'
+import Loading from '../atoms/Loading'
+import {getArgumentRoots} from '../../data/api/Api'
+import redirectTo from '../../util/redirect';
+
+const modalStyle = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+    }
+};
 
 const RootArgs = (props) => {
     const [nodes, setNodes] = useState([])
@@ -24,12 +35,21 @@ const RootArgs = (props) => {
         return (
             <div>
                 {node.statement}
-                <br/>
-                this is from rootargs
-                <br/>
                 <button onClick={() => redirectTo(props.history, '/graphs/argument/' + node.id)}>Go to arg</button>
             </div>
         )
+    }
+
+    const getArgGraphProps = () => {
+        return {
+            nodeCanvasObject: (node, ctx) => {
+                ctx.beginPath(); 
+                ctx.fillStyle = '#ff9999'
+                ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
+                ctx.fill();
+            },
+            enableZoomPanInteraction: false
+        }
     }
 
     return (
@@ -39,7 +59,9 @@ const RootArgs = (props) => {
             <ViewArgs 
                 nodes={nodes}
                 links={links}
-                nodeModalContents={modalContents}/>
+                nodeModalContents={modalContents}
+                modalStyle={modalStyle}
+                argGraphProps={getArgGraphProps()}/>
             }
         </div>
     )

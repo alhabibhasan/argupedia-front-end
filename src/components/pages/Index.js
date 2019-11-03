@@ -1,6 +1,8 @@
 import React from 'react'
 import { Jumbotron } from 'reactstrap'
 import styled from 'styled-components'
+import redirectTo from '../../util/redirect'
+import {createArgument} from '../../data/routes'
 
 const Header = styled.div`
     text-align: left;
@@ -19,7 +21,8 @@ const GetStarted = styled.button`
     background-color: #95e2db8c;
 `
 
-const Index = () => {
+const Index = (props) => {
+    
     return (
         <div>
             <Jumbotron>
@@ -30,7 +33,7 @@ const Index = () => {
                     <Subtext>
                         Argupedia is about promoting productive discussion and debate.
                     </Subtext>
-                    <GetStarted>
+                    <GetStarted onClick={() => redirectTo(props.history, createArgument.use)}>
                         Join in
                     </GetStarted>
                 </Header>

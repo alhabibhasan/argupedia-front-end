@@ -1,0 +1,8 @@
+.addArg-appear {
+    opacity: 0.01;
+  }
+  
+.addArg-appear.addArg-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
