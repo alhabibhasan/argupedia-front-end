@@ -1,20 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Loading from '../atoms/Loading'
-import ArgumentGraph from '../atoms/ArgumentGraph'
+import ArgumentGraph from '../molecules/ArgumentGraph'
 import Modal from 'react-modal'
 
-
-const modalStyle = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
-    }
-  };
-  
 Modal.setAppElement('#root')
 
 const ViewArgsGraph = (props) => {
@@ -37,6 +25,7 @@ const ViewArgsGraph = (props) => {
                     nodes={props.nodes} 
                     links={props.links} 
                     onNodeClick={(node, event) => handleNodeClick(node, event)}
+                    argGraphProps={props.argGraphProps}
                 />
             </div>
         )
@@ -45,7 +34,7 @@ const ViewArgsGraph = (props) => {
     return (
         <div>
             {renderRoots()}
-            <Modal isOpen={showModal} style={modalStyle}>
+            <Modal isOpen={showModal} style={props.modalStyle}>
                 {selectedNode ? props.nodeModalContents(selectedNode) : <Loading/>}
                 <button onClick={toggleModal}>Close</button>
             </Modal>
