@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { ForceGraph2D } from 'react-force-graph';
-import { getArgumentChain } from '../../data/api/Api'
 
 
 /* Component */
@@ -13,25 +12,19 @@ const ArgumentGraph = (props) => {
                     nodes: props.nodes,
                     links: props.links
                 }}
-                nodeLabel="statement"
-                linkLabel="type"
-                nodeCanvasObject={(node, ctx) => {
-                    ctx.beginPath(); 
-                    if (node.root) {
-                        ctx.fillStyle = 'green'
-                        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false); 
-                    } else {
-                        ctx.fillStyle = 'red'
-                        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
-                    }
-                    ctx.fill(); 
-                }}
+                nodeLabel={props.argGraphProps.nodeLabel}
+                linkLabel={props.argGraphProps.type}
+                nodeCanvasObject={props.argGraphProps.nodeCanvasObject}
                 onNodeClick={(node, event) => {
                     node.fy = node.y
                     node.fx = node.x
                     props.onNodeClick(node, event)
+
+                    if (props.argGraphProps.onNodeClick) {
+                        props.argGraphProps.onNodeClick()
+                    }
                 }}
-                enableZoomPanInteraction={false}
+                enableZoomPanInteraction={props.argGraphProps.enableZoomPanInteraction}
                 />
             </div>
                 
