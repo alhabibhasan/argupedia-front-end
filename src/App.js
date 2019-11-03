@@ -4,17 +4,19 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom"
 
 import './App.css'
-import Index from './pages/Index'
-import RootArgs from './pages/RootArgs'
-import ArgChain from './pages/ArgChain'
+import Index from './components/pages/Index'
+import RootArgs from './components/pages/RootArgs'
+import ArgChain from './components/pages/ArgChain'
 
 import Navigation from './components/organisms/Nav'
 import Footer from './components/organisms/Footer'
+import CreateArgument from './components/pages/CreateArgument'
+
+import {index, roots, createArgument, readArgument} from './data/routes'
 
 function App() {
   return (
@@ -22,10 +24,11 @@ function App() {
       <div className='App'>
         <Navigation/>
         <Switch>
-          <Route exact path="/graphs/roots" render={(props) => <RootArgs {...props} />}></Route>
-          <Route exact path="/graphs/argument/:id(\d+)" render={(props) => <ArgChain {...props}/>}></Route>
-          <Route exact path="/" ><Index/></Route>
-          <Route render={() => <Redirect to="/" />}></Route>
+          <Route exact path={roots.defintion} render={(props) => <RootArgs {...props} />}></Route>
+          <Route exact path={readArgument.defintion} render={(props) => <ArgChain {...props}/>}></Route>
+          <Route exact path={createArgument.defintion} render={(props) => <CreateArgument {...props}/>}></Route>
+          <Route exact path={index.defintion} render={(props) => <Index {...props} />}></Route>
+          <Route render={() => <Redirect to={index.defintion} />}></Route>
         </Switch>
         <Footer/>
       </div>
