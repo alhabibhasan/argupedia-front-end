@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import ViewArgs from '../organisms/ViewArgsGraph'
 import Loading from '../atoms/Loading'
 import {getArgumentRoots} from '../../data/api/Api'
+import {readArgument} from '../../data/routes'
 import redirectTo from '../../util/redirect';
 
 const modalStyle = {
@@ -35,7 +36,10 @@ const RootArgs = (props) => {
         return (
             <div>
                 {node.statement}
-                <button onClick={() => redirectTo(props.history, '/graphs/argument/' + node.id)}>Go to arg</button>
+                <button onClick={() => {
+                    console.log(readArgument.use + node.id)
+                    redirectTo(props.history, readArgument.use + node.id)
+                }}>Go to arg</button>
             </div>
         )
     }
