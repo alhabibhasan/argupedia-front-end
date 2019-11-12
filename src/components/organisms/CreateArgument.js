@@ -2,12 +2,13 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import ForwardButton from '../atoms/ForwardButton'
 import SourceList from '../atoms/SourceList';
+import ListFormInput from '../molecules/ListFormInput';
 
 const CreateArgument = () => (
   <div>
     <h1>Let's get started!</h1>
     <Formik
-      initialValues={{ title: '', argument: '', support: []}}
+      initialValues={{ title: '', argument: '', sourceList: ''}}
       validate={values => {
         const errors = {};
         if (!values.title) {
@@ -33,13 +34,13 @@ const CreateArgument = () => (
           <ErrorMessage name="argument" component="div" />
           <br/>
 
+          <ListFormInput/>
+
           <ForwardButton type="submit" disabled={isSubmitting}>
           </ForwardButton>
         </Form>
       )}
     </Formik>
-
-    <SourceList/>
   </div>
 );
 
