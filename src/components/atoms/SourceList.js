@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import BackButton from './BackButton'
+import './styles/SourceList.scss'
 
 const SourceList = (props) => {
     const [list, setList] = useState([])
@@ -9,16 +10,23 @@ const SourceList = (props) => {
         if (!list || list.length === 0) return <ul/>
         let listToRender = list.map((item, index) => 
             <div key={item+index}>
-                <li>{item}</li>
-                <BackButton onClick={() => removeListElem(index)}></BackButton>
+                <div>{item}</div>
+                <BackButton 
+                    className="Remove-Btn"
+                    onClick={() => removeListElem(index)}
+                />
             </div>
         )
         return (
-            <ul>
+            <div>
                 {listToRender}
-            </ul>
+            </div>
         )
     }
+
+    useEffect(() => {
+        props.updateList(JSON.stringify(list))
+    }, [list])
 
     const removeListElem = (indexToRemove) => {
         let newList = list.filter((elem, index) => index != indexToRemove)
@@ -26,6 +34,7 @@ const SourceList = (props) => {
     }
 
     const addToList = (toAdd) => {
+        if (!toAdd || !toAdd.length) return;
         setList(list.concat(toAdd))
         setCurrInput('')
     }
@@ -33,8 +42,9 @@ const SourceList = (props) => {
     return (
         <div>
             {renderExistingList()}
-            <input type="text" value={currInput} onChange={(e) => setCurrInput(e.target.value)} />
-            <button onClick={() => addToList(currInput)}>Add to list</button>
+            <label htmlFor="addToList">Source</label>
+            <input type="text" name="addToList" value={currInput} onChange={(e) => setCurrInput(e.target.value)} />
+            <button type="button" onClick={() => addToList(currInput)}>Add to list</button>
         </div>
     )
 }
