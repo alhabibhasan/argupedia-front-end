@@ -25,7 +25,7 @@ function App() {
         <Navigation/>
         <Switch>
           <Route exact path={roots.defintion} render={(props) => <RootArgs {...props} />}></Route>
-          <Route exact path={readArgument.defintion} render={(props) => <ArgChain {...props}/>}></Route>
+          <Route exact path='/argument/:id(\d+)' render={(props) => <ArgChain {...props}/>}></Route>
           <Route exact path={createArgument.defintion} render={(props) => <CreateArgument {...props}/>}></Route>
           <Route exact path={index.defintion} render={(props) => <Index {...props} />}></Route>
           <Route render={() => <Redirect to={index.defintion} />}></Route>
