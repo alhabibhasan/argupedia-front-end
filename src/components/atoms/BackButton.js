@@ -10,7 +10,7 @@ const Btn = styled.button`
 
 const BackButton = (props) => {
     return (
-        <Btn onClick={(e) => props.onClick(e)}>
+        <Btn {...props} onClick={(e) => props.onClick(e)}>
             &times;
         </Btn>
     )
