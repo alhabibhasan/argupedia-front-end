@@ -1,47 +1,97 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import ForwardButton from '../atoms/ForwardButton'
-import SourceList from '../atoms/SourceList';
 import ListFormInput from '../molecules/ListFormInput';
+import * as Yup from 'yup';
 
-const CreateArgument = () => (
-  <div>
-    <h1>Let's get started!</h1>
-    <Formik
-      initialValues={{ title: '', argument: '', sourceList: ''}}
-      validate={values => {
-        const errors = {};
-        if (!values.title) {
-          errors.title = 'Required';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <label htmlFor="title">Title</label>
-          <Field type="text" name="title" />
-          <ErrorMessage name="title" component="div" />
-          <br/>
-          <label htmlFor="argument">Argument</label>
-          <Field type="text" component="textarea" name="argument" style={{width: '50%'}} />
-          <ErrorMessage name="argument" component="div" />
-          <br/>
+const CreateArgumentSchema = Yup.object().shape({
+  title : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+  circumstance : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+  action : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+  newCircumstance : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+  goal : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+  value : Yup.string()
+    .min(5, 'Too short!')
+    .required('Required!'),
+})
 
-          <ListFormInput/>
+const valueLabels = {
+  title: 'Title',
+  circumstance: 'Current circumstance',
+  action: 'Action',
+  newCircumstance: 'New circumstance',
+  goal: 'Achieving the goal of',
+  value: 'Promoting values of'
+}
 
-          <ForwardButton type="submit" disabled={isSubmitting}>
-          </ForwardButton>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+const CreateArgument = (props) => {
+  const renderFormElems = (isSubmitting, values) => {
+    let formFields = []
+    for (var prop in values) {
+      if (Object.prototype.hasOwnProperty.call(values, prop)) {
+          formFields.push(prop)
+      }
+    }
+
+    let inputFields = formFields.map((value, index) => {
+      if (value === 'sourceList') {
+        return <ListFormInput key={index} label='Extra resources'/>
+      } else {
+        return (
+          <div key={index}>
+            <label htmlFor={value}>{valueLabels[value]}</label>
+            <br/>
+            <Field onBlur={() => props.setFormTouched(true)} type="text" name={value} style={{width: '50%'}}/>
+            <ErrorMessage className='error' name={value} component="div" />
+          </div>
+        )
+      }
+    })
+
+    return (
+      <Form>
+        {inputFields}
+        <ForwardButton type="submit" disabled={isSubmitting}>
+        </ForwardButton>
+      </Form>
+    )
+  }
+  
+  return (
+    <div>
+      <h1>Let's get started!</h1>
+      <Formik
+        initialValues={{ 
+          title: '',
+          circumstance: '',
+          action:'',
+          newCircumstance: '',
+          goal:'',
+          value:'', 
+          sourceList: ''}}
+        validationSchema={CreateArgumentSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+        
+      >
+        {({ isSubmitting , values}) => renderFormElems(isSubmitting, values)}
+      </Formik>
+    </div>
+  )
+}
 
 export default CreateArgument;
