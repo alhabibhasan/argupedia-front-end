@@ -10,6 +10,7 @@ const ListFormInput = (props) => {
         {({ field: { value }, form: { setFieldValue } }) => (
             <div>
                 <SourceList
+                    label={props.label}
                     list={value}
                     updateList={stringifiedList => setFieldValue(fieldName, stringifiedList)}
                 />

@@ -26,7 +26,7 @@ const SourceList = (props) => {
 
     useEffect(() => {
         props.updateList(JSON.stringify(list))
-    }, [list])
+    }, [props])
 
     const removeListElem = (indexToRemove) => {
         let newList = list.filter((elem, index) => index != indexToRemove)
@@ -42,9 +42,10 @@ const SourceList = (props) => {
     return (
         <div>
             {renderExistingList()}
-            <label htmlFor="addToList">Source</label>
+            <label htmlFor="addToList">{props.label}</label>
+            <br/>
             <input type="text" name="addToList" value={currInput} onChange={(e) => setCurrInput(e.target.value)} />
-            <button type="button" onClick={() => addToList(currInput)}>Add to list</button>
+            <button type="button" onClick={() => addToList(currInput)}>Add</button>
         </div>
     )
 }
