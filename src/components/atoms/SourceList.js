@@ -26,10 +26,10 @@ const SourceList = (props) => {
 
     useEffect(() => {
         props.updateList(JSON.stringify(list))
-    }, [props])
+    }, [list])
 
     const removeListElem = (indexToRemove) => {
-        let newList = list.filter((elem, index) => index != indexToRemove)
+        let newList = list.filter((elem, index) => index !== indexToRemove)
         setList(newList)
     }
 
