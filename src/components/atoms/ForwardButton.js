@@ -5,6 +5,7 @@ const Btn = styled.button`
     border: 0;
     font-size: 22pt;
     font-weight: 100;
+    background: none;
 `
 
 const ForwardButton = (props) => {

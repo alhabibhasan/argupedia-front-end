@@ -6,6 +6,7 @@ const Btn = styled.button`
     border: 0;
     font-size: 28pt;
     font-weight: 100;
+    background: none;
 `
 
 const BackButton = (props) => {
