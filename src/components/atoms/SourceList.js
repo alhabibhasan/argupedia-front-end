@@ -9,7 +9,7 @@ const SourceList = (props) => {
     const renderExistingList = () => {
         if (!list || list.length === 0) return <ul/>
         let listToRender = list.map((item, index) => 
-            <div key={item+index}>
+            <div key={item+index} className='List-Elem'>
                 <div>{item}</div>
                 <BackButton 
                     className="Remove-Btn"
@@ -40,7 +40,7 @@ const SourceList = (props) => {
     }
 
     return (
-        <div>
+        <div >
             {renderExistingList()}
             <label htmlFor="addToList">{props.label}</label>
             <br/>
