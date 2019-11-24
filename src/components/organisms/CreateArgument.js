@@ -1,11 +1,12 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import ForwardButton from '../atoms/ForwardButton'
-import ListFormInput from '../molecules/ListFormInput';
-import * as Yup from 'yup';
+import ListFormInput from '../molecules/ListFormInput'
+import {createArgument} from '../../data/api/Api'
+import * as Yup from 'yup'
 
 const CreateArgumentSchema = Yup.object().shape({
-  title : Yup.string()
+  statement : Yup.string()
     .min(5, 'Too short!')
     .required('Required!'),
   circumstance : Yup.string()
@@ -26,7 +27,7 @@ const CreateArgumentSchema = Yup.object().shape({
 })
 
 const valueLabels = {
-  title: 'Title',
+  statement: 'Statement',
   circumstance: 'Current circumstance',
   action: 'Action',
   newCircumstance: 'New circumstance',
@@ -72,7 +73,7 @@ const CreateArgument = (props) => {
       <h1>Let's get started!</h1>
       <Formik
         initialValues={{ 
-          title: '',
+          statement: '',
           circumstance: '',
           action:'',
           newCircumstance: '',
@@ -81,10 +82,13 @@ const CreateArgument = (props) => {
           sourceList: ''}}
         validationSchema={CreateArgumentSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          setSubmitting(true)
+          let root = true
+          createArgument(JSON.parse(JSON.stringify(values)), root)
+            .then(nodeId => console.log(nodeId))
+            .catch(err => {
+              console.log('rejected')
+            })
         }}
         
       >
@@ -94,4 +98,4 @@ const CreateArgument = (props) => {
   )
 }
 
-export default CreateArgument;
+export default CreateArgument
