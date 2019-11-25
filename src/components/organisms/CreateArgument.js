@@ -1,9 +1,13 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, getIn, ErrorMessage } from 'formik'
 import ForwardButton from '../atoms/ForwardButton'
+import BackButton from '../atoms/BackButton'
 import ListFormInput from '../molecules/ListFormInput'
 import {createArgument} from '../../data/api/Api'
 import * as Yup from 'yup'
+import ReactTooltip from 'react-tooltip'
+
+import './styles/CreateArgs.scss'
 
 const CreateArgumentSchema = Yup.object().shape({
   statement : Yup.string()
@@ -35,7 +39,37 @@ const valueLabels = {
   value: 'Promoting values of'
 }
 
+const getStyles = (form, field) => {
+  if (form.touched[field.name] && form.errors[field.name]) {
+    return {
+      background: '#ffe6e6' // light red
+    }
+  }
+}
+
+const CustomInput = ({field, form}) => {
+  return <div>
+    <label htmlFor={field.name}>{valueLabels[field.name]}</label>
+    <ErrorMessage name={field.name} component={CustomErrorMessage}/>
+    <br/>
+    <textarea 
+    className='Create-Arg-Input'
+    placeholder={field.name} {...field} 
+    style={getStyles(form, field)} />
+  </div>
+}
+
+const CustomErrorMessage = (error) => {
+  return (
+    <span>
+      <a data-tip={error.children} style={{color: '#fb6767'}}> &#9888; </a>
+      <ReactTooltip place="right" type="error" effect="solid"/>
+    </span>
+  )
+}
+
 const CreateArgument = (props) => {
+
   const renderFormElems = (isSubmitting, values) => {
     let formFields = []
     for (var prop in values) {
@@ -50,10 +84,11 @@ const CreateArgument = (props) => {
       } else {
         return (
           <div key={index}>
-            <label htmlFor={value}>{valueLabels[value]}</label>
-            <br/>
-            <Field onBlur={() => props.setFormTouched(true)} type="text" name={value} style={{width: '50%'}}/>
-            <ErrorMessage className='error' name={value} component="div" />
+            <Field 
+              component={CustomInput}
+              type="text" 
+              name={value} 
+            />
           </div>
         )
       }
@@ -62,10 +97,17 @@ const CreateArgument = (props) => {
     return (
       <Form>
         {inputFields}
+        <BackButton onClick={confirmLeave}/>
         <ForwardButton type="submit" disabled={isSubmitting}>
         </ForwardButton>
       </Form>
     )
+  }
+
+  const confirmLeave = () => {
+    if (window.confirm('If you leave, you will loose any content you have added below. Are you sure you want to leave?')) {
+        props.history.goBack()
+    }
   }
   
   return (
@@ -81,6 +123,7 @@ const CreateArgument = (props) => {
           value:'', 
           sourceList: ''}}
         validationSchema={CreateArgumentSchema}
+        initialErrors={{}}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(true)
           let root = true
@@ -90,10 +133,10 @@ const CreateArgument = (props) => {
               console.log('rejected')
             })
         }}
-        
       >
-        {({ isSubmitting , values}) => renderFormElems(isSubmitting, values)}
+        {({ isSubmitting , values, errors}) => renderFormElems(isSubmitting, values, errors)}
       </Formik>
+
     </div>
   )
 }
