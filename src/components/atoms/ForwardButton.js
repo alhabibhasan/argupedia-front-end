@@ -10,7 +10,7 @@ const Btn = styled.button`
 
 const ForwardButton = (props) => {
     return (
-        <Btn {...props}>
+        <Btn type={props.type} {...props}>
             &rarr;
         </Btn>
     )
