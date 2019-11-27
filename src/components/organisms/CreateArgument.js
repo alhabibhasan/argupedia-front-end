@@ -1,11 +1,10 @@
 import React from 'react'
 import { Formik, Form, Field, getIn, ErrorMessage } from 'formik'
-import ForwardButton from '../atoms/ForwardButton'
-import BackButton from '../atoms/BackButton'
+import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
 import {createArgument} from '../../data/api/Api'
 import * as Yup from 'yup'
-import ReactTooltip from 'react-tooltip'
+import Tooltip from '../atoms/Tooltip'
 
 import './styles/CreateArgs.scss'
 
@@ -28,15 +27,35 @@ const CreateArgumentSchema = Yup.object().shape({
   value : Yup.string()
     .min(5, 'Too short!')
     .required('Required!'),
+  sourceList: Yup.string()
+    .notRequired()
 })
 
-const valueLabels = {
-  statement: 'Statement',
-  circumstance: 'Current circumstance',
-  action: 'Action',
-  newCircumstance: 'New circumstance',
-  goal: 'Achieving the goal of',
-  value: 'Promoting values of'
+const fieldDecoratorValues = {
+  statement: {
+    label: 'Statement',
+    placeholder:'Give a short overview of your argument.'
+  },
+  circumstance: {
+    label: 'Current circumstance',
+    placeholder: 'Describe the current situation surrounding your argument.'
+  },
+  action: {
+    label: 'Action',
+    placeholder: 'What action do you recommend happens.'
+  },
+  newCircumstance: {
+    label: 'New circumstance',
+    placeholder: 'What will the action you suggest result in?'
+  },
+  goal: {
+    label: 'Achieving the goal of',
+    placeholder: 'What goal would the new situation achieve?'
+  },
+  value: {
+    label: 'Promoting values of',
+    placeholder: 'What values are now more prevalent due to your suggested action?'
+  },
 }
 
 const getStyles = (form, field) => {
@@ -49,22 +68,23 @@ const getStyles = (form, field) => {
 
 const CustomInput = ({field, form}) => {
   return <div>
-    <label htmlFor={field.name}>{valueLabels[field.name]}</label>
+    <label htmlFor={field.name}>{fieldDecoratorValues[field.name].label}</label>
     <ErrorMessage name={field.name} component={CustomErrorMessage}/>
     <br/>
     <textarea 
     className='Create-Arg-Input'
-    placeholder={field.name} {...field} 
+    placeholder={fieldDecoratorValues[field.name].placeholder} {...field} 
     style={getStyles(form, field)} />
   </div>
 }
 
 const CustomErrorMessage = (error) => {
   return (
-    <span>
-      <a data-tip={error.children} style={{color: '#fb6767'}}> &#9888; </a>
-      <ReactTooltip place="right" type="error" effect="solid"/>
-    </span>
+    <Tooltip 
+      text={error.children}
+      style={{color: '#fb6767'}}
+      type='error'
+    />
   )
 }
 
@@ -89,6 +109,7 @@ const CreateArgument = (props) => {
               type="text" 
               name={value} 
             />
+            {value === 'statement' ? <hr/> : ''}
           </div>
         )
       }
@@ -97,9 +118,9 @@ const CreateArgument = (props) => {
     return (
       <Form>
         {inputFields}
-        <BackButton onClick={confirmLeave}/>
-        <ForwardButton type="submit" disabled={isSubmitting}>
-        </ForwardButton>
+        <Button icon="back" onClick={confirmLeave}/>
+        <Button icon="submit" disabled={isSubmitting}>
+        </Button>
       </Form>
     )
   }
@@ -112,7 +133,6 @@ const CreateArgument = (props) => {
   
   return (
     <div>
-      <h1>Let's get started!</h1>
       <Formik
         initialValues={{ 
           statement: '',
