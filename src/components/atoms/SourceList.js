@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import BackButton from './BackButton'
+import Button from './Button'
 import './styles/SourceList.scss'
 
 const SourceList = (props) => {
@@ -11,7 +11,8 @@ const SourceList = (props) => {
         let listToRender = list.map((item, index) => 
             <div key={item+index} className='List-Elem'>
                 <div>{item}</div>
-                <BackButton 
+                <Button
+                    icon="back" 
                     className="Remove-Btn"
                     onClick={() => removeListElem(index)}
                 />
@@ -44,8 +45,16 @@ const SourceList = (props) => {
             {renderExistingList()}
             <label htmlFor="addToList">{props.label}</label>
             <br/>
-            <input type="text" name="addToList" value={currInput} onChange={(e) => setCurrInput(e.target.value)} />
-            <button type="button" onClick={() => addToList(currInput)}>Add</button>
+            <input 
+                type="text" 
+                name="addToList" 
+                value={currInput} 
+                onChange={(e) => setCurrInput(e.target.value)} />
+
+            <Button 
+                icon="add"
+                onClick={() => addToList(currInput)}
+            />
         </div>
     )
 }

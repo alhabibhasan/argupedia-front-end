@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Loading from '../atoms/Loading'
 import ArgumentGraph from '../molecules/ArgumentGraph'
 import Modal from 'react-modal'
+import Button from '../atoms/Button'
 
 Modal.setAppElement('#root')
 
@@ -36,7 +37,7 @@ const ViewArgsGraph = (props) => {
             {renderRoots()}
             <Modal isOpen={showModal} style={props.modalStyle}>
                 {selectedNode ? props.nodeModalContents(selectedNode) : <Loading/>}
-                <button onClick={toggleModal}>Close</button>
+                <Button icon='back' onClick={toggleModal}/>
             </Modal>
         </div>
     )
