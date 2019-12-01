@@ -4,28 +4,34 @@ import {withRouter} from 'react-router-dom'
 
 const Btn = styled.button`
     border: 0;
-    font-size: 28pt;
-    font-weight: 100;
+    font-size: 30pt;
+    font-weight: 240;
     background: none;
 `
 
 const Button = (props) => {
     const getButtonText = () => {
-        console.log(props.icon)
         switch (props.icon) {
             case 'back': return <span>&times;</span>
             case 'submit': return <span style={{fontSize: '22pt'}}>&rarr;</span>
-            case 'add': return <span>+</span>
+            case 'add': return <span>&#43;</span>
+            case 'done': return <span style={{fontSize: '22pt', fontWeight: '250', color: '#adecad'}}>&#10003;</span>
             default: return 'Default Button Text'
         }
     }
-    const handleClick = (e) => {
-        if (props.onClick) {
-            props.onClick(e)
+   
+    const handleBlur = (e) => {
+        if (props.onBlur) {
+            props.onBlur(e)
         }
     }
+
     return (
-        <Btn className={props.className} type={props.icon === 'submit' ? 'submit' : 'button'} onClick={e => handleClick(e)}>
+        <Btn className={props.className} 
+            type={props.icon === 'submit' ? 'submit' : 'button'} 
+            onClick={e => props.onClick && props.onClick(e)}
+            onBlur={e => props.onBlur && props.onBlur(e)}
+            disabled={props.disabled}>
             {getButtonText()}
         </Btn>
     )
