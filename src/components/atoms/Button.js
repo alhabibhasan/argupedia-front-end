@@ -20,18 +20,13 @@ const Button = (props) => {
             case 'submit': return <span style={{fontSize: '22pt'}}>&rarr;</span>
             case 'add': return <span>&#43;</span>
             case 'done': return <span style={{fontSize: '22pt', fontWeight: '250', color: '#adecad'}}>&#10003;</span>
-            default: return 'Default Button Text'
-        }
-    }
-   
-    const handleBlur = (e) => {
-        if (props.onBlur) {
-            props.onBlur(e)
+            default: return <span>{props.text}</span>
         }
     }
 
     return (
         <Btn className={props.className} 
+            style={props.style}
             type={props.icon === 'submit' ? 'submit' : 'button'} 
             onClick={e => props.onClick && props.onClick(e)}
             onBlur={e => props.onBlur && props.onBlur(e)}
