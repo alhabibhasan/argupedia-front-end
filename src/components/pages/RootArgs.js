@@ -37,7 +37,6 @@ const RootArgs = (props) => {
             <div>
                 {node.statement}
                 <button onClick={() => {
-                    console.log(readArgument.use + node.id)
                     redirectTo(props.history, readArgument.use + node.id)
                 }}>Go to arg</button>
             </div>
@@ -49,10 +48,10 @@ const RootArgs = (props) => {
             nodeCanvasObject: (node, ctx) => {
                 ctx.beginPath(); 
                 ctx.fillStyle = '#ff9999'
-                ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
+                ctx.arc(node.x, node.y, 20, 0, 20 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: false
+            enableZoomPanInteraction: true
         }
     }
 
