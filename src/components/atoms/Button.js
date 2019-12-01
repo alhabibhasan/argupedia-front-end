@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import {withRouter} from 'react-router-dom'
 
+import {tooltipErrorRed} from '../../util/colours'
+import {MdErrorOutline} from 'react-icons/md'
+
 const Btn = styled.button`
     border: 0;
     font-size: 30pt;
@@ -13,6 +16,7 @@ const Button = (props) => {
     const getButtonText = () => {
         switch (props.icon) {
             case 'back': return <span>&times;</span>
+            case 'error': return <span style={{color: tooltipErrorRed, fontSize: '22pt', marginBottom: '5pt'}} > <MdErrorOutline/></span>
             case 'submit': return <span style={{fontSize: '22pt'}}>&rarr;</span>
             case 'add': return <span>&#43;</span>
             case 'done': return <span style={{fontSize: '22pt', fontWeight: '250', color: '#adecad'}}>&#10003;</span>

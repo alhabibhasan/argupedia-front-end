@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import { Formik, Form, Field, getIn, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
 import {createArgument} from '../../data/api/Api'
 import * as Yup from 'yup'
 import Tooltip from '../atoms/Tooltip'
-import Loader from 'react-loader-spinner'
 
+import {tooltipErrorRed, formInputErrorRed} from '../../util/colours'
 import './styles/CreateArgs.scss'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import redirectTo from '../../util/redirect'
@@ -65,7 +65,7 @@ const fieldDecoratorValues = {
 const getStyles = (form, field) => {
   if (form.touched[field.name] && form.errors[field.name]) {
     return {
-      background: '#ffe6e6' // light red
+      background: formInputErrorRed
     }
   }
 }
@@ -86,46 +86,32 @@ const CustomErrorMessage = (error) => {
   return (
     <Tooltip 
       text={error.children}
-      style={{color: '#fb6767'}}
+      style={{color: tooltipErrorRed}}
       type='error'
     />
   )
 }
 
 const CreateArgument = (props) => {
-  const [created, setCreated] = useState(false)
-  const [createdNodeId, setCreatedNodeId] = useState()
+  const argStatusValues = {
+    'CREATED': 'CREATED',
+    'NOT_CREATED': 'NOT_CREATED',
+    'ERROR':'ERROR'
+  }
 
-  const renderSubmitButton = (isSubmitting) => {
-    if (isSubmitting) {
-      return (
-        <Loader type="TailSpin"
-          color="black"
-          height={20}
-          width={20}
-          className="Loading-Spinner"
-          timeout={1000}
-        />
-      )
-    } else if (created) {
-      return <Button icon="done" onBlur={() => setCreated(false)}/>
-    } else {
-      return <Button icon="submit"/>
+  const [argumentStatus, setArgumentStatus] = useState(argStatusValues['NOT_CREATED'])
+  const [argumentStatusMessage, setArgumentStatusMessage] = useState('')
+
+  const renderSubmitButton = () => {
+    const statusToButtonType = {
+      'CREATED' : 'done',
+      'NOT_CREATED' : 'submit',
+      'ERROR' : 'error'
     }
+    return <Button icon={statusToButtonType[argumentStatus]}/>
   }
 
-  const renderCreatedMessage = () => {
-    setTimeout(() => {
-      redirectTo(props.history, readArgument.use + createdNodeId)
-    }, 3000)
-    return (
-      <div>
-        Argument created successfully, redirecting you to your argument.
-      </div>
-    )
-  }
-
-  const renderFormElems = (isSubmitting, values) => {
+  const renderFormElems = (values, errors) => {
     let formFields = []
     for (var prop in values) {
       if (Object.prototype.hasOwnProperty.call(values, prop)) {
@@ -155,10 +141,10 @@ const CreateArgument = (props) => {
         {inputFields}
         <div className="Form-Buttons">
           <Button icon="back" onClick={confirmLeave}/>
-          {renderSubmitButton(isSubmitting)}
+          {renderSubmitButton()}
         </div>
         <div>
-          {created ? renderCreatedMessage(): ''}
+          {argumentStatusMessage}
         </div>
       </Form>
     )
@@ -188,15 +174,23 @@ const CreateArgument = (props) => {
           let root = true
           createArgument(JSON.parse(JSON.stringify(values)), root)
             .then(createdNode => {
-              setCreated(true)
-              setCreatedNodeId(createdNode.nodeId)
+              setArgumentStatus(argStatusValues['CREATED'])
+              setArgumentStatusMessage('Your argument was created successfully, redirecting you now.')
+              console.log(readArgument.use, createdNode.nodeId)
+              setTimeout(() => {
+                redirectTo(props.history, readArgument.use + createdNode.nodeId)
+              }, 1500)
             })
-            .catch(err => {
-              console.log('rejected')
+            .catch(() => {
+              setArgumentStatus(argStatusValues['ERROR'])
+              setTimeout(() => {
+                setArgumentStatus(argStatusValues['NOT_CREATED'])
+              }, 1500)
+              setArgumentStatusMessage('An argument with this statement already exists, please either add to it or reword your one.')
             })
         }}
       >
-        {({ isSubmitting , values, errors}) => renderFormElems(isSubmitting, values, errors)}
+        {({values, errors}) => renderFormElems(values, errors)}
       </Formik>
 
     </div>

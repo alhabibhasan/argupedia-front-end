@@ -51,7 +51,8 @@ const RootArgs = (props) => {
                 ctx.arc(node.x, node.y, 20, 0, 20 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: true
+            enableZoomPanInteraction: true,
+            nodeLabel: 'statement'
         }
     }
 
