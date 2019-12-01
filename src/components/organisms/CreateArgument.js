@@ -1,12 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field, getIn, ErrorMessage } from 'formik'
 import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
 import {createArgument} from '../../data/api/Api'
 import * as Yup from 'yup'
 import Tooltip from '../atoms/Tooltip'
+import Loader from 'react-loader-spinner'
 
 import './styles/CreateArgs.scss'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import redirectTo from '../../util/redirect'
+import { readArgument } from '../../data/routes'
 
 const CreateArgumentSchema = Yup.object().shape({
   statement : Yup.string()
@@ -89,6 +93,37 @@ const CustomErrorMessage = (error) => {
 }
 
 const CreateArgument = (props) => {
+  const [created, setCreated] = useState(false)
+  const [createdNodeId, setCreatedNodeId] = useState()
+
+  const renderSubmitButton = (isSubmitting) => {
+    if (isSubmitting) {
+      return (
+        <Loader type="TailSpin"
+          color="black"
+          height={20}
+          width={20}
+          className="Loading-Spinner"
+          timeout={1000}
+        />
+      )
+    } else if (created) {
+      return <Button icon="done" onBlur={() => setCreated(false)}/>
+    } else {
+      return <Button icon="submit"/>
+    }
+  }
+
+  const renderCreatedMessage = () => {
+    setTimeout(() => {
+      redirectTo(props.history, readArgument.use + createdNodeId)
+    }, 3000)
+    return (
+      <div>
+        Argument created successfully, redirecting you to your argument.
+      </div>
+    )
+  }
 
   const renderFormElems = (isSubmitting, values) => {
     let formFields = []
@@ -118,9 +153,13 @@ const CreateArgument = (props) => {
     return (
       <Form>
         {inputFields}
-        <Button icon="back" onClick={confirmLeave}/>
-        <Button icon="submit" disabled={isSubmitting}>
-        </Button>
+        <div className="Form-Buttons">
+          <Button icon="back" onClick={confirmLeave}/>
+          {renderSubmitButton(isSubmitting)}
+        </div>
+        <div>
+          {created ? renderCreatedMessage(): ''}
+        </div>
       </Form>
     )
   }
@@ -132,7 +171,7 @@ const CreateArgument = (props) => {
   }
   
   return (
-    <div>
+    <div className='Create-Arg-Form'>
       <Formik
         initialValues={{ 
           statement: '',
@@ -148,7 +187,10 @@ const CreateArgument = (props) => {
           setSubmitting(true)
           let root = true
           createArgument(JSON.parse(JSON.stringify(values)), root)
-            .then(nodeId => console.log(nodeId))
+            .then(createdNode => {
+              setCreated(true)
+              setCreatedNodeId(createdNode.nodeId)
+            })
             .catch(err => {
               console.log('rejected')
             })
