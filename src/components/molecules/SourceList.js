@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Button from './Button'
+import Button from '../atoms/Button'
 import './styles/SourceList.scss'
 
 const SourceList = (props) => {
@@ -47,12 +47,14 @@ const SourceList = (props) => {
             <br/>
             <input 
                 type="text" 
-                name="addToList" 
+                name="addToList"
+                className="Source-Input"
                 value={currInput} 
                 onChange={(e) => setCurrInput(e.target.value)} />
 
             <Button 
                 icon="add"
+                className="Add-Source-Button"
                 onClick={() => addToList(currInput)}
             />
         </div>
