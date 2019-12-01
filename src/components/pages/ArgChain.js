@@ -1,8 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import ViewArgsGraph from '../organisms/ViewArgsGraph'
 import ViewArgsRegular from '../organisms/ViewArgsRegular'
 import Loading from '../atoms/Loading'
 import {getArgumentChain} from '../../data/api/Api'
+import styled from 'styled-components'
+
+const RootStatement = styled.h1`
+    padding-top: 1%;
+`
 
 const modalStyle = {
     content : {
@@ -20,6 +25,7 @@ const ArgChain = (props) => {
     const [links, setLinks] = useState([])
     const [rootId, setRootId] = useState(props.match.params.id)
     const [loading, setLoading] = useState(true)
+    const threadRef = useRef(null)
 
     useEffect(() => {
         getArgumentChain(rootId)
@@ -37,7 +43,6 @@ const ArgChain = (props) => {
             <div>
                 {node.statement}
                 <br/>
-                this is from arg chainz
             </div>
         )
     }
@@ -54,20 +59,58 @@ const ArgChain = (props) => {
         }
     }
 
+    const renderRootStatement = () => {
+        let root = nodes.filter(node => node.root)[0]
+        if (root) {
+            return (
+                <div>
+                    <RootStatement>
+                        {root.statement}
+                    </RootStatement>
+                </div>
+            )
+        }
+
+    }
+
+    const renderViewThread = () => {
+        return (
+            <div onClick={() => {
+                let distanceFromTop = threadRef.current.offsetTop
+                window.scrollTo({
+                    top: distanceFromTop,
+                    behavior: 'smooth'
+                })
+            }}>
+                <div>
+                    View Thread
+                </div>
+                <div style={{transform: 'rotate(180deg)'}}>
+                    &#8963;    
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             {loading ? <Loading/> 
                 : 
             <div>
+                {renderRootStatement()}
+                {renderViewThread()}
                 <ViewArgsGraph 
                     nodes={nodes}
                     links={links}
                     nodeModalContents={modalContents}
                     argGraphProps={getArgGraphProps()}
                     modalStyle={modalStyle}/>
-                <ViewArgsRegular
-                    nodes={nodes}
-                    links={links}/>
+                <div ref={threadRef}>
+                    <ViewArgsRegular
+                        id='Thread-View'
+                        nodes={nodes}
+                        links={links}/>
+                </div>
             </div>
             }
         </div>
