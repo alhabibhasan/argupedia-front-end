@@ -10,7 +10,7 @@ const SourceList = (props) => {
         if (!list || list.length === 0) return <ul/>
         let listToRender = list.map((item, index) => 
             <div key={item+index} className='List-Elem'>
-                <div>{item}</div>
+                <div>[{index+1}] {item}</div>
                 <Button
                     icon="back" 
                     className="Remove-Btn"
