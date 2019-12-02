@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import CreateArgument from '../organisms/CreateArgument'
+import ArgumentForm from '../organisms/ArgumentForm'
 import styled from 'styled-components'
 import Tooltip from '../atoms/Tooltip'
+import {waitThenRedirectTo} from '../../util/redirect'
+import { readArgument } from '../../data/routes'
+import {createArgument} from '../../data/api/Api'
 import './styles/CreateArgs.scss'
 
 const GuidanceText = styled.div`
@@ -52,7 +55,24 @@ const CreateArg = (props) => {
                 </GuidanceText>
 
 
-                <CreateArgument history={props.history}/>
+                <ArgumentForm history={props.history} 
+                    onSubmit={(values, argStatusValues, setArgumentStatus, setArgumentStatusMessage) => {
+                        let valuesCopy = JSON.parse(JSON.stringify(values))
+                        valuesCopy['root'] = true
+                        createArgument(valuesCopy)
+                        .then(createdNode => {
+                            setArgumentStatus(argStatusValues['SUCCESS'])
+                            setArgumentStatusMessage('Your argument was created successfully, redirecting you now.')
+                            waitThenRedirectTo(props.history, readArgument.use + createdNode.nodeId, 1500)
+                        })
+                        .catch(() => {
+                            setArgumentStatus(argStatusValues['ERROR'])
+                            setTimeout(() => {
+                                setArgumentStatus(argStatusValues['NOT_ATTEMPTED'])
+                            }, 1500)
+                            setArgumentStatusMessage('An argument with this statement already exists, please either add to it or reword your one.')
+                        })
+                }}/>
             </ReactCSSTransitionGroup>
         </Page>
     )

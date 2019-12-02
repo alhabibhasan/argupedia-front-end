@@ -3,7 +3,7 @@ import ViewArgs from '../organisms/ViewArgsGraph'
 import Loading from '../atoms/Loading'
 import {getArgumentRoots} from '../../data/api/Api'
 import {readArgument} from '../../data/routes'
-import redirectTo from '../../util/redirect';
+import {redirectTo} from '../../util/redirect';
 
 const modalStyle = {
     content : {

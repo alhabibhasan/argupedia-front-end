@@ -1,7 +1,7 @@
 import React from 'react'
 import { Jumbotron } from 'reactstrap'
 import styled from 'styled-components'
-import redirectTo from '../../util/redirect'
+import {redirectTo} from '../../util/redirect'
 import {createArgument} from '../../data/routes'
 
 const Header = styled.div`

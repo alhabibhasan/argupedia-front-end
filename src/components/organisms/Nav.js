@@ -8,7 +8,7 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap'
-import redirectTo from '../../util/redirect'
+import {redirectTo} from '../../util/redirect'
 import { withRouter } from 'react-router-dom'
 import {index, roots, createArgument, readArgument} from '../../data/routes'
 

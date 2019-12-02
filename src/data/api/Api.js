@@ -12,8 +12,7 @@ const getArgumentRoots = () => {
         .catch(err => console.log(err))
 }
 
-const createArgument = (arg, root) => {
-    arg['root'] = root
+const createArgument = (arg) => {
     return axios.post(process.env.REACT_APP_API_BASE_URL+ '/createArg', arg)
         .then(res => res.data)
         .catch(err => {

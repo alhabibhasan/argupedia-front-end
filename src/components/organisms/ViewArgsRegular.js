@@ -49,16 +49,20 @@ const ViewArgsRegular = (props) => {
     }
 
     const renderSourceList = (sourceList) => {
-        sourceList = JSON.parse(sourceList)
-        sourceList = sourceList.map((elem, index) => {
-            return (
-                <div key={index}>
-                    [{index + 1}] {elem}
-                    <hr/>
-                </div>
-            )
-        })
-
+        if (sourceList) {
+            sourceList = JSON.parse(sourceList)
+            sourceList = sourceList.map((elem, index) => {
+                return (
+                    <div key={index}>
+                        [{index + 1}] {elem}
+                        <hr/>
+                    </div>
+                )
+            })
+        } else {
+            sourceList = {}
+        }
+        
         return <ExpandCollapse render={sourceList}/>
 
     }
