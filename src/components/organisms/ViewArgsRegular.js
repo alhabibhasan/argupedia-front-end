@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import Button from '../atoms/Button'
+import {ScrollToTop} from '../../util/scrollTo'
+import ResponseForm from './ResponseForm'
 
 const Argument = styled.div`
     margin: 5%;
@@ -26,6 +28,12 @@ const Point = styled.div`
 `
 
 const ViewArgsRegular = (props) => {
+    const [root, setRoot] = useState()
+
+    useEffect(() => {
+        let nodes = props.nodes
+        setRoot(nodes.filter(node => node.root)[0])
+    }, [props.nodes])
 
     const propertiesToRender = {
         'circumstance' : {
@@ -63,14 +71,15 @@ const ViewArgsRegular = (props) => {
             sourceList = {}
         }
         
-        return <ExpandCollapse render={sourceList}/>
+        return (<ExpandCollapse 
+            openIcon='Show +' 
+            closeIcon='Hide -'
+            render={sourceList}/>)
 
     }
 
     const renderRoot = () => {
-        let nodes = props.nodes
-        let root = nodes.filter(node => node.root)[0]
-
+        if (!root) return;
         let argumentPoints = JSON.parse(JSON.stringify(propertiesToRender))
         argumentPoints = Object.keys(argumentPoints).map (point => {
             return {
@@ -114,42 +123,33 @@ const ViewArgsRegular = (props) => {
         )
     }
 
-    const renderScrollToTheTop = (label, style) => {
-        return (
-            <div style={style} onClick={() => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                })
-            }}>
-                <div>
-                    &#8963;
-                </div>
-                <div>
-                    {label}
-                </div>
+    const renderResponseOptions = () => {
+        let respondButton = (
+            <div>
+                <Button text='Respond' 
+                    style={{
+                        backgroundColor: '#a9a8a8',
+                        fontSize: '18pt',
+                        marginTop: '1%'
+                    }}
+                />
             </div>
         )
-    }
-
-    const renderResponseOptions = () => {
+        
         return (
-            <Button text='Respond' 
-                style={{
-                    backgroundColor: '#a9a8a8',
-                    fontSize: '18pt',
-                    marginTop: '1%'
-                }}
-                onClick={() => alert('will load attack component for arg with ID: ' + props.nodes.filter(node => node.root)[0].id)}
+            <ExpandCollapse 
+            openIcon={respondButton}
+            closeIcon={respondButton}
+            render={<ResponseForm root={root} renderedProperties={propertiesToRender}/>}
             />
         )
     }
 
     return (
         <div>
-            {renderScrollToTheTop('View graph')}
+            <ScrollToTop label='View graph'/>
             {renderRoot()}
-            {renderScrollToTheTop('Go to the top', {marginBottom: '5%'})}
+            <ScrollToTop label='Go to the top' style={{marginBottom: '5%'}}/>
         </div>
     )
 }
