@@ -6,28 +6,17 @@ import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
 import {ArgumentFormInput} from  '../atoms/ArgumentFormInput'
 import {confirmLeave} from '../../util/redirect'
 
-
 import './styles/CreateArgs.scss'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 const ArgumentForm = (props) => {
   const argStatusValues = {
-    'SUCCESS': 'SUCCESS',
-    'NOT_ATTEMPTED': 'NOT_ATTEMPTED',
-    'ERROR':'ERROR'
+    'SUCCESS' : 'done',
+    'NOT_ATTEMPTED' : 'submit',
+    'ERROR' : 'error'
   }
 
-  const [argumentStatus, setArgumentStatus] = useState(argStatusValues['NOT_ATTEMPTED'])
+  const [argumentStatus, setArgumentStatus] = useState('NOT_ATTEMPTED')
   const [argumentStatusMessage, setArgumentStatusMessage] = useState('')
-
-  const renderSubmitButton = () => {
-    const statusToButtonType = {
-      'SUCCESS' : 'done',
-      'NOT_ATTEMPTED' : 'submit',
-      'ERROR' : 'error'
-    }
-    return <Button icon={statusToButtonType[argumentStatus]}/>
-  }
 
   const renderFormElems = (values) => {
     let formFields = []
@@ -60,7 +49,7 @@ const ArgumentForm = (props) => {
         {inputFields}
         <div className="Form-Buttons">
           <Button icon="back" onClick={() => confirmLeave(props.history)}/>
-          {renderSubmitButton()}
+          <Button icon={argStatusValues[argumentStatus]}/>
         </div>
         <div>
           {argumentStatusMessage}

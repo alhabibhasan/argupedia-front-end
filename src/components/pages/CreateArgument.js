@@ -61,14 +61,14 @@ const CreateArg = (props) => {
                         valuesCopy['root'] = true
                         createArgument(valuesCopy)
                         .then(createdNode => {
-                            setArgumentStatus(argStatusValues['SUCCESS'])
+                            setArgumentStatus('SUCCESS')
                             setArgumentStatusMessage('Your argument was created successfully, redirecting you now.')
                             waitThenRedirectTo(props.history, readArgument.use + createdNode.nodeId, 1500)
                         })
                         .catch(() => {
-                            setArgumentStatus(argStatusValues['ERROR'])
+                            setArgumentStatus('ERROR')
                             setTimeout(() => {
-                                setArgumentStatus(argStatusValues['NOT_ATTEMPTED'])
+                                setArgumentStatus('NOT_ATTEMPTED')
                             }, 1500)
                             setArgumentStatusMessage('An argument with this statement already exists, please either add to it or reword your one.')
                         })
