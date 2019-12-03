@@ -5,13 +5,13 @@ const ExpandCollapse = (props) => {
 
     const renderClose = () => {
         return (
-            <span onClick={() => setOpen(false)}>-</span>
+            <span onClick={() => setOpen(false)}>{props.closeIcon}</span>
         )
     }
 
     const renderOpen = () => {
         return (
-            <span onClick={() => setOpen(true)}>+</span>
+            <span onClick={() => setOpen(true)}>{props.openIcon}</span>
         )
     }
 
@@ -22,10 +22,9 @@ const ExpandCollapse = (props) => {
                 { open ? renderClose() : renderOpen()}
             </div>
 
-
-            {
-                open ? props.render : ''
-            }
+            <div style={{display: open ? 'block' : 'none'}}>
+                {props.render}
+            </div>
         </div>
     )
 }
