@@ -4,6 +4,7 @@ import ViewArgsRegular from '../organisms/ViewArgsRegular'
 import Loading from '../atoms/Loading'
 import {getArgumentChain} from '../../data/api/Api'
 import styled from 'styled-components'
+import { ScrollDownToLocation } from '../../util/scrollTo'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -25,7 +26,6 @@ const ArgChain = (props) => {
     const [links, setLinks] = useState([])
     const [rootId, setRootId] = useState(props.match.params.id)
     const [loading, setLoading] = useState(true)
-    const threadRef = useRef(null)
 
     useEffect(() => {
         getArgumentChain(rootId)
@@ -73,45 +73,24 @@ const ArgChain = (props) => {
 
     }
 
-    const renderViewThread = () => {
-        return (
-            <div onClick={() => {
-                let distanceFromTop = threadRef.current.offsetTop
-                window.scrollTo({
-                    top: distanceFromTop,
-                    behavior: 'smooth'
-                })
-            }}>
-                <div>
-                    View Thread
-                </div>
-                <div style={{transform: 'rotate(180deg)'}}>
-                    &#8963;    
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div>
             {loading ? <Loading/> 
                 : 
-            <div>
-                {renderRootStatement()}
-                {renderViewThread()}
-                <ViewArgsGraph 
-                    nodes={nodes}
-                    links={links}
-                    nodeModalContents={modalContents}
-                    argGraphProps={getArgGraphProps()}
-                    modalStyle={modalStyle}/>
-                <div ref={threadRef}>
+                <div>
+                    {renderRootStatement()}
+                    <ScrollDownToLocation label='View thread' location={window.outerHeight}/>
+                    <ViewArgsGraph 
+                        nodes={nodes}
+                        links={links}
+                        nodeModalContents={modalContents}
+                        argGraphProps={getArgGraphProps()}
+                        modalStyle={modalStyle}/>  
                     <ViewArgsRegular
                         id='Thread-View'
                         nodes={nodes}
                         links={links}/>
                 </div>
-            </div>
             }
         </div>
     )
