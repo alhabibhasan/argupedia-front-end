@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ArgumentForm from '../organisms/ArgumentForm'
 import styled from 'styled-components'
 import Tooltip from '../atoms/Tooltip'
 import {waitThenRedirectTo} from '../../util/redirect'
+import {Link} from 'react-router-dom'
 import { readArgument } from '../../data/routes'
 import {createArgument} from '../../data/api/Api'
 import './styles/CreateArgs.scss'
@@ -11,6 +12,7 @@ import './styles/CreateArgs.scss'
 const GuidanceText = styled.div`
     text-align: left;
     margin: 5%;
+    white-space: pre-wrap;
 `
 
 const Page = styled.div`
@@ -52,11 +54,15 @@ const CreateArg = (props) => {
                 <GuidanceText>
                     You should also try to give your argument a quick summary/overview in the statement field. This will allow your readers
                     to get a quick overview of your topic.
+                    <br/><br/>
+                    You will need to specify the reasoning behind your argument. A full explanation of what the available options mean,
+                    can be found in the <Link to="/help">help</Link> section of our website.
                 </GuidanceText>
 
 
                 <ArgumentForm history={props.history} 
-                    onSubmit={(values, argStatusValues, setArgumentStatus, setArgumentStatusMessage) => {
+                    onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
+                        alert(JSON.stringify(values))
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
                         createArgument(valuesCopy)
