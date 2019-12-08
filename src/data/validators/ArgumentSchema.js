@@ -18,6 +18,8 @@ const ArgumentSchema = Yup.object().shape({
     value : Yup.string()
         .min(5, 'Too short!')
         .required('Required!'),
+    argumentBasis: Yup.string()
+        .required('Required'),
     sourceList: Yup.string()
         .notRequired()
     })
