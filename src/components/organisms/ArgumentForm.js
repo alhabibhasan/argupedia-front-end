@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import { Formik, Form, Field } from 'formik'
 import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
+import RadioFormInput from '../molecules/DropdownFormInput'
 import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
 import {ArgumentFormInput} from  '../atoms/ArgumentFormInput'
 import {confirmLeave} from '../../util/redirect'
+import motivationSchemas from '../../data/motivationSchemas'
 
 import './styles/CreateArgs.scss'
 
@@ -30,6 +32,11 @@ const ArgumentForm = (props) => {
     let inputFields = formFields.map((value, index) => {
       if (value === 'sourceList') {
         return <ListFormInput key={index} label='Extra resources'/>
+      } else if (value === 'argumentBasis') {
+        return (<div>
+            <RadioFormInput key={index} fieldName='argumentBasis' renderedProperties={motivationSchemas}/>
+            <hr/>
+          </div>)
       } else {
         return (
           <div key={index}>
@@ -38,7 +45,6 @@ const ArgumentForm = (props) => {
               type="text" 
               name={value} 
             />
-            {value === 'statement' ? <hr/> : ''}
           </div>
         )
       }
@@ -63,6 +69,7 @@ const ArgumentForm = (props) => {
       <Formik
         initialValues={{ 
           statement: '' || props.statement,
+          argumentBasis: '' || props.basis,
           circumstance: '' || props.circumstance,
           action:''|| props.action,
           newCircumstance: '' || props.newCircumstance,
@@ -72,7 +79,7 @@ const ArgumentForm = (props) => {
         validationSchema={ArgumentSchema}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(true)
-          props.onSubmit(values, argStatusValues, setArgumentStatus, setArgumentStatusMessage)
+          props.onSubmit(values, setArgumentStatus, setArgumentStatusMessage)
         }}
       >
         {({values}) => renderFormElems(values)}
