@@ -68,7 +68,7 @@ const ViewArgsRegular = (props) => {
                 )
             })
         } else {
-            sourceList = {}
+            sourceList = 'None'
         }
         
         return (<ExpandCollapse 
