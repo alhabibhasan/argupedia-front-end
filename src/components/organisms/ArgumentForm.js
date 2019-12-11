@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Formik, Form, Field } from 'formik'
 import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
@@ -33,8 +33,8 @@ const ArgumentForm = (props) => {
       if (value === 'sourceList') {
         return <ListFormInput key={index} label='Extra resources'/>
       } else if (value === 'argumentBasis') {
-        return (<div>
-            <RadioFormInput key={index} fieldName='argumentBasis' renderedProperties={motivationSchemas}/>
+        return (<div key={index}>
+            <RadioFormInput fieldName='argumentBasis' renderedProperties={motivationSchemas}/>
             <hr/>
           </div>)
       } else {
@@ -67,24 +67,24 @@ const ArgumentForm = (props) => {
   return (
     <div className='Create-Arg-Form'>
       <Formik
-        initialValues={{ 
-          statement: '' || props.statement,
-          argumentBasis: '' || props.basis,
-          circumstance: '' || props.circumstance,
-          action:''|| props.action,
-          newCircumstance: '' || props.newCircumstance,
-          goal:'' || props.goal,
-          value:'' || props.value, 
-          sourceList: '' || props.sourceList}}
-        validationSchema={ArgumentSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(true)
-          props.onSubmit(values, setArgumentStatus, setArgumentStatusMessage)
-        }}
+      initialValues={{ 
+        statement: '' || props.statement,
+        argumentBasis: '' || props.basis,
+        circumstance: '' || props.circumstance,
+        action:''|| props.action,
+        newCircumstance: '' || props.newCircumstance,
+        goal:'' || props.goal,
+        value:'' || props.value, 
+        sourceList: '' || props.sourceList}}
+      enableReinitialize={true}
+      validationSchema={props.schema ? props.schema : ArgumentSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true)
+        props.onSubmit(values, setArgumentStatus, setArgumentStatusMessage)
+      }}
       >
         {({values}) => renderFormElems(values)}
       </Formik>
-
     </div>
   )
 }
