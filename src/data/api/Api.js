@@ -20,8 +20,17 @@ const createArgument = (arg) => {
         })
 }
 
+const createResponse = (rootId, arg) => {
+    return axios.post(process.env.REACT_APP_API_BASE_URL+ '/' + rootId + '/createResponse', arg)
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
 export {
     getArgumentChain,
     getArgumentRoots,
     createArgument,
+    createResponse
 }
