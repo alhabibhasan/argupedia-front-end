@@ -16,7 +16,7 @@ const ExpandCollapse = (props) => {
     }
 
     return (
-        <div>
+        <div style={props.style}>
             <div>
                 {props.header}
                 { open ? renderClose() : renderOpen()}
