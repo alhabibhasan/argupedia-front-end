@@ -13,7 +13,7 @@ const ArgumentGraph = (props) => {
                     links: props.links
                 }}
                 nodeLabel={props.argGraphProps.nodeLabel}
-                linkLabel={props.argGraphProps.type}
+                linkLabel={props.argGraphProps.linkLabel}
                 nodeCanvasObject={props.argGraphProps.nodeCanvasObject}
                 onNodeClick={(node, event) => {
                     node.fy = node.y
