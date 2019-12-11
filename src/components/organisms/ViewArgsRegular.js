@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import Button from '../atoms/Button'
 import {ScrollToTop} from '../../util/scrollTo'
-import ResponseForm from './ResponseForm'
+import Respond from './Respond'
+import Argument from '../atoms/Argument'
 
-const Argument = styled.div`
+
+const ArgumentWrapper = styled.div`
     margin: 5%;
     padding: 1%;
-    background-color: #f3f3f3;
 `
 const Statement = styled.h1`
     margin-bottom: 4%;
@@ -32,94 +33,24 @@ const ViewArgsRegular = (props) => {
 
     useEffect(() => {
         let nodes = props.nodes
-        setRoot(nodes.filter(node => node.root)[0])
-    }, [props.nodes])
-
-    const propertiesToRender = {
-        'circumstance' : {
-            label: 'Current circumstance'
-        }, 
-        'action' : {
-            label: 'Required action'
-        }, 
-        'newCircumstance' : {
-            label: 'New circumstance'
-        }, 
-        'goal' : {
-            label: 'Goal achieved'
-        }, 
-        'value' : {
-            label: 'Values promoted'
-        }, 
-        'sourceList' : {
-            label: 'Extra reading'
-        }, 
-    }
-
-    const renderSourceList = (sourceList) => {
-        if (sourceList) {
-            sourceList = JSON.parse(sourceList)
-            sourceList = sourceList.map((elem, index) => {
-                return (
-                    <div key={index}>
-                        [{index + 1}] {elem}
-                        <hr/>
-                    </div>
-                )
-            })
-        } else {
-            sourceList = 'None'
-        }
-        
-        return (<ExpandCollapse 
-            openIcon='Show +' 
-            closeIcon='Hide -'
-            render={sourceList}/>)
-
-    }
+        setRoot(nodes.filter(node => node.id === props.rootId)[0])
+    }, [props.rootId, props.nodes])
 
     const renderRoot = () => {
         if (!root) return;
-        let argumentPoints = JSON.parse(JSON.stringify(propertiesToRender))
-        argumentPoints = Object.keys(argumentPoints).map (point => {
-            return {
-                field: {
-                    machineName: point,
-                    label: propertiesToRender[point].label,
-                    argVal: root[point] 
-                }
-            }
-        })
-
-        let renderedRoot = Object.keys(argumentPoints).map((prop, index) => {
-            let point = argumentPoints[prop].field
-            if (propertiesToRender[point.machineName]) {
-                return (
-                    <div key={index}>
-                        <Label>
-                            {point.label}
-                        </Label>
-                        {point.machineName === 'sourceList' ? renderSourceList(point.argVal) : 
-                            <Point>
-                                {point.argVal ? point.argVal : <small><i>None given</i></small>}
-                            </Point>
-                        }
-                        
-                    </div>
-                )
-            }
-        })
-
+        /**
+         * TODO: add a link to the parent argument if current isn't a root.
+         */
         return (
-            <Argument>
+            <ArgumentWrapper>
                 <Statement>
                     {root.statement}
                 </Statement>
                 <div>
-                    {renderedRoot}
+                    <Argument arg={root}/>
                 </div>
                 {renderResponseOptions()}
-            </Argument>
+            </ArgumentWrapper>
         )
     }
 
@@ -140,7 +71,7 @@ const ViewArgsRegular = (props) => {
             <ExpandCollapse 
             openIcon={respondButton}
             closeIcon={respondButton}
-            render={<ResponseForm root={root} renderedProperties={propertiesToRender}/>}
+            render={<Respond root={root}/>}
             />
         )
     }
