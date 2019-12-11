@@ -60,9 +60,9 @@ const CreateArg = (props) => {
                 </GuidanceText>
 
 
-                <ArgumentForm history={props.history} 
+                <ArgumentForm 
+                    history={props.history} 
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
-                        alert(JSON.stringify(values))
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
                         createArgument(valuesCopy)
