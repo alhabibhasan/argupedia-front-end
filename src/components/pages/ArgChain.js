@@ -41,7 +41,7 @@ const ArgChain = (props) => {
     const modalContents = (node) => {
         return (
             <div>
-                {node.statement}
+                {JSON.stringify(node)}
                 <br/>
             </div>
         )
@@ -55,12 +55,14 @@ const ArgChain = (props) => {
                 ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: false
+            enableZoomPanInteraction: false,
+            nodeLabel: 'statement',
+            linkLabel: 'type'
         }
     }
 
     const renderRootStatement = () => {
-        let root = nodes.filter(node => node.root)[0]
+        let root = nodes.filter(node => node.id === rootId)[0]
         if (root) {
             return (
                 <div>
@@ -88,6 +90,7 @@ const ArgChain = (props) => {
                         modalStyle={modalStyle}/>  
                     <ViewArgsRegular
                         id='Thread-View'
+                        rootId={rootId}
                         nodes={nodes}
                         links={links}/>
                 </div>
