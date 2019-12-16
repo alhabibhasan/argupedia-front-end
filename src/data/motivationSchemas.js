@@ -1,6 +1,6 @@
 const motivationSchemas = [
      {
-        id: 'argumentFromPositionToKnow',
+        id: 'Position to know',
         label: 'Position to know',
         criticalQuestions: [
             'Is the writer really in a position to know if their argument is true?',
@@ -10,7 +10,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'appealToExpertOpinion',
+        id: 'Expert Opinion',
         label: 'Expert Opinion',
         criticalQuestions: [
             'How credible is the writer as an Expert?',
@@ -22,7 +22,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'appealToPopularOpinion',
+        id: 'Appeal to popular opinion',
         label: 'Appeal to popular opinion',
         criticalQuestions: [
             'What evidence do we have for believing that the argument is generally accepted?',
@@ -30,7 +30,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'argumentFromAnalogy',
+        id: 'Argument from analogy',
         label: 'Argument from analogy',
         criticalQuestions: [
             'Is the argument really true in the given situations?',
@@ -39,7 +39,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'argumentFromCorrelationToCause',
+        id: 'Argument from correlation to cause',
         label: 'Argument from correlation to cause',
         criticalQuestions: [
             'Is there really a correlation between the points raised?',
@@ -48,7 +48,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'argumentFromPostiveNegativeConsequences',
+        id: 'Argument from positive/negative consequence',
         label: 'Argument from positive/negative consequence',
         criticalQuestions: [
             'How strong is the probability or plausibility that these cited consequences will (may, might, must) occur?',
@@ -58,7 +58,7 @@ const motivationSchemas = [
         ]
     },
     {
-        id: 'slipperySlopeArgument',
+        id: 'Slippery slope argument',
         label: 'Slippery slope argument',
         criticalQuestions: [
             'What intervening propositions in the sequence linking the actions are actually given?',
