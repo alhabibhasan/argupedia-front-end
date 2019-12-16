@@ -19,7 +19,8 @@ const ArgumentSchema = Yup.object().shape({
         .min(5, 'Too short!')
         .required('Required!'),
     argumentBasis: Yup.string()
-        .required('Required'),
+        .notOneOf(['default'], 'You need to select an argument basis')
+        .required('Required!'),
     sourceList: Yup.string()
         .notRequired()
     })
@@ -44,7 +45,8 @@ const ResponseSchema = Yup.object().shape({
         .min(5, 'Too short!')
         .notRequired(),
     argumentBasis: Yup.string()
-        .required('Required'),
+        .notOneOf(['default'], 'You need to select an argument basis')
+        .required('Required!'),
     sourceList: Yup.string()
         .notRequired()
     })
