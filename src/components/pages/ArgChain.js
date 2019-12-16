@@ -1,13 +1,23 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import ViewArgsGraph from '../organisms/ViewArgsGraph'
 import ViewArgsRegular from '../organisms/ViewArgsRegular'
 import Loading from '../atoms/Loading'
 import {getArgumentChain} from '../../data/api/Api'
 import styled from 'styled-components'
 import { ScrollDownToLocation } from '../../util/scrollTo'
+import Argument from '../atoms/Argument'
+import Respond from '../organisms/Respond'
+import {ExpandCollapse} from '../atoms/ExpandCollapse'
+import Button from '../atoms/Button'
+import {readArgument} from '../../data/routes'
+import {redirectTo} from '../../util/redirect';
 
 const RootStatement = styled.h1`
     padding-top: 1%;
+`
+
+const ModelContent = styled.div`
+    padding-bottom: 2%;
 `
 
 const modalStyle = {
@@ -16,18 +26,72 @@ const modalStyle = {
         left                  : '50%',
         right                 : 'auto',
         bottom                : 'auto',
+        overflowY             : 'scroll',
+        maxHeight             : '90vh',
+        height                : 'auto',
+        width                 : '50%',
+        maxWidth              : '80%',
         marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        transform             : 'translate(-50%, -50%)',
+        textAlign             : 'center',
+        display               : 'inline-block'
     }
 };
 
 const ArgChain = (props) => {
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
-    const [rootId, setRootId] = useState(props.match.params.id)
     const [loading, setLoading] = useState(true)
+    
+    const rootId = props.match.params.id
 
     useEffect(() => {
+        updateArgument()
+    }, [rootId])
+
+    const modalContents = (node) => {
+        let respondButton = (
+            <Button text='Respond' 
+                style={{
+                    backgroundColor: '#a9a8a8',
+                    fontSize: '12pt',
+                    marginTop: '1%'
+                }}
+            />
+        )   
+        return (
+            <ModelContent>
+                <div>
+                    <Argument arg={node}/>
+                </div>
+                <div>
+                    <Button 
+                        text={'Go to argument'} 
+                        onClick={() => {
+                            redirectTo(props.history, readArgument.use + node.id)
+                        }}
+                        style={{
+                            fontSize: '12pt',
+                            backgroundColor: '#a8a9a9',
+                        }}
+                    />
+                </div>
+                <div>
+                    <ExpandCollapse 
+                            openIcon={respondButton}
+                            closeIcon={respondButton}
+                            render={<Respond
+                                successMessage='Your argument has been added, close this modal to see it.' 
+                                hideBack={true}
+                                root={node} 
+                                updateArgument={updateArgument}/>}
+                        />
+                </div>
+            </ModelContent>
+        )
+    }
+
+    const updateArgument = () => {
         getArgumentChain(rootId)
         .then(chain => {
             if (chain && chain.nodes && chain.links) {
@@ -36,15 +100,6 @@ const ArgChain = (props) => {
                 setLoading(false)
             }
         })
-    }, [rootId])
-
-    const modalContents = (node) => {
-        return (
-            <div>
-                {JSON.stringify(node)}
-                <br/>
-            </div>
-        )
     }
 
     const getArgGraphProps = () => {
@@ -55,7 +110,7 @@ const ArgChain = (props) => {
                 ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: false,
+            enableZoomPanInteraction: true,
             nodeLabel: 'statement',
             linkLabel: 'type'
         }
@@ -83,13 +138,14 @@ const ArgChain = (props) => {
                     {renderRootStatement()}
                     <ScrollDownToLocation label='View thread' location={window.outerHeight}/>
                     <ViewArgsGraph 
+                        updateArgument={updateArgument}
                         nodes={nodes}
                         links={links}
                         nodeModalContents={modalContents}
                         argGraphProps={getArgGraphProps()}
                         modalStyle={modalStyle}/>  
                     <ViewArgsRegular
-                        id='Thread-View'
+                        updateArgument={updateArgument}
                         rootId={rootId}
                         nodes={nodes}
                         links={links}/>

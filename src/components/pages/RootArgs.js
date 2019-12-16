@@ -4,6 +4,8 @@ import Loading from '../atoms/Loading'
 import {getArgumentRoots} from '../../data/api/Api'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
+import Argument from '../atoms/Argument'
+import Button from '../atoms/Button'
 
 const modalStyle = {
     content : {
@@ -12,7 +14,10 @@ const modalStyle = {
         right                 : 'auto',
         bottom                : 'auto',
         marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        transform             : 'translate(-50%, -50%)',
+        maxHeight             : '90vh',
+        height                : 'auto',
+        width                 : '50vh',
     }
 };
 
@@ -35,10 +40,20 @@ const RootArgs = (props) => {
     const modalContents = (node) => {
         return (
             <div>
-                {node.statement}
-                <button onClick={() => {
-                    redirectTo(props.history, readArgument.use + node.id)
-                }}>Go to arg</button>
+                <div>
+                    <Argument arg={node}/>
+                </div>
+                <div>
+                    <Button 
+                        text={'Go to argument'} 
+                        onClick={() => {
+                            redirectTo(props.history, readArgument.use + node.id)
+                        }}
+                        style={{
+                            background: '#a9a8a8',
+                            fontSize: '12pt'
+                        }}/>
+                </div>
             </div>
         )
     }
