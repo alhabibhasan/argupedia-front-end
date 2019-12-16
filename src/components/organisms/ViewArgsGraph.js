@@ -37,7 +37,12 @@ const ViewArgsGraph = (props) => {
             {renderRoots()}
             <Modal isOpen={showModal} style={props.modalStyle}>
                 {selectedNode ? props.nodeModalContents(selectedNode) : <Loading/>}
-                <Button icon='back' onClick={toggleModal}/>
+                <Button 
+                    text='Close' 
+                    style={{
+                        fontSize: '12pt',
+                    }} 
+                    onClick={toggleModal}/>
             </Modal>
         </div>
     )
