@@ -4,11 +4,12 @@ import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
 import RadioFormInput from '../molecules/DropdownFormInput'
 import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
-import {ArgumentFormInput} from  '../atoms/ArgumentFormInput'
+import {ArgumentFormInput} from  '../molecules/ArgumentFormInput'
 import {confirmLeave} from '../../util/redirect'
 import motivationSchemas from '../../data/motivationSchemas'
 
 import './styles/CreateArgs.scss'
+import camelCaseToSentenceCase from '../../util/formatting'
 
 const ArgumentForm = (props) => {
   const argStatusValues = {
@@ -20,7 +21,7 @@ const ArgumentForm = (props) => {
   const [argumentStatus, setArgumentStatus] = useState('NOT_ATTEMPTED')
   const [argumentStatusMessage, setArgumentStatusMessage] = useState('')
 
-  const renderFormElems = (values) => {
+  const renderFormElems = (values, errors) => {
     let formFields = []
     // Convert object to array, otherwise we cannot cycle through it easily
     for (var prop in values) {
@@ -54,14 +55,34 @@ const ArgumentForm = (props) => {
       <Form>
         {inputFields}
         <div className="Form-Buttons">
-          <Button icon="back" onClick={() => confirmLeave(props.history)}/>
+          {props.hideBack ? 
+            ''
+            :
+            <Button icon="back" onClick={() => confirmLeave(props.history)}/> 
+          }
           <Button icon={argStatusValues[argumentStatus]}/>
+        </div>
+        <div>
+          {renderErrorMessages(errors)}
         </div>
         <div>
           {argumentStatusMessage}
         </div>
       </Form>
     )
+  }
+
+  const renderErrorMessages = (errors) => {
+      let errorKeys = Object.keys(errors)
+      let renderedErrors;
+      if (errorKeys.length > 0) {
+        renderedErrors = errorKeys.map((err, i) => {
+          return <div className='Error-Message'>
+            {camelCaseToSentenceCase(errorKeys[i])} : {errors[errorKeys[i]]}
+          </div>
+        }) 
+      }
+      return renderedErrors
   }
   
   return (
@@ -83,7 +104,7 @@ const ArgumentForm = (props) => {
         props.onSubmit(values, setArgumentStatus, setArgumentStatusMessage)
       }}
       >
-        {({values}) => renderFormElems(values)}
+        {({values, errors}) => renderFormElems(values, errors)}
       </Formik>
     </div>
   )
