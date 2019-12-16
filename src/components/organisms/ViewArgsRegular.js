@@ -5,7 +5,7 @@ import Button from '../atoms/Button'
 import {ScrollToTop} from '../../util/scrollTo'
 import Respond from './Respond'
 import Argument from '../atoms/Argument'
-
+import Thread from  '../organisms/Thread'
 
 const ArgumentWrapper = styled.div`
     margin: 5%;
@@ -13,19 +13,6 @@ const ArgumentWrapper = styled.div`
 `
 const Statement = styled.h1`
     margin-bottom: 4%;
-`
-
-const Label = styled.div`
-    font-style: italic;
-    font-size: 12pt;
-    color: gray;
-`
-
-const Point = styled.div`
-    font-size: 18pt;
-    margin-bottom: 2%;
-    white-space: pre-wrap;
-    text-align: left;
 `
 
 const ViewArgsRegular = (props) => {
@@ -39,7 +26,7 @@ const ViewArgsRegular = (props) => {
     const renderRoot = () => {
         if (!root) return;
         /**
-         * TODO: add a link to the parent argument if current isn't a root.
+         * TODO: add a link to the parent argument if current isn't a 'base' arg.
          */
         return (
             <ArgumentWrapper>
@@ -50,28 +37,34 @@ const ViewArgsRegular = (props) => {
                     <Argument arg={root}/>
                 </div>
                 {renderResponseOptions()}
+                {renderThread()}
             </ArgumentWrapper>
         )
     }
 
+    const renderThread = () => {
+        return <Thread rootId={props.rootId} />
+    }
+
     const renderResponseOptions = () => {
         let respondButton = (
-            <div>
                 <Button text='Respond' 
                     style={{
                         backgroundColor: '#a9a8a8',
-                        fontSize: '18pt',
+                        fontSize: '12pt',
                         marginTop: '1%'
                     }}
                 />
-            </div>
         )
         
         return (
             <ExpandCollapse 
             openIcon={respondButton}
             closeIcon={respondButton}
-            render={<Respond root={root}/>}
+            render={<Respond 
+                    root={root} 
+                    updateArgument={props.updateArgument}
+                />}
             />
         )
     }
