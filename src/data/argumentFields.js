@@ -20,9 +20,13 @@ const argumentFields = [
         label: 'Values promoted'
     }, 
     {
+        id: 'argumentBasis',
+        label: 'Argument based on'
+    }, 
+    {
         id: 'sourceList',
         label: 'Extra reading'
-    }, 
+    },
 ]
 
 export default argumentFields
