@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 const DropdownList = (props) => {
-    const [selected, setSelected] = useState()
+    const [selected, setSelected] = useState('default')
 
     useEffect(() => {
         props.setSelectedValue(selected)
@@ -15,8 +15,8 @@ const DropdownList = (props) => {
 
     const renderCategorizedList = () => {
         return props.valuesToRender.map((property, i) => {
-            let groupOptions = props.valuesToRender[i][props.categoryOptionsField]
-            let label = props.valuesToRender[i].label
+            let groupOptions = property[props.categoryOptionsField]
+            let label = property.label
 
             let optionTags = groupOptions.map((opt, index) => {
                 return <option key={index} value={opt}>{opt}</option>
