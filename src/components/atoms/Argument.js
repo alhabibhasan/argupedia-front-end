@@ -11,25 +11,31 @@ const Label = styled.div`
 `
 
 const Argument = (props) => {
-    let fields = argumentFields.map(field => {
+    let fields = argumentFields.map((field, indexI) => {
         if (field.id === 'sourceList') {
-            let sources = JSON.parse(props.arg[field.id]).map((source, index) => {
-                return <div>
-                    [{index + 1}] {source}
-                </div>
-            })
+            let sourceList = JSON.parse(props.arg[field.id])
+            let renderedSources = <div>None</div>
+            if (sourceList.length) {
+                renderedSources = sourceList.map((source, indexJ) => {
+                    return <div key={indexJ}>
+                        [{indexI + 1}] {source}
+                    </div>
+                })
+            }
             let show = <Label>Show Sources +</Label>
             let hide = <Label>Hide Sources +</Label>
             return (
-                <ExpandCollapse
+                <div key={indexI+field}>
+                    <ExpandCollapse
                     style={{textAlign: 'left'}} 
                     openIcon={show}
                     closeIcon={hide} 
-                    render={sources}/>
+                    render={renderedSources}/>
+                </div>
             )
         }
         return (
-            <Arg>
+            <Arg key={indexI}>
                 <Label>{field.label}</Label>
                 {props.arg[field.id]}
             </Arg>
