@@ -66,10 +66,12 @@ const CreateArg = (props) => {
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
                         createArgument(valuesCopy)
-                        .then(createdNode => {
+                        .then(response => {
+                            let createdNode = response.createdNode
                             setArgumentStatus('SUCCESS')
                             setArgumentStatusMessage('Your argument was created successfully, redirecting you now.')
-                            waitThenRedirectTo(props.history, readArgument.use + createdNode.nodeId, 1500)
+                            console.log('redirecting to ' + readArgument.use + createdNode.id)
+                            waitThenRedirectTo(props.history, readArgument.use + createdNode.id, 1500)
                         })
                         .catch(() => {
                             setArgumentStatus('ERROR')
