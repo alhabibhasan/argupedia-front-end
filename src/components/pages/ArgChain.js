@@ -11,6 +11,8 @@ import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
+import RespondButton from '../molecules/RespondButton'
+import RespondOption from '../molecules/RespondButton'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -29,7 +31,7 @@ const modalStyle = {
         overflowY             : 'scroll',
         maxHeight             : '90vh',
         height                : 'auto',
-        width                 : '50%',
+        width                 : 'auto',
         maxWidth              : '80%',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',
@@ -41,6 +43,7 @@ const modalStyle = {
 const ArgChain = (props) => {
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
+    const [root, setRoot] = useState()
     const [loading, setLoading] = useState(true)
     
     const rootId = props.match.params.id
@@ -50,15 +53,6 @@ const ArgChain = (props) => {
     }, [rootId])
 
     const modalContents = (node) => {
-        let respondButton = (
-            <Button text='Respond' 
-                style={{
-                    backgroundColor: '#a9a8a8',
-                    fontSize: '12pt',
-                    marginTop: '1%'
-                }}
-            />
-        )   
         return (
             <ModelContent>
                 <div>
@@ -77,15 +71,11 @@ const ArgChain = (props) => {
                     />
                 </div>
                 <div>
-                    <ExpandCollapse 
-                            openIcon={respondButton}
-                            closeIcon={respondButton}
-                            render={<Respond
-                                successMessage='Your argument has been added, close this modal to see it.' 
-                                hideBack={true}
-                                root={node} 
-                                updateArgument={updateArgument}/>}
-                        />
+                        <RespondOption 
+                            successMessage='Your argument has been added, close this modal to see it.' 
+                            hideBack={true}
+                            updateArgument={updateArgument} 
+                            root={node}/>
                 </div>
             </ModelContent>
         )
@@ -97,6 +87,8 @@ const ArgChain = (props) => {
             if (chain && chain.nodes && chain.links) {
                 setNodes(chain.nodes)
                 setLinks(chain.links)
+                let root = chain.nodes.filter(node => node.id === rootId)[0]
+                setRoot(root)
                 setLoading(false)
             }
         })
@@ -110,10 +102,29 @@ const ArgChain = (props) => {
                 ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: true,
+            enableZoomPanInteraction: false,
             nodeLabel: 'statement',
             linkLabel: 'type'
         }
+    }
+
+    const renderGoToParent = () => {
+        let linkedParent = root.parentId
+        if (linkedParent > 0) {
+            return (
+                <Button 
+                        text={'Go to parent argument'} 
+                        onClick={() => {
+                            redirectTo(props.history, readArgument.use + linkedParent)
+                        }}
+                        style={{
+                            fontSize: '12pt',
+                            backgroundColor: '#a8a9a9',
+                        }}
+                    />
+            )
+        }
+        
     }
 
     const renderRootStatement = () => {
@@ -136,6 +147,7 @@ const ArgChain = (props) => {
                 : 
                 <div>
                     {renderRootStatement()}
+                    {renderGoToParent()}
                     <ScrollDownToLocation label='View thread' location={window.outerHeight}/>
                     <ViewArgsGraph 
                         updateArgument={updateArgument}

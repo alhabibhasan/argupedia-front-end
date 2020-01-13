@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {ExpandCollapse} from '../atoms/ExpandCollapse'
-import Button from '../atoms/Button'
+import RespondOption from '../molecules/RespondButton'
 import {ScrollToTop} from '../../util/scrollTo'
 import Respond from './Respond'
 import Argument from '../atoms/Argument'
 import Thread from  '../organisms/Thread'
+
 
 const ArgumentWrapper = styled.div`
     margin: 5%;
@@ -36,37 +37,14 @@ const ViewArgsRegular = (props) => {
                 <div>
                     <Argument arg={root}/>
                 </div>
-                {renderResponseOptions()}
+                <RespondOption root={root}/>
                 {renderThread()}
             </ArgumentWrapper>
         )
     }
 
     const renderThread = () => {
-        return <Thread rootId={props.rootId} />
-    }
-
-    const renderResponseOptions = () => {
-        let respondButton = (
-                <Button text='Respond' 
-                    style={{
-                        backgroundColor: '#a9a8a8',
-                        fontSize: '12pt',
-                        marginTop: '1%'
-                    }}
-                />
-        )
-        
-        return (
-            <ExpandCollapse 
-            openIcon={respondButton}
-            closeIcon={respondButton}
-            render={<Respond 
-                    root={root} 
-                    updateArgument={props.updateArgument}
-                />}
-            />
-        )
+        return <Thread rootId={props.rootId} nodes={props.nodes} updateArgument={props.updateArgument}/>
     }
 
     return (
