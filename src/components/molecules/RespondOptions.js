@@ -9,10 +9,10 @@ const RespondButton = () => {
 }
 
 const style = {
-    'text-align': 'center',
+    'textAlign': 'center',
 }
 
-const RespondOption = (props) => {
+const RespondOptions = (props) => {
     return (
         <ExpandCollapse
             className='Respond'
@@ -21,7 +21,6 @@ const RespondOption = (props) => {
             style={style}
             render={<Respond 
                 successMessage={props.successMessage}
-                hideBack={props.hideBack}
                 parent={props.root} 
                 updateArgument={props.updateArgument}
             />}
@@ -29,4 +28,4 @@ const RespondOption = (props) => {
     )
 }
 
-export default RespondOption
+export default RespondOptions
