@@ -37,18 +37,18 @@ const ResponseSchema = Yup.object().shape({
         .required('Required!'),
     newCircumstance : Yup.string()
         .min(5, 'Too short!')
-        .notRequired(),
+        .required(),
     goal : Yup.string()
         .min(5, 'Too short!')
-        .notRequired(),
+        .required(),
     value : Yup.string()
         .min(5, 'Too short!')
-        .notRequired(),
+        .required(),
     argumentBasis: Yup.string()
         .notOneOf(['default'], 'You need to select an argument basis')
         .required('Required!'),
     sourceList: Yup.string()
-        .notRequired()
+        .required()
     })
 
 export {
