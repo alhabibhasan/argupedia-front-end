@@ -8,23 +8,23 @@ const ArgumentGraph = (props) => {
         return (
             <div>
                 <ForceGraph2D
-                graphData={{
-                    nodes: props.nodes,
-                    links: props.links
-                }}
-                nodeLabel={props.argGraphProps.nodeLabel}
-                linkLabel={props.argGraphProps.linkLabel}
-                nodeCanvasObject={props.argGraphProps.nodeCanvasObject}
-                onNodeClick={(node, event) => {
-                    node.fy = node.y
-                    node.fx = node.x
-                    props.onNodeClick(node, event)
+                    graphData={{
+                        nodes: props.nodes,
+                        links: props.links
+                    }}
+                    nodeLabel={props.argGraphProps.nodeLabel}
+                    linkLabel={props.argGraphProps.linkLabel}
+                    nodeCanvasObject={props.argGraphProps.nodeCanvasObject}
+                    onNodeClick={(node, event) => {
+                        node.fy = node.y
+                        node.fx = node.x
+                        props.onNodeClick(node, event)
 
-                    if (props.argGraphProps.onNodeClick) {
-                        props.argGraphProps.onNodeClick()
-                    }
-                }}
-                enableZoomPanInteraction={props.argGraphProps.enableZoomPanInteraction}
+                        if (props.argGraphProps.onNodeClick) {
+                            props.argGraphProps.onNodeClick()
+                        }
+                    }}
+                    enableZoomPanInteraction={props.argGraphProps.enableZoomPanInteraction}
                 />
             </div>
                 
