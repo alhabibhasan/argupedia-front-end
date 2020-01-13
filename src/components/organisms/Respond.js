@@ -13,14 +13,14 @@ const Response = (props) => {
     const [selectedPoint, setSelectedPoint] = useState()
     const [criticalQuestion, setCriticalQuestion] = useState()
 
-    const hasSelectedPoint = () => selectedPoint && selectedPoint != 'default'
+    const hasSelectedPoint = () => selectedPoint && selectedPoint !== 'default'
 
-    const hasCriticalQuestion = () => criticalQuestion && criticalQuestion != 'default'
+    const hasCriticalQuestion = () => criticalQuestion && criticalQuestion !== 'default'
 
     const renderCriticalQuestions = () => {
         if (!hasSelectedPoint()) return;
         let copiedSchemes = JSON.parse(JSON.stringify(motivationSchemas))
-        let currentCategory = copiedSchemes.filter(schema => schema.id === props.root.argumentBasis)[0]
+        let currentCategory = copiedSchemes.filter(schema => schema.id === props.parent.argumentBasis)[0]
         if (currentCategory && !currentCategory.label.includes('Recommended')) {
             copiedSchemes[copiedSchemes.indexOf(currentCategory)].label = currentCategory.label + ' - Recommended '
         }
@@ -42,7 +42,7 @@ const Response = (props) => {
             return (
                 <div>
                     <div>
-                        We recommend using questions from the "{getQuestionCategoryLabel(props.root.argumentBasis)}" list.
+                        We recommend using questions from the "{getQuestionCategoryLabel(props.parent.argumentBasis)}" list.
                     </div>  
                     {renderCriticalQuestions()}
                 </div>
@@ -57,7 +57,7 @@ const Response = (props) => {
     const getQuote = () => {
         let quote = ''
         if (hasSelectedPoint() && hasCriticalQuestion()) {
-            quote = "\"" + props.root[selectedPoint] + "\" - " + criticalQuestion
+            quote = "\"" + props.parent[selectedPoint] + "\" - " + criticalQuestion
         }
         return quote
     }
@@ -73,8 +73,8 @@ const Response = (props) => {
                 let valuesCopy = JSON.parse(JSON.stringify(values))
                 valuesCopy['root'] = false
                 valuesCopy['propertyToRespondTo'] = selectedPoint
-                valuesCopy['rootId'] = props.root.id
-                createResponse(props.root.id, valuesCopy)
+                valuesCopy['parentId'] = props.parent.id
+                createResponse(props.parent.id, valuesCopy)
                 .then(() => {
                     setArgumentStatus('SUCCESS')
                     setArgumentStatusMessage(props.successMessage ? props.successMessage : defaultSuccessMessage)
