@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const getArgumentChain = (rootId) => {
     return axios.get(process.env.REACT_APP_API_BASE_URL + '/getArgChain/' + rootId)
-        .then(res => res.data.argChain)
+        .then(res => res.data)
         .catch(err => console.log(err))
 }
 

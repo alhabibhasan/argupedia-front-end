@@ -27,6 +27,10 @@ const argumentFields = [
         id: 'sourceList',
         label: 'Extra reading'
     },
+    {
+        id: 'status',
+        label: 'Status'
+    },
 ]
 
 export default argumentFields
