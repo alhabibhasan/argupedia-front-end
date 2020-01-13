@@ -28,9 +28,18 @@ const createResponse = (rootId, arg) => {
         })
 }
 
+const getThread = (rootId) => {
+    return axios.get(process.env.REACT_APP_API_BASE_URL + '/getThread/' + rootId)
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
 export {
     getArgumentChain,
     getArgumentRoots,
     createArgument,
-    createResponse
+    createResponse,
+    getThread,
 }
