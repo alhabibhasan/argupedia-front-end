@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field } from 'formik'
 import Button from '../atoms/Button'
 import ListFormInput from '../molecules/ListFormInput'
@@ -9,7 +9,6 @@ import {confirmLeave} from '../../util/redirect'
 import motivationSchemas from '../../data/motivationSchemas'
 
 import './styles/CreateArgs.scss'
-import camelCaseToSentenceCase from '../../util/formatting'
 
 const ArgumentForm = (props) => {
   const argStatusValues = {
@@ -63,26 +62,10 @@ const ArgumentForm = (props) => {
           <Button icon={argStatusValues[argumentStatus]}/>
         </div>
         <div>
-          {renderErrorMessages(errors)}
-        </div>
-        <div>
           {argumentStatusMessage}
         </div>
       </Form>
     )
-  }
-
-  const renderErrorMessages = (errors) => {
-      let errorKeys = Object.keys(errors)
-      let renderedErrors;
-      if (errorKeys.length > 0) {
-        renderedErrors = errorKeys.map((err, i) => {
-          return <div className='Error-Message'>
-            {camelCaseToSentenceCase(errorKeys[i])} : {errors[errorKeys[i]]}
-          </div>
-        }) 
-      }
-      return renderedErrors
   }
   
   return (
