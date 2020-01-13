@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 const ExpandCollapse = (props) => {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(props.open)
 
     const renderClose = () => {
         return (
@@ -22,9 +22,19 @@ const ExpandCollapse = (props) => {
                 { open ? renderClose() : renderOpen()}
             </div>
 
+            {props.lazyRender ? 
+            
+            <div>
+                {open ? <div> {props.render} </div> : ''}
+            </div>
+            
+            :
+            
             <div style={{display: open ? 'block' : 'none'}}>
                 {props.render}
             </div>
+            
+            }
         </div>
     )
 }
