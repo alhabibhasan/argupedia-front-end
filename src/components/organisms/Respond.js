@@ -66,7 +66,6 @@ const Response = (props) => {
         if (!hasSelectedPoint() || !hasCriticalQuestion()) return;
 
         return <ArgumentForm
-            hideBack={props.hideBack} 
             schema={ResponseSchema} 
             statement={getQuote()}
             onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
