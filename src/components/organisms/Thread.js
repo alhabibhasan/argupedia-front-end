@@ -4,8 +4,8 @@ import Argument from '../atoms/Argument'
 import { ExpandCollapse } from '../atoms/ExpandCollapse'
 import Loading from '../atoms/Loading'
 import Respond from './Respond'
-import RespondButton from '../molecules/RespondButton'
-import RespondOption from '../molecules/RespondButton'
+import RespondButton from '../molecules/RespondOptions'
+import RespondOptions from '../molecules/RespondOptions'
 
 const Thread = props => {
     const rootId = props.rootId
@@ -32,7 +32,10 @@ const Thread = props => {
                     <Argument arg={argument.node}/>
                     <div>
                         <div>
-                            <RespondOption updateArgument={props.updateArgument} root={argument.node}/>
+                            <RespondOptions 
+                                updateArgument={props.updateArgument} 
+                                root={argument.node}
+                            />
                         </div>
                         {children ? 
                             <div>

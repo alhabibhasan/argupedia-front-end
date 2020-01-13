@@ -11,8 +11,7 @@ import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
-import RespondButton from '../molecules/RespondButton'
-import RespondOption from '../molecules/RespondButton'
+import RespondOptions from '../molecules/RespondOptions'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -31,7 +30,7 @@ const modalStyle = {
         overflowY             : 'scroll',
         maxHeight             : '90vh',
         height                : 'auto',
-        width                 : 'auto',
+        width                 : '50%',
         maxWidth              : '80%',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',
@@ -71,9 +70,8 @@ const ArgChain = (props) => {
                     />
                 </div>
                 <div>
-                        <RespondOption 
+                        <RespondOptions 
                             successMessage='Your argument has been added, close this modal to see it.' 
-                            hideBack={true}
                             updateArgument={updateArgument} 
                             root={node}/>
                 </div>
@@ -83,7 +81,8 @@ const ArgChain = (props) => {
 
     const updateArgument = () => {
         getArgumentChain(rootId)
-        .then(chain => {
+        .then(data => {
+            let chain = data.argChain
             if (chain && chain.nodes && chain.links) {
                 setNodes(chain.nodes)
                 setLinks(chain.links)

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {ExpandCollapse} from '../atoms/ExpandCollapse'
-import RespondOption from '../molecules/RespondButton'
+import RespondOptions from '../molecules/RespondOptions'
 import {ScrollToTop} from '../../util/scrollTo'
 import Respond from './Respond'
 import Argument from '../atoms/Argument'
@@ -37,14 +37,15 @@ const ViewArgsRegular = (props) => {
                 <div>
                     <Argument arg={root}/>
                 </div>
-                <RespondOption root={root}/>
-                {renderThread()}
+                <RespondOptions root={root}/>
+
+                <Thread 
+                    rootId={props.rootId} 
+                    nodes={props.nodes} 
+                    updateArgument={props.updateArgument}
+                />
             </ArgumentWrapper>
         )
-    }
-
-    const renderThread = () => {
-        return <Thread rootId={props.rootId} nodes={props.nodes} updateArgument={props.updateArgument}/>
     }
 
     return (
