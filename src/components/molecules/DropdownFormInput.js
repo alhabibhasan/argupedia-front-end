@@ -2,7 +2,7 @@ import React from 'react'
 import {Field} from 'formik';
 import {DropdownList} from '../atoms/DropdownList'
 import { ErrorMessage } from 'formik'
-import {tooltipErrorRed, formInputErrorRed} from '../../util/colours'
+import {tooltipErrorRed} from '../../util/colours'
 import Tooltip from '../atoms/Tooltip'
 
 

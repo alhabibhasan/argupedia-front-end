@@ -10,7 +10,7 @@ import {
 } from 'reactstrap'
 import {redirectTo} from '../../util/redirect'
 import { withRouter } from 'react-router-dom'
-import {index, roots, createArgument, readArgument} from '../../data/routes'
+import {index, roots} from '../../data/routes'
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false)

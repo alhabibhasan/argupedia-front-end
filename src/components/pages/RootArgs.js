@@ -6,6 +6,8 @@ import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
 import Argument from '../atoms/Argument'
 import Button from '../atoms/Button'
+import ViewRootsRegular from '../organisms/ViewRootsRegular'
+import { ScrollDownToLocation } from '../../util/scrollTo'
 
 const modalStyle = {
     content : {
@@ -25,6 +27,8 @@ const RootArgs = (props) => {
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const header = 'Explore Argument roots'
 
     useEffect(() => {
         getArgumentRoots()
@@ -66,7 +70,7 @@ const RootArgs = (props) => {
                 ctx.arc(node.x, node.y, 20, 0, 20 * Math.PI, false);
                 ctx.fill();
             },
-            enableZoomPanInteraction: true,
+            enableZoomPanInteraction: false,
             nodeLabel: 'statement'
         }
     }
@@ -75,12 +79,24 @@ const RootArgs = (props) => {
         <div>
             {loading ? <Loading/> 
                 : 
-            <ViewArgs 
-                nodes={nodes}
-                links={links}
-                nodeModalContents={modalContents}
-                modalStyle={modalStyle}
-                argGraphProps={getArgGraphProps()}/>
+            <div>
+                <h1>
+                    {header}
+                </h1>
+                <ScrollDownToLocation 
+                    label='View argument list' 
+                    location={window.outerHeight}/>
+                <ViewArgs 
+                    nodes={nodes}
+                    links={links}
+                    nodeModalContents={modalContents}
+                    modalStyle={modalStyle}
+                    argGraphProps={getArgGraphProps()}/>
+                <ViewRootsRegular
+                    nodes={nodes}
+                    header={header}
+                />
+            </div>
             }
         </div>
     )

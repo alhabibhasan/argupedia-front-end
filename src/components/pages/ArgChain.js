@@ -6,8 +6,6 @@ import {getArgumentChain} from '../../data/api/Api'
 import styled from 'styled-components'
 import { ScrollDownToLocation } from '../../util/scrollTo'
 import Argument from '../atoms/Argument'
-import Respond from '../organisms/Respond'
-import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';

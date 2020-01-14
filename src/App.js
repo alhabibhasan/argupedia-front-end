@@ -16,7 +16,7 @@ import Navigation from './components/organisms/Nav'
 import Footer from './components/organisms/Footer'
 import CreateArgument from './components/pages/CreateArgument'
 
-import {index, roots, createArgument, readArgument} from './data/routes'
+import {index, roots, createArgument} from './data/routes'
 
 function App() {
   return (

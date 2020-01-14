@@ -3,8 +3,6 @@ import { getThread } from '../../data/api/Api'
 import Argument from '../atoms/Argument'
 import { ExpandCollapse } from '../atoms/ExpandCollapse'
 import Loading from '../atoms/Loading'
-import Respond from './Respond'
-import RespondButton from '../molecules/RespondOptions'
 import RespondOptions from '../molecules/RespondOptions'
 
 const Thread = props => {
@@ -16,7 +14,7 @@ const Thread = props => {
         .then(threadData => {
             setThread(threadData.thread)
         })
-    }, [props.rootId, props.nodes])
+    }, [props.rootId, props.nodes, rootId])
 
     const renderAttackers = (attackers) => {
         attackers = attackers.map((argument, index) => {

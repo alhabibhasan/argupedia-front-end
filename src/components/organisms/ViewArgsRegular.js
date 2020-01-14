@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {ExpandCollapse} from '../atoms/ExpandCollapse'
 import RespondOptions from '../molecules/RespondOptions'
 import {ScrollToTop} from '../../util/scrollTo'
-import Respond from './Respond'
 import Argument from '../atoms/Argument'
 import Thread from  '../organisms/Thread'
 
