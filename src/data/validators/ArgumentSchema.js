@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 const ArgumentSchema = Yup.object().shape({
     statement : Yup.string()
         .min(5, 'Too short!')
+        .max(250, 'Keep it short and snappy!')
         .required('Required!'),
     circumstance : Yup.string()
         .min(5, 'Too short!')

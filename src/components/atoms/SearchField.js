@@ -22,6 +22,17 @@ const SearchField = (props) => {
         color: 'black',
     }
 
+    const handleKeyPress = (e) => {
+        console.log(e)
+        if (e.key === 'Enter') {
+            props.search(searchTerm)
+        }
+        if (e.key === 'Escape') {
+            props.clear()
+            setSearchTerm('')
+        }
+    }
+
     const renderSearchField = () => {
         return (
             <SearchBar>
@@ -29,7 +40,7 @@ const SearchField = (props) => {
                     <input type="text" 
                         value={searchTerm}
                         placeholder='Enter search terms...'
-                        onKeyDown={e => e.key === 'Enter' ? props.search(searchTerm) : false}
+                        onKeyDown={handleKeyPress}
                         onChange={e => setSearchTerm(e.target.value)}
                         style={{
                             width: '50%',

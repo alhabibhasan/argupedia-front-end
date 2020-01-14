@@ -35,7 +35,7 @@ const ViewArgsRegular = (props) => {
                 <div>
                     <Argument arg={root}/>
                 </div>
-                <RespondOptions root={root}/>
+                <RespondOptions updateArgument={props.updateArgument} root={root}/>
 
                 <Thread 
                     rootId={props.rootId} 
