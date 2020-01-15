@@ -10,6 +10,7 @@ const Btn = styled.button`
     font-size: 30pt;
     font-weight: 240;
     background: none;
+    color: black;
 `
 
 const Button = (props) => {
