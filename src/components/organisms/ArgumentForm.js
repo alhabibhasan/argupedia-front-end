@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { Formik, Form, Field } from 'formik'
 import Button from '../atoms/Button'
-import ListFormInput from '../molecules/ListFormInput'
-import RadioFormInput from '../molecules/DropdownFormInput'
+import ListFormInput from '../molecules/FormInput/ListFormInput'
+import RadioFormInput from '../molecules/FormInput/DropdownFormInput'
 import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
-import {ArgumentFormInput} from  '../molecules/ArgumentFormInput'
+import {ArgumentFormInput} from  '../molecules/FormInput/ArgumentFormInput'
 import motivationSchemas from '../../data/motivationSchemas'
 import { Prompt } from 'react-router-dom'
 
-import './styles/CreateArgs.scss'
+import './Styles/CreateArgs.scss'
 
 const ArgumentForm = (props) => {
   const argStatusValues = {

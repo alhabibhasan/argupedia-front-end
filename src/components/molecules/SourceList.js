@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Button from '../atoms/Button'
-import './styles/SourceList.scss'
+import './Styles/SourceList.scss'
 
 const SourceList = (props) => {
     const [list, setList] = useState([])
