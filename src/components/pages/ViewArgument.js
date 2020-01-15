@@ -37,7 +37,7 @@ const modalStyle = {
     }
 };
 
-const ArgChain = (props) => {
+const ViewArgument = (props) => {
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
     const [root, setRoot] = useState()
@@ -164,4 +164,4 @@ const ArgChain = (props) => {
     )
 }
 
-export default ArgChain
+export default ViewArgument

@@ -1,9 +1,9 @@
 import React from 'react'
 import {Field} from 'formik';
-import {DropdownList} from '../atoms/DropdownList'
+import {DropdownList} from '../../atoms/DropdownList'
 import { ErrorMessage } from 'formik'
-import {tooltipErrorRed} from '../../util/colours'
-import Tooltip from '../atoms/Tooltip'
+import {tooltipErrorRed} from '../../../util/colours'
+import Tooltip from '../../atoms/Tooltip'
 
 
 const fieldDecoratorValues = {

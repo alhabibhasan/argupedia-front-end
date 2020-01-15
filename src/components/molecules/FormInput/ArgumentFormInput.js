@@ -1,7 +1,7 @@
 import React from 'react'
 import { ErrorMessage } from 'formik'
-import {tooltipErrorRed, formInputErrorRed} from '../../util/colours'
-import Tooltip from '../atoms/Tooltip'
+import {tooltipErrorRed, formInputErrorRed} from '../../../util/colours'
+import Tooltip from '../../atoms/Tooltip'
 
 const fieldDecoratorValues = {
     statement: {
