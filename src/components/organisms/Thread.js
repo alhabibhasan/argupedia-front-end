@@ -26,7 +26,7 @@ const Thread = props => {
                 marginLeft: '5%'
             }
             return (
-                <div style={threadChildrenStyles}>
+                <div key={index} style={threadChildrenStyles}>
                     <Argument arg={argument.node}/>
                     <div>
                         <div>

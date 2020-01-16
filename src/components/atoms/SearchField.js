@@ -10,7 +10,6 @@ const SearchField = (props) => {
     const [searchTerm, setSearchTerm] = useState('')
     const clearButtonStyle = {
         fontSize: '12pt',
-        marginLeft: '5px',
         marginRight: '1px',
         color: 'black',
         marginLeft: '-25px'
@@ -23,7 +22,6 @@ const SearchField = (props) => {
     }
 
     const handleKeyPress = (e) => {
-        console.log(e)
         if (e.key === 'Enter') {
             props.search(searchTerm)
         }
