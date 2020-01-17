@@ -6,6 +6,7 @@ import { auth } from '../../../../data/routes';
 import { withRouter } from 'react-router-dom';
 import errorMessages from '../error-messages';
 import EmailPasswordForm from '../../../molecules/Auth/EmailPasswordForm';
+import { createUser, checkIfUserExist } from '../../../../data/api/Api';
 
 const Email = (props) => {
     const [email, setEmail] = useState('')
@@ -21,6 +22,11 @@ const Email = (props) => {
                 return firebase.auth().currentUser.sendEmailVerification().then(() => firebase.auth().signOut())
             } else {
                 setInfo('')
+                checkIfUserExist(userCred.user.uid).then(check => {
+                    if(!check.userExists) {
+                        createUser(userCred.user.uid, userCred.user.email)
+                    }
+                })
                 redirectTo(props.history, '/');
             }
         }).catch((err) => {

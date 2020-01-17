@@ -3,11 +3,17 @@ import firebase from '../../../../data/auth/fire'
 import { redirectTo } from '../../../../util/redirect';
 import Button from '../../../atoms/Button';
 import './Styles/Google.scss'
+import { createUser, checkIfUserExist } from '../../../../data/api/Api';
 
 const Google = (props) => {
     const loginWithGoogle = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then((result) => {
+        firebase.auth().signInWithPopup(provider).then((userCred) => {
+            checkIfUserExist(userCred.user.uid).then(check => {
+                if(!check.userExists) {
+                    createUser(userCred.user.uid, userCred.user.email)
+                }
+            })
             redirectTo(props.history, '/');
         }).catch((err) => {
             console.log(err);
