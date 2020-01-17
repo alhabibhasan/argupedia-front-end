@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import errorMessages from './error-messages';
 import firebase from '../../../data/auth/fire'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
+import { createUser } from '../../../data/api/Api';
 
 const registerStyles = {
     marginTop: '5%'
@@ -37,10 +38,12 @@ const RegisterView = (props) => {
             setInfo('Passwords do not match.')
             return
         }
-
+        setInfo('Signing you up... Hang on!')
         firebase.auth().createUserWithEmailAndPassword(email, passwordConfirm).then(userCred => {
             firebase.auth().currentUser.sendEmailVerification().then(() => {
                 setInfo('A verification email has been sent to ' + email + ' please activate your account using that link and then login.')
+                setPassword('')
+                setPasswordConfirm('')
                 firebase.auth().signOut()
             })
         }).catch(err => {

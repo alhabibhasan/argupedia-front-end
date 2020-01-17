@@ -27,13 +27,13 @@ const LoginView = (props) => {
         <div>
             <h1 style={welcomeStyles}>Welcome, login to join in!</h1>
             <div style={methodStyles}>
-                <Email/>
+                <Email history={props.history}/>
             </div>
             <div style={messageStyles}>
                 {message}
             </div>
             <div style={methodStyles}>
-                <Google/>
+                <Google history={props.history}/>
             </div>
         </div>
     );
