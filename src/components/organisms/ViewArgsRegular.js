@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import RespondOptions from '../molecules/RespondOptions'
+import Options from '../molecules/Options'
 import {ScrollToTop} from '../../util/scrollTo'
 import Argument from '../atoms/Argument'
 import Thread from  '../organisms/Thread'
@@ -35,7 +35,7 @@ const ViewArgsRegular = (props) => {
                 <div>
                     <Argument arg={root}/>
                 </div>
-                <RespondOptions updateArgument={props.updateArgument} root={root}/>
+                <Options updateArgument={props.updateArgument} root={root}/>
 
                 <Thread 
                     rootId={props.rootId} 

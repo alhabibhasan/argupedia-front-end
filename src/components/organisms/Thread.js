@@ -3,7 +3,7 @@ import { getThread } from '../../data/api/Api'
 import Argument from '../atoms/Argument'
 import { ExpandCollapse } from '../atoms/ExpandCollapse'
 import Loading from '../atoms/Loading'
-import RespondOptions from '../molecules/RespondOptions'
+import Options from '../molecules/Options'
 
 const Thread = props => {
     const rootId = props.rootId
@@ -30,7 +30,7 @@ const Thread = props => {
                     <Argument arg={argument.node}/>
                     <div>
                         <div>
-                            <RespondOptions 
+                            <Options 
                                 updateArgument={props.updateArgument} 
                                 root={argument.node}
                             />
