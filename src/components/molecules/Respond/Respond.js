@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import { DropdownList } from '../atoms/DropdownList'
-import motivationSchemas from '../../data/motivationSchemas'
-import ArgumentForm from './ArgumentForm'
-import { ResponseSchema } from '../../data/validators/ArgumentSchema'
-import { createResponse } from '../../data/api/Api'
+import { DropdownList } from '../../atoms/DropdownList'
+import motivationSchemas from '../../../data/motivationSchemas'
+import ArgumentForm from '../../organisms/ArgumentForm'
+import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 import {withRouter} from 'react-router-dom'
-import argumentFields from '../../data/argumentFields'
+import {sendCreateResponseRequest} from './argRequests'
+import argumentFields from '../../../data/argumentFields'
 
 const defaultSuccessMessage = 'Your response was created successfully.'
 
@@ -69,33 +69,19 @@ const Response = (props) => {
             schema={ResponseSchema} 
             statement={getQuote()}
             onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
+                let metadata = {
+                    updateArgument: props.updateArgument,
+                    successMessage: props.successMessage,
+                    parentId: props.parent.id,
+                    selectedPoint: selectedPoint,
+                    defaultSuccessMessage: defaultSuccessMessage
+                }
+
                 let valuesCopy = JSON.parse(JSON.stringify(values))
                 valuesCopy['root'] = false
                 valuesCopy['propertyToRespondTo'] = selectedPoint
                 valuesCopy['parentId'] = props.parent.id
-                createResponse(props.parent.id, valuesCopy)
-                .then(() => {
-                    setArgumentStatus('SUCCESS')
-                    setArgumentStatusMessage(props.successMessage ? props.successMessage : defaultSuccessMessage)
-                    setTimeout(() => {
-                        setArgumentStatus('NOT_ATTEMPTED')
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        })
-                        setTimeout(() => {
-                            props.updateArgument()
-                        }, 1000)
-                    }, 1000)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    setArgumentStatus('ERROR')
-                    setTimeout(() => {
-                        setArgumentStatus('NOT_ATTEMPTED')
-                    }, 1500)
-                    setArgumentStatusMessage('Oops, there was an error, please try again. If it persists, contact the admin via admin@argupedia.com.')
-                })
+                sendCreateResponseRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)
             }}/>
     }
 
