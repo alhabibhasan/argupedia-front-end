@@ -3,11 +3,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ArgumentForm from '../organisms/ArgumentForm'
 import styled from 'styled-components'
 import Tooltip from '../atoms/Tooltip'
-import {waitThenRedirectTo} from '../../util/redirect'
 import {Link} from 'react-router-dom'
-import { readArgument } from '../../data/routes'
-import {createArgument} from '../../data/api/Api'
+
 import './styles/CreateArgs.scss'
+import { sendCreateArgRequest } from '../molecules/Respond/argRequests'
 
 const GuidanceText = styled.div`
     text-align: left;
@@ -65,22 +64,8 @@ const CreateArg = (props) => {
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
-                        createArgument(valuesCopy)
-                        .then(response => {
-                            let createdNode = response.createdNode
-                            setArgumentStatus('SUCCESS')
-                            setArgumentStatusMessage('Your argument was created successfully, redirecting you now.')
-                            console.log('redirecting to ' + readArgument.use + createdNode.id)
-                            waitThenRedirectTo(props.history, readArgument.use + createdNode.id, 1500)
-                        })
-                        .catch(() => {
-                            setArgumentStatus('ERROR')
-                            setTimeout(() => {
-                                setArgumentStatus('NOT_ATTEMPTED')
-                            }, 1500)
-                            setArgumentStatusMessage('An argument with this statement already exists, please either add to it or reword your one.')
-                        })
-                }}/>
+                        sendCreateArgRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, props.history)
+                    }}/>
             </ReactCSSTransitionGroup>
         </Page>
     )
