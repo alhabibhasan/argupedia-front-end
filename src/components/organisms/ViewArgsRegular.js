@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import Options from '../molecules/Options'
+import Options from './Options'
 import {ScrollToTop} from '../../util/scrollTo'
 import Argument from '../atoms/Argument'
 import Thread from  '../organisms/Thread'
