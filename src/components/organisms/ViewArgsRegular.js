@@ -41,6 +41,7 @@ const ViewArgsRegular = (props) => {
                     rootId={props.rootId} 
                     nodes={props.nodes} 
                     updateArgument={props.updateArgument}
+                    rootDeleted={root.deleted}
                 />
             </ArgumentWrapper>
         )
