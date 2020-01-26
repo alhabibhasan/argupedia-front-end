@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Respond from '../molecules/Respond/Respond'
 import './Styles/Options.scss'
 import ArgumentForm from './ArgumentForm'
 import Button from '../atoms/Button'
+import { sendUpdateArgRequest } from '../molecules/Respond/argRequests'
+import { deleteArgument } from '../../data/api/Api'
 
 const Options = (props) => {
     const [currentOption, setCurrentOption] = useState('')
@@ -26,17 +28,35 @@ const Options = (props) => {
             name: 'Edit',
             type: RENDERABLE,
             render: () => {
-                return <ArgumentForm arg={props.root} />
+                let metadata = {
+                    id: props.root.id,
+                    toggleOption: () => toggleOption('Edit'),
+                    updateArgument: props.updateArgument
+                }
+                console.log(props.root)
+                return <ArgumentForm arg={props.root} 
+                    history={props.history} 
+                    onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
+                        let valuesCopy = JSON.parse(JSON.stringify(values))
+                        valuesCopy['root'] = true
+                        sendUpdateArgRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)
+                    }}/>
             },
             permissions: () => {
                 return true
             }
         },
         {
-            name: 'Upvote',
+            name: 'Delete',
             type: CALLABLE,
             call: () => {
-                alert('hello there mimesis!')
+                let choice = window.confirm('Are you sure you want to delete this argument, this is not reversible?')
+                if (choice) {
+                    deleteArgument(props.root.id)
+                    .then(() => {
+                        props.updateArgument()
+                    })
+                }
             },
             permissions: () => {
                 return true
@@ -78,15 +98,29 @@ const Options = (props) => {
         return renderedOption
     }
 
+    const showDeletedMessage = () => {
+        if (props.root.deleted) return 'This post has been deleted so further responses are blocked.'
+        if (props.parentDeleted) return 'A parent of this argument has been deleted so further responses are blocked.'
+    }
+
     return (
-        <div>    
-            <div className='Options-Block'>
-                {renderOptions()}
-            </div>
-            <div className='Options-Rendered'>
-                {renderCurrentOption()}
-            </div>
+        <div>
+            {props.root.deleted ? 
+            <div>
+                {showDeletedMessage()}
+            </div> 
+            : 
+            <div>    
+                <div className='Options-Block'>
+                    {renderOptions()}
+                </div>
+                <div className='Options-Rendered'>
+                    {renderCurrentOption()}
+                </div>
+            </div> 
+        }
         </div>
+        
     )
 }
 
