@@ -33,7 +33,6 @@ const Options = (props) => {
                     toggleOption: () => toggleOption('Edit'),
                     updateArgument: props.updateArgument
                 }
-                console.log(props.root)
                 return <ArgumentForm arg={props.root} 
                     history={props.history} 
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
