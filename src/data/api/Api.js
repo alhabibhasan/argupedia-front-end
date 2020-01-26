@@ -16,6 +16,22 @@ const createResponse = (rootId, arg) => {
         })
 }
 
+const updateArgument = (argId, arg) => {
+    return axios.patch(process.env.REACT_APP_API_BASE_URL+ '/arg/update/' + argId, arg)
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
+const deleteArgument = (argId) => {
+    return axios.delete(process.env.REACT_APP_API_BASE_URL+ '/arg/delete/' + argId)
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
 const createUser = (uid, email) => {
     return axios.post(process.env.REACT_APP_API_BASE_URL+ '/user/create/', {uid, email})
         .then(res => res.data)
@@ -55,6 +71,8 @@ const getThread = (rootId) => {
 export {
     createArgument,
     createResponse,
+    updateArgument,
+    deleteArgument,
     createUser,
     checkIfUserExist,
     getArgumentChain,

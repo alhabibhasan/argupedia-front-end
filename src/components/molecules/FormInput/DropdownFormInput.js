@@ -24,7 +24,7 @@ const CustomErrorMessage = (error) => {
   }
 
 
-const RadioFormInput = (props) => {
+const DropdownFormInput = (props) => {
     return (
         <Field name={props.fieldName} id={props.fieldName} type="text">
         {({ field: { value }, form: { setFieldValue } }) => (
@@ -41,4 +41,4 @@ const RadioFormInput = (props) => {
     )
 }
 
-export default RadioFormInput
+export default DropdownFormInput

@@ -2,8 +2,22 @@ import React, {useState, useEffect} from 'react'
 import Button from '../atoms/Button'
 import './Styles/SourceList.scss'
 
+const getDefault = props => {
+    let list = []
+    if (props.list) {
+        try {
+            list = JSON.parse(props.list)
+            return list
+        } catch (err) {
+            return list
+        }
+    } else {
+        return list
+    }
+}
+
 const SourceList = (props) => {
-    const [list, setList] = useState([])
+    const [list, setList] = useState(getDefault(props))
     const [currInput, setCurrInput] = useState('')
 
     const renderExistingList = () => {

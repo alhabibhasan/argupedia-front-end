@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from 'react'
 
+const getDefault = (props) => {
+    if (props.selectedValue && props.selectedValue.length > 0) return props.selectedValue
+    return 'default'
+}
+
 const DropdownList = (props) => {
-    const [selected, setSelected] = useState('default')
+    const [selected, setSelected] = useState(getDefault(props))
 
     useEffect(() => {
         props.setSelectedValue(selected)
@@ -32,7 +37,7 @@ const DropdownList = (props) => {
 
     return (
         <div>
-            <select multiple={props.multiple} onChange={(e) => setSelected(e.target.value)}>
+            <select multiple={props.multiple} onChange={(e) => setSelected(e.target.value)} value={selected}>
                 <option value='default'>{props.defaultText ? props.defaultText : 'Select a value'}</option>
                 {props.categorized ? renderCategorizedList() : renderRegularList()}  
             </select>

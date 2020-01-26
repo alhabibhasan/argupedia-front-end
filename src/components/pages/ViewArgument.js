@@ -9,7 +9,7 @@ import Argument from '../atoms/Argument'
 import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
-import RespondOptions from '../molecules/RespondOptions'
+import Options from '../organisms/Options'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -68,7 +68,7 @@ const ViewArgument = (props) => {
                     />
                 </div>
                 <div>
-                        <RespondOptions 
+                        <Options 
                             successMessage='Your argument has been added, close this modal to see it.' 
                             updateArgument={updateArgument} 
                             root={node}/>
