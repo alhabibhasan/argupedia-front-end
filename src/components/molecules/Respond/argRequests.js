@@ -1,6 +1,6 @@
 import { waitThenRedirectTo } from "../../../util/redirect"
 import { readArgument } from '../../../data/routes'
-import { createArgument, createResponse } from "../../../data/api/Api"
+import { createArgument, createResponse, updateArgument } from "../../../data/api/Api"
 
 
 const sendCreateArgRequest = (values, setArgumentStatus, setArgumentStatusMessage, history) => {
@@ -28,7 +28,7 @@ const sendCreateResponseRequest = (values, setArgumentStatus, setArgumentStatusM
         setTimeout(() => {
             setArgumentStatus('NOT_ATTEMPTED')
             window.scrollTo({ top: 0, behavior: 'smooth'})
-            setTimeout(() => metadata.updateArgument(), 1000)
+            metadata.updateArgument()
         }, 1000)
     })
     .catch(() => {
@@ -38,9 +38,22 @@ const sendCreateResponseRequest = (values, setArgumentStatus, setArgumentStatusM
     })
 }
 
+const sendUpdateArgRequest = (values, setArgumentStatus, setArgumentStatusMessage, metadata) => {
+    updateArgument(metadata.id, values)
+    .then(() => {
+        setArgumentStatus('SUCCESS')
+        setArgumentStatusMessage('Your argument was successfully updated, this form will close automatically.')
+        setTimeout(() => {
+            setArgumentStatus('NOT_ATTEMPTED')
+            metadata.updateArgument()
+            metadata.toggleOption()
+        }, 2000)
+    })
+}
 
 
 export {
     sendCreateArgRequest,
-    sendCreateResponseRequest
+    sendCreateResponseRequest,
+    sendUpdateArgRequest
 }
