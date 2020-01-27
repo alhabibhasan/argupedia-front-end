@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import errorMessages from './error-messages';
 import firebase from '../../../data/auth/fire'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
-import { createUser } from '../../../data/api/Api';
+import styled from 'styled-components'
 
 const registerStyles = {
     marginTop: '5%'
@@ -16,10 +16,16 @@ const welcomeStyles = {
     margin: '5%'
 }
 
+const Input = styled.input`
+    width: 30%;
+    margin-bottom: 15px;
+`
+
 const RegisterView = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [displayName, setDisplayName] = useState('')
     const [info, setInfo] = useState('')
 
     useEffect(() => {
@@ -30,7 +36,7 @@ const RegisterView = (props) => {
 
     const registerUser = (e) => {
         e.preventDefault()
-        if (password.length === 0 || passwordConfirm.length === 0 || email.length === 0) {
+        if (password.length === 0 || passwordConfirm.length === 0 || email.length === 0 || displayName.length === 0) {
             setInfo('Fill in all fields.')
             return 
         }
@@ -44,7 +50,11 @@ const RegisterView = (props) => {
                 setInfo('A verification email has been sent to ' + email + ' please activate your account using that link and then login.')
                 setPassword('')
                 setPasswordConfirm('')
-                firebase.auth().signOut()
+                firebase.auth().currentUser.updateProfile({
+                    displayName: displayName
+                }).then(() => {
+                    firebase.auth().signOut()
+                })
             })
         }).catch(err => {
             let errorMessage = errorMessages[err.code]
@@ -61,6 +71,9 @@ const RegisterView = (props) => {
         <div>
             <h1 style={welcomeStyles}>Hey! Register to join in!</h1>
             <div style={registerStyles}>
+                <Input placeholder='Diplay name' 
+                        value={displayName} 
+                        onChange={e => setDisplayName(e.target.value)}/>
                 <EmailPasswordForm 
                     setEmail={setEmail} 
                     setPassword={setPassword}
