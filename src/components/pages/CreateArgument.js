@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ArgumentForm from '../organisms/ArgumentForm'
 import styled from 'styled-components'
@@ -6,7 +6,11 @@ import Tooltip from '../atoms/Tooltip'
 import {Link} from 'react-router-dom'
 
 import './styles/CreateArgs.scss'
-import { sendCreateArgRequest } from '../molecules/Respond/argRequests'
+import { sendCreateArgRequest } from '../../data/argRequests'
+import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
+import { redirectTo } from '../../util/redirect'
+import { auth } from '../../data/routes'
+import authListener from '../../data/auth/auth-listener'
 
 const GuidanceText = styled.div`
     text-align: left;
@@ -19,6 +23,15 @@ const Page = styled.div`
 `
 
 const CreateArg = (props) => {
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        if (!userLoggedInAndEmailVerified(props.user)) {
+            setUser(props.user)
+            redirectTo(props.history, auth.login.use)
+        }
+    }, [props.user])
+
     return (
         <Page>
             <ReactCSSTransitionGroup
@@ -64,6 +77,7 @@ const CreateArg = (props) => {
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
+                        valuesCopy['uid'] = props.user.uid
                         sendCreateArgRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, props.history)
                     }}/>
             </ReactCSSTransitionGroup>
