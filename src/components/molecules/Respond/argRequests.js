@@ -49,6 +49,11 @@ const sendUpdateArgRequest = (values, setArgumentStatus, setArgumentStatusMessag
             metadata.toggleOption()
         }, 2000)
     })
+    .catch((err) => {
+        setArgumentStatus('ERROR')
+        setTimeout(() => setArgumentStatus('NOT_ATTEMPTED'), 1500)
+        setArgumentStatusMessage('This argument has most likely been deleted, if this is not the case contact us via admin@argupedia.com.')
+    })
 }
 
 
