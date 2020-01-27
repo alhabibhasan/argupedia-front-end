@@ -4,7 +4,7 @@ import Button from '../atoms/Button'
 import ListFormInput from '../molecules/FormInput/ListFormInput'
 import DropdownFormInput from '../molecules/FormInput/DropdownFormInput'
 import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
-import {ArgumentFormInput} from  '../molecules/FormInput/ArgumentFormInput'
+import {ArgumentFormInput} from  '../molecules/FormInput/ArgumentFormInput/ArgumentFormInput'
 import motivationSchemas from '../../data/motivationSchemas'
 import { Prompt } from 'react-router-dom'
 
@@ -70,7 +70,6 @@ const ArgumentForm = (props) => {
         <Prompt 
           when={Object.keys(touched).length > 0} 
           message={LEAVE_MESSAGE}/>
-        
         <Form>
           {inputFields}
           <div className="Form-Buttons">
@@ -96,7 +95,7 @@ const ArgumentForm = (props) => {
     <div className='Create-Arg-Form'>
       <Formik
       initialValues={{ 
-        statement: getValue('statement'),
+        statement: getValue('statement') || props.statement,
         argumentBasis: getValue('argumentBasis'),
         circumstance: getValue('circumstance'),
         action: getValue('action'),
