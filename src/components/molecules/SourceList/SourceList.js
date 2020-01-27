@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import Button from '../atoms/Button'
-import './Styles/SourceList.scss'
+import Button from '../../atoms/Button'
+import './SourceList.scss'
 
 const getDefault = props => {
     let list = []
