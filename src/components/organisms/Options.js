@@ -99,7 +99,6 @@ const Options = (props) => {
 
     const showDeletedMessage = () => {
         if (props.root.deleted) return 'This post has been deleted so further responses are blocked.'
-        if (props.parentDeleted) return 'A parent of this argument has been deleted so further responses are blocked.'
     }
 
     return (
