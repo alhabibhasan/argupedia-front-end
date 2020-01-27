@@ -11,24 +11,34 @@ const Label = styled.div`
 
 const argumentFields = [
     {
+        id: 'statement',
+        label: 'Statement',
+        quotable: true,
+    },
+    {
         id: 'circumstance',
-        label: 'Current circumstance'
+        label: 'Current circumstance',
+        quotable: true
     }, 
     {
         id: 'action',
-        label: 'Required action'
+        label: 'Required action',
+        quotable: true
     }, 
     {
         id: 'newCircumstance',
-        label: 'New circumstance'
+        label: 'New circumstance',
+        quotable: true
     }, 
     {
         id: 'goal',
-        label: 'Goal achieved'
+        label: 'Goal achieved',
+        quotable: true
     }, 
     {
         id: 'value',
-        label: 'Values promoted'
+        label: 'Values promoted',
+        quotable: true
     }, 
     {
         id: 'argumentBasis',
@@ -48,7 +58,7 @@ const argumentFields = [
                 })
             }
             let show = <Label>Show Sources +</Label>
-            let hide = <Label>Hide Sources +</Label>
+            let hide = <Label>Hide Sources -</Label>
             return (
                 <div>
                     <ExpandCollapse
