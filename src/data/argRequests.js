@@ -1,6 +1,6 @@
-import { waitThenRedirectTo } from "../../../util/redirect"
-import { readArgument } from '../../../data/routes'
-import { createArgument, createResponse, updateArgument } from "../../../data/api/Api"
+import { waitThenRedirectTo } from "../util/redirect"
+import { readArgument } from './routes'
+import { createArgument, createResponse, updateArgument } from "./api/Api"
 
 
 const sendCreateArgRequest = (values, setArgumentStatus, setArgumentStatusMessage, history) => {
@@ -46,7 +46,7 @@ const sendUpdateArgRequest = (values, setArgumentStatus, setArgumentStatusMessag
         setTimeout(() => {
             setArgumentStatus('NOT_ATTEMPTED')
             metadata.updateArgument()
-            metadata.toggleOption()
+            metadata.toggleOption({name: 'Respond'})
         }, 2000)
     })
     .catch((err) => {
