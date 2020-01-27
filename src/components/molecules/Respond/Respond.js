@@ -4,7 +4,7 @@ import motivationSchemas from '../../../data/motivationSchemas'
 import ArgumentForm from '../../organisms/ArgumentForm'
 import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 import {withRouter} from 'react-router-dom'
-import {sendCreateResponseRequest} from './argRequests'
+import {sendCreateResponseRequest} from '../../../data/argRequests'
 
 const defaultSuccessMessage = 'Your response was created successfully.'
 
@@ -53,13 +53,15 @@ const Response = (props) => {
                     successMessage: props.successMessage,
                     parentId: props.parent.id,
                     selectedPoint: 'need to derive this from the selected critical qs',
-                    defaultSuccessMessage: defaultSuccessMessage
+                    defaultSuccessMessage: defaultSuccessMessage,
+                    toggleOption: props.metadata.toggleOption
                 }
 
                 let valuesCopy = JSON.parse(JSON.stringify(values))
                 valuesCopy['root'] = false
                 valuesCopy['propertyToRespondTo'] = 'derive this from critical qs'
                 valuesCopy['parentId'] = props.parent.id
+                valuesCopy['uid'] = props.user.uid
                 sendCreateResponseRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)
             }}/>
     }
