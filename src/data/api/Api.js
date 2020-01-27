@@ -32,8 +32,13 @@ const deleteArgument = (argId) => {
         })
 }
 
-const createUser = (uid, email) => {
-    return axios.post(process.env.REACT_APP_API_BASE_URL+ '/user/create/', {uid, email})
+const createUser = (uid, email, displayName) => {
+    return axios.post(process.env.REACT_APP_API_BASE_URL+ '/user/create/', 
+        {
+            uid, 
+            email,
+            displayName
+        })
         .then(res => res.data)
         .catch(err => {
             throw new Error(err)
