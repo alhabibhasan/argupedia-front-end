@@ -16,25 +16,23 @@ const Thread = props => {
         })
     }, [props.rootId, props.nodes, rootId])
 
-    const renderAttackers = (attackers, parentDeleted) => {
+    const renderAttackers = (attackers, parent) => {
         attackers = attackers.map((argument, index) => {
             let children = false;
-            let postDeleted = props.rootDeleted || parentDeleted
             if (argument.attackers.length) {
-                children = renderAttackers(argument.attackers, postDeleted)
+                children = renderAttackers(argument.attackers, argument.node)
             } 
             const threadChildrenStyles = {
                 marginLeft: '5%'
             }
             return (
                 <div key={index} style={threadChildrenStyles}>
-                    <Argument arg={argument.node}/>
+                    <Argument arg={argument.node} parent={parent}/>
                     <div>
                         <div>
                             <Options 
                                 updateArgument={props.updateArgument} 
                                 root={argument.node}
-                                parentDeleted={parentDeleted}
                             />
                         </div>
                         {children ? 
@@ -62,8 +60,7 @@ const Thread = props => {
 
     const renderThreadInShowHide = () => {
         if (!thread) return <Loading/>
-        let attackers = thread.attackers
-        let renderedAttackers = renderAttackers(attackers, thread.node.deleted)
+        let renderedAttackers = renderAttackers(thread.attackers, thread.node)
         return (<ExpandCollapse 
                 openIcon={'+ Show responses (' + thread.attackers.length + ')'} 
                 closeIcon={'- Hide responses (' + thread.attackers.length + ')'} 
