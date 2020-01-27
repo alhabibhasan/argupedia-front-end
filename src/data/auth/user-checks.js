@@ -1,5 +1,5 @@
 const userLoggedInAndEmailVerified = (user) => {
-    return user && user.emailVerified
+    return Boolean(user && user.emailVerified)
 }
 
 export {

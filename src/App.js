@@ -23,6 +23,7 @@ import CreateArgument from './components/pages/CreateArgument'
 
 import {index, roots, createArgument, auth} from './data/routes'
 import authListener from './data/auth/auth-listener'
+import Profile from './components/pages/Auth/Profile'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -36,7 +37,6 @@ function App() {
     <Router>
       <div className='App'>
         <Navigation user={user}/>
-        {user ? user.displayName : <span></span> }
         <Switch>
           <Route exact path={roots.defintion} render={(props) => <RootArgs user={user} {...props} />}></Route>
           <Route exact path='/argument/:id(\d+)' render={(props) => <ViewArgument user={user} {...props}/>}></Route>
@@ -46,6 +46,7 @@ function App() {
           <Route exact path={auth.logout.use} render={(props) => <LogoutView user={user} {...props} ></LogoutView>}></Route>
           <Route exact path={auth.register.use} render={(props) => <RegisterView user={user} {...props} ></RegisterView>}></Route>
           <Route exact path={auth.passwordReset.use} render={(props) => <PasswordResetView user={user} {...props} ></PasswordResetView>}></Route>
+          <Route exact path={auth.profile.use} render={(props) => <Profile user={user} {...props} ></Profile>}></Route>
           <Route render={() => <Redirect to={index.defintion} />}></Route>
         </Switch>
         <Footer/>
