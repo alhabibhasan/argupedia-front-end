@@ -28,28 +28,22 @@ const ArgumentSchema = Yup.object().shape({
 
 const ResponseSchema = Yup.object().shape({
     statement : Yup.string()
-        .min(5, 'Too short!')
         .required('Required!'),
     circumstance : Yup.string()
-        .min(5, 'Too short!')
-        .required('Required!'),
+        .notRequired(),
     action : Yup.string()
-        .min(5, 'Too short!')
-        .required('Required!'),
+        .notRequired(),
     newCircumstance : Yup.string()
-        .min(5, 'Too short!')
-        .required(),
+        .notRequired(),
     goal : Yup.string()
-        .min(5, 'Too short!')
-        .required(),
+        .notRequired(),
     value : Yup.string()
-        .min(5, 'Too short!')
-        .required(),
+        .notRequired(),
     argumentBasis: Yup.string()
         .notOneOf(['default'], 'You need to select an argument basis')
-        .required('Required!'),
+        .required(),
     sourceList: Yup.string()
-        .required()
+        .notRequired(),
     })
 
 export {
