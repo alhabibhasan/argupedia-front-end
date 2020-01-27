@@ -26,7 +26,7 @@ const Navigation = (props) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="lg">
+      <Navbar color="light" light expand="lg" fixed="top">
         <NavbarBrand onClick={() => redirectTo(props.history, index.use)}>Argupedia</NavbarBrand>
         <NavbarToggler onClick={toggleNavOpen} />
         <Collapse isOpen={isOpen} navbar>
