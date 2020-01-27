@@ -11,6 +11,7 @@ import {
   DropdownItem, 
   DropdownToggle, 
   DropdownMenu,
+  NavbarText,
 } from 'reactstrap'
 import {redirectTo} from '../../util/redirect'
 import { withRouter } from 'react-router-dom'
@@ -44,7 +45,13 @@ const Navigation = (props) => {
                   Account
                 </DropdownToggle>
                 <DropdownMenu>
+                  {props.user.displayName ?
+                    <DropdownItem>
+                      <NavbarText>Hey, {props.user.displayName}</NavbarText>
+                    </DropdownItem> :''}
+                    <DropdownItem onClick={() => redirectTo(props.history, auth.profile.use)}>Profile</DropdownItem>
                   <DropdownItem onClick={() => redirectTo(props.history, auth.logout.use)}>Sign out</DropdownItem>
+                  
                 </DropdownMenu>
             </Dropdown>
             :
