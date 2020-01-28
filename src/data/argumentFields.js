@@ -49,8 +49,8 @@ const argumentFields = [
         label: 'Extra reading',
         render: (sourceList) => {
             let renderedSources = <div>None</div>
-            sourceList = JSON.parse(sourceList)
-            if (sourceList.length) {
+            if (sourceList.length > 0) {
+                sourceList = JSON.parse(sourceList)
                 renderedSources = sourceList.map((source, indexJ) => {
                     return <div key={indexJ}>
                         [{indexJ + 1}] {source}
