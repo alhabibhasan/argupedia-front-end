@@ -45,10 +45,12 @@ const Options = (props) => {
                     updateArgument: props.updateArgument
                 }
                 return <ArgumentForm arg={props.root} 
-                    history={props.history} 
+                    history={props.history}
+                    schema={ResponseSchema} 
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
+                        valuesCopy['parentId'] = props.root.parentId
                         sendUpdateArgRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)
                     }}/>
             },
