@@ -14,6 +14,9 @@ const auth = {
     },
     passwordReset: {
         use: '/password-reset'
+    },
+    profile: {
+        use: '/profile'
     }
 }
 

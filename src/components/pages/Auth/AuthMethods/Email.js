@@ -24,7 +24,7 @@ const Email = (props) => {
                 setInfo('')
                 checkIfUserExist(userCred.user.uid).then(check => {
                     if(!check.userExists) {
-                        createUser(userCred.user.uid, userCred.user.email)
+                        createUser(userCred.user.uid, userCred.user.email, userCred.user.displayName)
                     }
                 })
                 redirectTo(props.history, '/');

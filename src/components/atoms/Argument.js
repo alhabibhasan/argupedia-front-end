@@ -17,7 +17,7 @@ const Argument = (props) => {
             return <Arg key={indexI}>{field.render(props.arg[field.id])}</Arg>
         } else {
             let parentValue;
-            if (props.parent && props.parent[field.id] > 0) {
+            if (props.parent && props.parent[field.id].length > 0) {
                 parentValue = (
                         <Arg key={indexI} style={{backgroundColor: '#f8f9fa', fontStyle: 'italic', textAlign: 'center'}}>
                             They said: 

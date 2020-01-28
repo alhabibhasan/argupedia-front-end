@@ -1,6 +1,6 @@
 import React from 'react'
 import {Field} from 'formik';
-import SourceList from '../SourceList'
+import SourceList from '../SourceList/SourceList'
 
 const fieldName = 'sourceList'
 

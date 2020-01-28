@@ -1,13 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Respond from '../molecules/Respond/Respond'
 import './Styles/Options.scss'
 import ArgumentForm from './ArgumentForm'
 import Button from '../atoms/Button'
-import { sendUpdateArgRequest } from '../molecules/Respond/argRequests'
+import { sendUpdateArgRequest } from '../../data/argRequests'
 import { deleteArgument } from '../../data/api/Api'
+import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
+import authListener from '../../data/auth/auth-listener'
+import { ResponseSchema } from '../../data/validators/ArgumentSchema'
 
 const Options = (props) => {
+    const [user, setUser] = useState(false)
     const [currentOption, setCurrentOption] = useState('')
+
+    useEffect(() => {
+        authListener(setUser)
+    }, [props.user, user])
+
     const CALLABLE = 'callable'
     const RENDERABLE = 'renderable'
     const options = [
@@ -15,13 +24,15 @@ const Options = (props) => {
             name: 'Respond',
             type: RENDERABLE,
             render: () => {
-                return <Respond 
+                return <Respond
+                    user={user} 
                     successMessage={props.successMessage}
                     parent={props.root} 
-                    updateArgument={props.updateArgument}/>
+                    updateArgument={props.updateArgument}
+                    metadata={toggleOption}/>
             },
             permissions: () => {
-                return true
+                return userLoggedInAndEmailVerified(user)
             }
         },
         {
@@ -34,15 +45,17 @@ const Options = (props) => {
                     updateArgument: props.updateArgument
                 }
                 return <ArgumentForm arg={props.root} 
-                    history={props.history} 
+                    history={props.history}
+                    schema={ResponseSchema} 
                     onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                         let valuesCopy = JSON.parse(JSON.stringify(values))
                         valuesCopy['root'] = true
+                        valuesCopy['parentId'] = props.root.parentId
                         sendUpdateArgRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)
                     }}/>
             },
             permissions: () => {
-                return true
+                return props.root.creatorUID === user.uid
             }
         },
         {
@@ -58,19 +71,26 @@ const Options = (props) => {
                 }
             },
             permissions: () => {
-                return true
+                return props.root.creatorUID === user.uid
             }
         }
     ]
 
     const renderOptions = () => {
+        if (!userLoggedInAndEmailVerified(user)) {
+            return <div>
+                Please login to be able to respond to arguments.
+            </div>
+        }
         return options.map((option, i) => {
-            return (
-                <Button key={i} 
-                    text={option.name} 
-                    className='Option' 
-                    onClick={() => toggleOption(option)}/>
-            )
+            if (option.permissions()) {
+                return (
+                    <Button key={i} 
+                        text={option.name} 
+                        className='Option' 
+                        onClick={() => toggleOption(option)}/>
+                )
+            }
         })
     }
 
@@ -90,7 +110,7 @@ const Options = (props) => {
         let renderedOption;
         if (currentOption && currentOption.length > 0) {
             let optionToRender = options.filter(opt => opt.name === currentOption)[0]
-            if (optionToRender && optionToRender.permissions() && optionToRender.render) {
+            if (optionToRender.permissions() && optionToRender.render) {
                 renderedOption = optionToRender.render()
             }
         }
