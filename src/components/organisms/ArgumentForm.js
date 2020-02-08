@@ -105,8 +105,8 @@ const ArgumentForm = (props) => {
         sourceList: getValue('sourceList'),}}
       enableReinitialize={true}
       validationSchema={props.schema ? props.schema : ArgumentSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(true)
+      onSubmit={(values, formikBag) => {
+        formikBag.setSubmitting(true)
         props.onSubmit(values, setArgumentStatus, setArgumentStatusMessage)
       }}
       >
