@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 const Arg = styled.div`
     text-align: left;
+    white-space: pre-wrap;
 `
 const Label = styled.div`
     font-weight: 600;
@@ -49,8 +50,14 @@ const argumentFields = [
         label: 'Extra reading',
         render: (sourceList) => {
             let renderedSources = <div>None</div>
-            if (sourceList.length > 0) {
+            
+            try {
                 sourceList = JSON.parse(sourceList)
+            } catch (err) {
+                sourceList = []
+            }
+
+            if (sourceList.length > 0) {
                 renderedSources = sourceList.map((source, indexJ) => {
                     return <div key={indexJ}>
                         [{indexJ + 1}] {source}
