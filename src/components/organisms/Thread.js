@@ -3,7 +3,7 @@ import { getThread } from '../../data/api/Api'
 import Argument from '../atoms/Argument'
 import { ExpandCollapse } from '../atoms/ExpandCollapse'
 import Loading from '../atoms/Loading'
-import Options from './Options'
+import Options from './Options/Options'
 
 const Thread = props => {
     const rootId = props.rootId

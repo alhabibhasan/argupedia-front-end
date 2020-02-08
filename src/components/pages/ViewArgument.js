@@ -9,7 +9,7 @@ import Argument from '../atoms/Argument'
 import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
-import Options from '../organisms/Options'
+import Options from '../organisms/Options/Options'
 import graphConfig from '../../data/graphConfig'
 
 const RootStatement = styled.h1`
