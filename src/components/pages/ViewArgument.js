@@ -10,6 +10,7 @@ import Button from '../atoms/Button'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
 import Options from '../organisms/Options'
+import graphConfig from '../../data/graphConfig'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -94,9 +95,11 @@ const ViewArgument = (props) => {
     const getArgGraphProps = () => {
         return {
             nodeCanvasObject: (node, ctx) => {
+                let fillStyle = graphConfig[node.configCode].fillStyle
+                let radius = graphConfig[node.configCode].radius
                 ctx.beginPath(); 
-                ctx.fillStyle = '#ff9999'
-                ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI, false);
+                ctx.fillStyle = fillStyle
+                ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
                 ctx.fill();
             },
             enableZoomPanInteraction: false,
