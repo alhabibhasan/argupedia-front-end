@@ -2,7 +2,7 @@ import React from 'react'
 import Respond from '../../molecules/Respond/Respond'
 import ArgumentForm from '../ArgumentForm'
 import { sendUpdateArgRequest } from '../../../data/argRequests'
-import { deleteArgument } from '../../../data/api/Api'
+import { deleteArgument, upvote, downvote } from '../../../data/api/Api'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks'
 import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 
@@ -56,12 +56,12 @@ const options = [
         type: CALLABLE,
         class: 'Option',
         display: () => <span>Delete</span>,
-        call: (props) => {
+        call: (metadata) => {
             let choice = window.confirm('Are you sure you want to delete this argument, this is not reversible?')
             if (choice) {
-                deleteArgument(props.root.id)
+                deleteArgument(metadata.argId)
                 .then(() => {
-                    props.updateArgument()
+                    metadata.updateArgument()
                 })
             }
         },
@@ -70,12 +70,42 @@ const options = [
         }
     },
     {
+        name: 'upvote',
+        type: CALLABLE,
+        class: 'Vote',
+        display: () => <span>&uarr;</span>,
+        call: (metadata) => {
+            upvote(metadata.argId, metadata.uid)
+            .then(() => {
+                metadata.updateVoteCount()
+            })
+        },
+        permissions: (user) => {
+            return userLoggedInAndEmailVerified(user)
+        }
+    },
+    {
         name: 'voteStats',
         type: CALLABLE,
         class: 'Vote',
-        display: (metadata) => <span>Votes: {metadata.voteInfo.count}</span>,
-        permissions: (user) => {
+        display: (metadata) => <span>Votes: {metadata.voteCount}</span>,
+        permissions: () => {
             return true
+        }
+    },
+    {
+        name: 'downvote',
+        type: CALLABLE,
+        class: 'Vote',
+        display: () => <span>&darr;</span>,
+        call: (metadata) => {
+            downvote(metadata.argId, metadata.uid)
+            .then(() => {
+                metadata.updateVoteCount()
+            })
+        },
+        permissions: (user) => {
+            return userLoggedInAndEmailVerified(user)
         }
     }
 ]

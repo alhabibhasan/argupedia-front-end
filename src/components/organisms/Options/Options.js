@@ -3,22 +3,37 @@ import './Options.scss'
 import Button from '../../atoms/Button'
 import authListener from '../../../data/auth/auth-listener'
 import {options, CALLABLE} from './OptionsConfig'
+import { getNumberOfVotes } from '../../../data/api/Api'
 
 const Options = (props) => {
     const [user, setUser] = useState(false)
     const [currentOption, setCurrentOption] = useState('')
-    const [voteInfo, setVoteInfo] = useState({})
+    const [voteCount, setVoteCount] = useState(0)
 
     useEffect(() => {
         authListener(setUser)
-        setVoteInfo({count: 10})
+        updateVoteCount()
     }, [props.user, user])
+
+    const updateVoteCount = () => {
+        let userId
+        if (user) {
+            userId = user.uid
+        }
+        getNumberOfVotes(props.root.id, userId)
+        .then(response => {
+            if (response) {
+                let {upvotes, downvotes} = response
+                setVoteCount(upvotes - downvotes)
+            }
+        }) 
+    }
 
     const renderOptions = () => {
         return options.map((option, i) => {
             if (option.permissions(user, props)) {
                 let metadata = {
-                    voteInfo
+                    voteCount
                 }
                 return (
                     <Button key={i} 
@@ -32,7 +47,13 @@ const Options = (props) => {
 
     const toggleOption = (option) => {
         if (option.type === CALLABLE && option.permissions(user, props) && option.call) {
-            option.call(props)
+            let metadata = {
+                updateVoteCount,
+                argId: props.root.id,
+                uid: user.uid,
+                updateArgument: props.updateArgument
+            }
+            option.call(metadata)
         } else {
             if (currentOption === option.name) {
                 setCurrentOption('')
