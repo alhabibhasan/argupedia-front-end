@@ -15,8 +15,10 @@ const ViewArgsGraph = (props) => {
     }
 
     const handleNodeClick = (node, event) => {
-        setSelectedNode(node)
-        toggleModal()
+        if (node.type !== 'Vote') {
+            setSelectedNode(node)
+            toggleModal()
+        }
     }
 
     const renderRoots = () => {
