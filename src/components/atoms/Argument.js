@@ -6,6 +6,7 @@ import { ExpandCollapse } from './ExpandCollapse'
 
 const Arg = styled.div`
     text-align: left;
+    white-space: pre-wrap;
 `
 const Label = styled.div`
     font-weight: 600;
