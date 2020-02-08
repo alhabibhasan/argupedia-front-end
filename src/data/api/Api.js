@@ -77,6 +77,31 @@ const getThread = (rootId) => {
         })
 }
 
+const getNumberOfVotes = (argId, uid) => {
+    if (!uid || uid.length === 0) uid =''
+    return axios.post(process.env.REACT_APP_API_BASE_URL + '/arg/vote/' + argId, {'uid': uid})
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
+const upvote = (argId, uid) => {
+    return axios.post(process.env.REACT_APP_API_BASE_URL + '/arg/vote/up/' + argId, {'uid': uid})
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
+const downvote = (argId, uid) => {
+    return axios.post(process.env.REACT_APP_API_BASE_URL + '/arg/vote/down/' + argId, {'uid': uid})
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err)
+        })
+}
+
 export {
     createArgument,
     createResponse,
@@ -87,4 +112,7 @@ export {
     getArgumentChain,
     getArgumentRoots,
     getThread,
+    getNumberOfVotes,
+    upvote,
+    downvote
 }
