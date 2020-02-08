@@ -23,7 +23,7 @@ const Thread = props => {
                 children = renderAttackers(argument.attackers, argument.node)
             } 
             const threadChildrenStyles = {
-                marginLeft: '5%'
+                marginLeft: '5%',
             }
             return (
                 <div key={index} style={threadChildrenStyles}>
@@ -43,13 +43,10 @@ const Thread = props => {
                                     lazyRender={true} 
                                     render={children}
                                 />
-                                {index !== attackers.length - 1 ? <hr/> : ''}
                             </div>
-                        
                         : 
                             ''
                         }
-                        {!children ? <hr/> : ''}
                     </div>
                 </div>
             )
@@ -71,7 +68,6 @@ const Thread = props => {
 
     return (
         <div>
-            <hr/>
             {renderThreadInShowHide()}
         </div>
     )

@@ -7,6 +7,7 @@ import { ExpandCollapse } from './ExpandCollapse'
 const Arg = styled.div`
     text-align: left;
     white-space: pre-wrap;
+    background-color: #f7f7f7;
 `
 const Label = styled.div`
     font-weight: 600;
@@ -20,8 +21,10 @@ const Argument = (props) => {
             let parentValue;
             if (props.parent && props.parent[field.id].length > 0) {
                 parentValue = (
-                        <Arg key={indexI} style={{backgroundColor: '#f8f9fa', fontStyle: 'italic', textAlign: 'center'}}>
-                            They said: 
+                        <Arg key={indexI} style={{backgroundColor: '#f8f9fa', 
+                                                fontStyle: 'italic', 
+                                                textAlign: 'center'}}>
+                            The original post said: 
                             <br/>
                             {props.parent[field.id]}
                         </Arg>
@@ -50,11 +53,9 @@ const Argument = (props) => {
         }
     })
     return (
-        <div>
             <Arg>
                 {fields}
             </Arg>
-        </div>
     )
 }
 
