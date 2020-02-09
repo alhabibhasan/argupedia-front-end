@@ -16,11 +16,11 @@ const graphConfig = {
         radius: 6
     },
     'vote-up': {
-        fillStyle: '#a6ffaf',
+        fillStyle: '#f26638;',
         radius: 2
     },
     'vote-down': {
-        fillStyle: '#ffc8a6',
+        fillStyle: '#38a5f2',
         radius: 2
     },
 }
