@@ -27,7 +27,8 @@ const RootTable = (props) => {
         'sourceList',
         'value',
         'goal',
-        'argumentBasis'
+        'argumentBasis',
+        'userDisplayName'
     ]
 
     const search = (searchTerm) => {
@@ -53,6 +54,9 @@ const RootTable = (props) => {
                         />
                     </td>
                     <td>
+                        {root.userDisplayName}
+                    </td>
+                    <td>
                         {new Date(root.createdAt).toLocaleString()}
                     </td>
                 </tr>
@@ -67,6 +71,9 @@ const RootTable = (props) => {
                         <tr>
                             <th>
                                 Statement
+                            </th>
+                            <th>
+                                Posted by
                             </th>
                             <th>
                                 Posted on
