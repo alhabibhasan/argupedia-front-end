@@ -3,7 +3,7 @@ import './Options.scss'
 import Button from '../../atoms/Button'
 import authListener from '../../../data/auth/auth-listener'
 import {options, CALLABLE} from './OptionsConfig'
-import { getNumberOfVotes } from '../../../data/api/Api'
+import { getNumberOfVotes } from '../../../data/api/requests/get'
 
 const Options = (props) => {
     const [user, setUser] = useState(false)

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import ViewArgs from '../organisms/ViewArgsGraph'
 import Loading from '../atoms/Loading'
-import {getArgumentRoots} from '../../data/api/Api'
+import {getArgumentRoots} from '../../data/api/requests/get'
 import {readArgument} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
 import Argument from '../atoms/Argument'

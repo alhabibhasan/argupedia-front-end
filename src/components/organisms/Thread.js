@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { getThread } from '../../data/api/Api'
+import { getThread } from '../../data/api/requests/get'
 import Argument from '../atoms/Argument'
 import { ExpandCollapse } from '../atoms/ExpandCollapse'
 import Loading from '../atoms/Loading'

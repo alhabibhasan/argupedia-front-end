@@ -3,7 +3,8 @@ import firebase from '../../../../data/auth/fire'
 import { redirectTo } from '../../../../util/redirect';
 import Button from '../../../atoms/Button';
 import './Styles/Google.scss'
-import { createUser, checkIfUserExist } from '../../../../data/api/Api';
+import { createUser } from '../../../../data/api/requests/create';
+import { checkIfUserExist } from '../../../../data/api/requests/get';
 
 const Google = (props) => {
     const loginWithGoogle = () => {

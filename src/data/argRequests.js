@@ -1,6 +1,7 @@
 import { waitThenRedirectTo } from "../util/redirect"
 import { readArgument } from './routes'
-import { createArgument, createResponse, updateArgument } from "./api/Api"
+import { createArgument, createResponse } from "./api/requests/create"
+import { updateArgument } from "./api/requests/update"
 
 
 const sendCreateArgRequest = (values, setArgumentStatus, setArgumentStatusMessage, history) => {

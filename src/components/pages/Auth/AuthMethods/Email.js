@@ -6,7 +6,8 @@ import { auth } from '../../../../data/routes';
 import { withRouter } from 'react-router-dom';
 import errorMessages from '../error-messages';
 import EmailPasswordForm from '../../../molecules/Auth/EmailPasswordForm';
-import { createUser, checkIfUserExist } from '../../../../data/api/Api';
+import { createUser } from '../../../../data/api/requests/create';
+import { checkIfUserExist } from '../../../../data/api/requests/get';
 
 const Email = (props) => {
     const [email, setEmail] = useState('')
