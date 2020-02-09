@@ -9,6 +9,7 @@ const Options = (props) => {
     const [user, setUser] = useState(false)
     const [currentOption, setCurrentOption] = useState('')
     const [voteCount, setVoteCount] = useState(0)
+    const [userVote, setUserVote] = useState()
 
     useEffect(() => {
         authListener(setUser)
@@ -25,6 +26,7 @@ const Options = (props) => {
             if (response) {
                 let {upvotes, downvotes} = response
                 setVoteCount(upvotes - downvotes)
+                setUserVote(response.userVote)
             }
         }) 
     }
@@ -33,7 +35,8 @@ const Options = (props) => {
         return options.map((option, i) => {
             if (option.permissions(user, props)) {
                 let metadata = {
-                    voteCount
+                    voteCount,
+                    userVote
                 }
                 return (
                     <Button key={i} 

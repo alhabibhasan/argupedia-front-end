@@ -73,7 +73,7 @@ const options = [
         name: 'upvote',
         type: CALLABLE,
         class: 'Vote',
-        display: () => <span>&uarr;</span>,
+        display: (metadata) => <span className={metadata.userVote === 'UP' ? 'Vote-Active-Up' : ''}>&uarr;</span>,
         call: (metadata) => {
             upvote(metadata.argId, metadata.uid)
             .then(() => {
@@ -97,7 +97,7 @@ const options = [
         name: 'downvote',
         type: CALLABLE,
         class: 'Vote',
-        display: () => <span>&darr;</span>,
+        display: (metadata) => <span className={metadata.userVote === 'DOWN' ? 'Vote-Active-Down' : ''}>&darr;</span>,
         call: (metadata) => {
             downvote(metadata.argId, metadata.uid)
             .then(() => {
