@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { ScrollDownToLocation } from '../../util/scrollTo'
 import Argument from '../atoms/Argument'
 import Button from '../atoms/Button'
-import {readArgument} from '../../data/routes'
+import {readArgument, index} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
 import Options from '../organisms/Options/Options'
 import graphConfig from '../../data/graphConfig'
@@ -81,6 +81,9 @@ const ViewArgument = (props) => {
     const updateArgument = () => {
         getArgumentChain(rootId)
         .then(data => {
+            if (data.deleted === true || data.exists === false) {
+                redirectTo(props.history, index.use)
+            }
             let chain = data.argChain
             if (chain && chain.nodes && chain.links) {
                 setNodes(chain.nodes)
