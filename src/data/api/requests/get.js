@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getAuthToken from '../util'
 
 const checkIfUserExist = (uid) => {
     return axios.post(process.env.REACT_APP_API_BASE_URL+ '/user/check/', {'uid': uid})
@@ -9,6 +10,7 @@ const checkIfUserExist = (uid) => {
 }
 
 const getArgumentChain = (rootId) => {
+    getAuthToken()
     return axios.get(process.env.REACT_APP_API_BASE_URL + '/arg/read/argChain/' + rootId)
         .then(res => res.data)
         .catch(err => console.log(err))
