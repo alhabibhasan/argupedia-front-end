@@ -29,7 +29,7 @@ const modalStyle = {
         overflowY             : 'scroll',
         maxHeight             : '90vh',
         height                : 'auto',
-        width                 : '50%',
+        width                 : '80%',
         maxWidth              : '80%',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',

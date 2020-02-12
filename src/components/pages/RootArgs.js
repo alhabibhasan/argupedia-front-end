@@ -19,7 +19,7 @@ const modalStyle = {
         transform             : 'translate(-50%, -50%)',
         maxHeight             : '90vh',
         height                : 'auto',
-        width                 : '50vh',
+        width                 : 'auto',
     }
 };
 
