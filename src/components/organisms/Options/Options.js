@@ -14,7 +14,7 @@ const Options = (props) => {
     useEffect(() => {
         authListener(setUser)
         updateVoteCount()
-    }, [props.user, user])
+    }, [props.user, user, props.root.id])
 
     const updateVoteCount = () => {
         let userId
