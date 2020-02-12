@@ -1,4 +1,8 @@
 const graphConfig = {
+    'root-argument-undecided' : {
+        fillStyle: '#d5dbd3',
+        radius: 12
+    },
     'root-argument-in': {
         fillStyle: '#97d7f7',
         radius: 12
@@ -14,6 +18,10 @@ const graphConfig = {
     'argument-out': {
         fillStyle: '#f797a2',
         radius: 6
+    },
+    'argument-undecided' : {
+        fillStyle: '#d5dbd3',
+        radius: 12
     },
     'vote-up': {
         fillStyle: '#367ff5',
