@@ -15,7 +15,7 @@ import {
 } from 'reactstrap'
 import {redirectTo} from '../../util/redirect'
 import { withRouter } from 'react-router-dom'
-import {index, roots, auth} from '../../data/routes'
+import {index, roots, auth, createArgument} from '../../data/routes'
 import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
 
 const Navigation = (props) => {
@@ -35,6 +35,10 @@ const Navigation = (props) => {
             <NavItem>
               <NavLink onClick={() => redirectTo(props.history, index.use)}>Home</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink onClick={() => redirectTo(props.history, createArgument.use)}>Add argument</NavLink>
+            </NavItem>
+            
             <NavItem>
               <NavLink onClick={() => redirectTo(props.history, roots.use)}>View roots</NavLink>
             </NavItem>
