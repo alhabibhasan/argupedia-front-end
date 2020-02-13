@@ -38,7 +38,7 @@ const ArgumentForm = (props) => {
     })
     window.addEventListener("beforeunload" , (e) => confirmLeave(e))
     return window.removeEventListener("beforeunload", (e) => confirmLeave(e))
-  })
+  }, [props, props.arg])
 
   const renderFormElems = (values, touched) => {
     let formFields = []
