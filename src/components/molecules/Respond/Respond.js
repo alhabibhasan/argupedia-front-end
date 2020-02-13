@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { DropdownList } from '../../atoms/DropdownList'
-import motivationSchemas from '../../../data/motivationSchemas'
 import ArgumentForm from '../../organisms/ArgumentForm'
 import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 import {withRouter} from 'react-router-dom'
 import {sendCreateResponseRequest} from '../../../data/argRequests'
+import getSchemes from '../../../data/motivationSchemas'
 
 const defaultSuccessMessage = 'Your response was created successfully.'
 
@@ -15,7 +15,7 @@ const Response = (props) => {
     const hasCriticalQuestion = () => criticalQuestion && criticalQuestion !== 'default'
 
     useEffect(() => {
-        let schema = motivationSchemas.filter(schema => schema.id === props.parent.argumentBasis)[0]
+        let schema = getSchemes().filter(schema => schema.label === props.parent.argumentBasis)[0]
         setCriticalQuestions(schema.criticalQuestions)
     },[props.parent.argumentBasis])
 
@@ -52,14 +52,14 @@ const Response = (props) => {
                     updateArgument: props.updateArgument,
                     successMessage: props.successMessage,
                     parentId: props.parent.id,
-                    selectedPoint: 'need to derive this from the selected critical qs',
+                    criticalQuestion: criticalQuestion,
                     defaultSuccessMessage: defaultSuccessMessage,
                     toggleOption: props.metadata.toggleOption
                 }
 
                 let valuesCopy = JSON.parse(JSON.stringify(values))
                 valuesCopy['root'] = false
-                valuesCopy['propertyToRespondTo'] = 'derive this from critical qs'
+                valuesCopy['criticalQuestion'] = criticalQuestion
                 valuesCopy['parentId'] = props.parent.id
                 valuesCopy['uid'] = props.user.uid
                 sendCreateResponseRequest(valuesCopy, setArgumentStatus, setArgumentStatusMessage, metadata)

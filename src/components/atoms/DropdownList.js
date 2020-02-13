@@ -14,7 +14,7 @@ const DropdownList = (props) => {
 
     const renderRegularList = () => {
         return props.valuesToRender.map((property, index) => {
-            return <option key={index} value={property.id}>{property.label}</option>
+            return <option key={index} value={property.label}>{property.label || property}</option>
         })
     }
 

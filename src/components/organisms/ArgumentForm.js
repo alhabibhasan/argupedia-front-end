@@ -5,10 +5,10 @@ import ListFormInput from '../molecules/FormInput/ListFormInput'
 import DropdownFormInput from '../molecules/FormInput/DropdownFormInput'
 import {ArgumentSchema} from '../../data/validators/ArgumentSchema'
 import {ArgumentFormInput} from  '../molecules/FormInput/ArgumentFormInput/ArgumentFormInput'
-import motivationSchemas from '../../data/motivationSchemas'
 import { Prompt } from 'react-router-dom'
 
 import './Styles/CreateArgs.scss'
+import getSchemes from '../../data/motivationSchemas'
 
 const ArgumentForm = (props) => {
   const argStatusValues = {
@@ -49,7 +49,7 @@ const ArgumentForm = (props) => {
         return <ListFormInput key={index} label='Extra resources'/>
       } else if (value === 'argumentBasis') {
         return (<div key={index}>
-            <DropdownFormInput fieldName='argumentBasis' renderedProperties={motivationSchemas}/>
+            <DropdownFormInput fieldName='argumentBasis' renderedProperties={getSchemes()}/>
             <hr/>
           </div>)
       } else {

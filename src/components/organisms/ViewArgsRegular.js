@@ -24,9 +24,6 @@ const ViewArgsRegular = (props) => {
 
     const renderRoot = () => {
         if (!root) return;
-        /**
-         * TODO: add a link to the parent argument if current isn't a 'base' arg.
-         */
         return (
             <ArgumentWrapper>
                 <Statement>
