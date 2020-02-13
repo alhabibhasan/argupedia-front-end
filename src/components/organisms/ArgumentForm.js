@@ -8,7 +8,7 @@ import {ArgumentFormInput} from  '../molecules/FormInput/ArgumentFormInput/Argum
 import { Prompt } from 'react-router-dom'
 
 import './Styles/CreateArgs.scss'
-import getSchemes from '../../data/motivationSchemas'
+import {getSchemes} from '../../data/motivationSchemas'
 
 const ArgumentForm = (props) => {
   const argStatusValues = {

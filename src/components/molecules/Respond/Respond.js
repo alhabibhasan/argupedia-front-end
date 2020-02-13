@@ -4,19 +4,19 @@ import ArgumentForm from '../../organisms/ArgumentForm'
 import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 import {withRouter} from 'react-router-dom'
 import {sendCreateResponseRequest} from '../../../data/argRequests'
-import getSchemes from '../../../data/motivationSchemas'
+import {getSchemes, getDefaultCriticalQuestions} from '../../../data/motivationSchemas'
 
 const defaultSuccessMessage = 'Your response was created successfully.'
 
 const Response = (props) => {
     const [criticalQuestion, setCriticalQuestion] = useState('default')
-    const [criticalQuestions, setCriticalQuestions] = useState([])
+    const [criticalQuestions, setCriticalQuestions] = useState(getDefaultCriticalQuestions())
 
     const hasCriticalQuestion = () => criticalQuestion && criticalQuestion !== 'default'
 
     useEffect(() => {
         let schema = getSchemes().filter(schema => schema.label === props.parent.argumentBasis)[0]
-        setCriticalQuestions(schema.criticalQuestions)
+        if (schema && schema.criticalQuestions) setCriticalQuestions(schema.criticalQuestions)
     },[props.parent.argumentBasis])
 
     const renderCriticalQuestions = () => {
