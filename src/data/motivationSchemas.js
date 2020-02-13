@@ -69,6 +69,17 @@ const motivationSchemas = {
     }
 }
 
+const getDefaultCriticalQuestions = () => {
+    return [
+        'What intervening propositions in the sequence linking the actions are actually given?',
+        'What other steps are required to fill in the sequence of actions to make sense?',
+        'Are there consequences of the opposite value that ought to be taken into account?',
+        'Is the argument really good/bad?',
+        'Even if the argument is generally accepted as being true, are there good reasons for doubting its veracity?',
+        'Even if the argument is generally accepted, how ethical and moral is it?',
+    ]
+}
+
 const getSchemes = () => {
     let schemes = motivationSchemas.schemes
     let schemeArr = []
@@ -78,4 +89,7 @@ const getSchemes = () => {
     return schemeArr
 }
 
-export default getSchemes
+export { 
+    getSchemes,
+    getDefaultCriticalQuestions,
+}
