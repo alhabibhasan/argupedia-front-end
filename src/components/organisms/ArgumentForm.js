@@ -21,6 +21,7 @@ const ArgumentForm = (props) => {
 
   const [argumentStatus, setArgumentStatus] = useState('NOT_ATTEMPTED')
   const [argumentStatusMessage, setArgumentStatusMessage] = useState('')
+  const [argumentBasis, setArgumentBasis] = useState([])
 
   const confirmLeave = (e) => {
     if (window.confirm(LEAVE_MESSAGE)) {
@@ -31,6 +32,10 @@ const ArgumentForm = (props) => {
   }
 
   useEffect(() => {
+    getSchemes()
+    .then(schemes => {
+      setArgumentBasis(schemes)
+    })
     window.addEventListener("beforeunload" , (e) => confirmLeave(e))
     return window.removeEventListener("beforeunload", (e) => confirmLeave(e))
   })
@@ -49,7 +54,7 @@ const ArgumentForm = (props) => {
         return <ListFormInput key={index} label='Extra resources'/>
       } else if (value === 'argumentBasis') {
         return (<div key={index}>
-            <DropdownFormInput fieldName='argumentBasis' renderedProperties={getSchemes()}/>
+            <DropdownFormInput fieldName='argumentBasis' renderedProperties={argumentBasis}/>
             <hr/>
           </div>)
       } else {

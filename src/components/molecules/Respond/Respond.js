@@ -15,8 +15,11 @@ const Response = (props) => {
     const hasCriticalQuestion = () => criticalQuestion && criticalQuestion !== 'default'
 
     useEffect(() => {
-        let schema = getSchemes().filter(schema => schema.label === props.parent.argumentBasis)[0]
-        if (schema && schema.criticalQuestions) setCriticalQuestions(schema.criticalQuestions)
+        getSchemes()
+        .then(schemes => {
+            let schema = schemes.filter(schema => schema.label === props.parent.argumentBasis)[0]
+            if (schema && schema.criticalQuestions) setCriticalQuestions(schema.criticalQuestions)
+        })
     },[props.parent.argumentBasis])
 
     const renderCriticalQuestions = () => {

@@ -1,3 +1,5 @@
+import firebase from './auth/fire'
+
 const motivationSchemas = {
     schemes : {
         'someId-1' : {
@@ -81,12 +83,29 @@ const getDefaultCriticalQuestions = () => {
 }
 
 const getSchemes = () => {
-    let schemes = motivationSchemas.schemes
-    let schemeArr = []
-    for (let elem in schemes) {
-        schemeArr.push(schemes[elem])
-    }
-    return schemeArr
+    const database = firebase.database()
+    return database.ref('/').once('value')
+    .then(snapshot => {
+        let values = snapshot.val()
+        let formattedValues = []
+        for (let field in values.schemes) {
+            let record = {
+                    label: values.schemes[field].label,
+                    criticalQuestions:  values.schemes[field].criticalQuestions,
+            }
+            formattedValues.push(record)
+        }
+        return formattedValues
+    })
+    .catch(() => {
+        // fallback config
+        let schemes = motivationSchemas.schemes
+        let schemeArr = []
+        for (let elem in schemes) {
+            schemeArr.push(schemes[elem])
+        }
+        return schemeArr
+    })
 }
 
 export { 
