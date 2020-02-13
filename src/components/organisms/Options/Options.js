@@ -4,12 +4,14 @@ import Button from '../../atoms/Button'
 import authListener from '../../../data/auth/auth-listener'
 import {options, CALLABLE} from './OptionsConfig'
 import { getNumberOfVotes } from '../../../data/api/requests/get'
+import Loading from '../../atoms/Loading'
 
 const Options = (props) => {
     const [user, setUser] = useState(false)
     const [currentOption, setCurrentOption] = useState('')
     const [voteCount, setVoteCount] = useState(0)
     const [userVote, setUserVote] = useState()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         authListener(setUser)
@@ -27,6 +29,7 @@ const Options = (props) => {
                 let {upvotes, downvotes} = response
                 setVoteCount(upvotes - downvotes)
                 setUserVote(response.userVote)
+                setLoading(false)
             }
         }) 
     }
@@ -92,10 +95,11 @@ const Options = (props) => {
                 {showDeletedMessage()}
             </div> 
             : 
-            <div>    
+            <div>
+                {loading ? <Loading/> : 
                 <div className='Options-Block'>
                     {renderOptions()}
-                </div>
+                </div>}    
                 <div className='Options-Rendered'>
                     {renderCurrentOption()}
                 </div>
