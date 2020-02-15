@@ -10,10 +10,20 @@ const checkIfUserExist = (uid) => {
 }
 
 const getArgumentChain = (rootId) => {
-    getAuthToken()
     return axios.get(process.env.REACT_APP_API_BASE_URL + '/arg/read/argChain/' + rootId)
         .then(res => res.data)
         .catch(err => console.log(err))
+}
+
+const getUserPosts = () => {
+    return getAuthToken()
+    .then(config => {
+        return axios.get(process.env.REACT_APP_API_BASE_URL+ '/user/posts', config)
+            .then(res => res.data)
+            .catch(err => {
+                throw new Error(err)
+            })
+    })
 }
 
 const getArgumentRoots = () => {
@@ -44,5 +54,6 @@ export {
     getArgumentRoots,
     getThread,
     getNumberOfVotes,
-    checkIfUserExist
+    checkIfUserExist,
+    getUserPosts,
 }
