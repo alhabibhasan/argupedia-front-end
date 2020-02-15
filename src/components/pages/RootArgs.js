@@ -8,6 +8,7 @@ import Argument from '../atoms/Argument'
 import Button from '../atoms/Button'
 import ViewRootsRegular from '../organisms/ViewRootsRegular'
 import { ScrollDownToLocation } from '../../util/scrollTo'
+import Title from '../molecules/Title'
 
 const modalStyle = {
     content : {
@@ -80,6 +81,7 @@ const RootArgs = (props) => {
             {loading ? <Loading/> 
                 : 
             <div>
+                <Title title={'View roots'}/>
                 <h1>
                     {header}
                 </h1>

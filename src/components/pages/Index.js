@@ -3,6 +3,7 @@ import { Jumbotron } from 'reactstrap'
 import styled from 'styled-components'
 import {redirectTo} from '../../util/redirect'
 import {createArgument} from '../../data/routes'
+import Title from '../molecules/Title'
 
 const Header = styled.div`
     text-align: left;
@@ -25,6 +26,7 @@ const Index = (props) => {
     
     return (
         <div>
+            <Title title={'Home'}/>
             <Jumbotron>
                 <Header>
                     <Welcome>

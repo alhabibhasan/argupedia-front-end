@@ -11,6 +11,7 @@ import {readArgument, index} from '../../data/routes'
 import {redirectTo} from '../../util/redirect';
 import Options from '../organisms/Options/Options'
 import graphConfig from '../../data/graphConfig'
+import Title from '../molecules/Title'
 
 const RootStatement = styled.h1`
     padding-top: 1%;
@@ -149,6 +150,7 @@ const ViewArgument = (props) => {
             {loading ? <Loading/> 
                 : 
                 <div>
+                    <Title title={root.statement}/>
                     {renderRootStatement()}
                     {renderGoToParent()}
                     <ScrollDownToLocation label='View thread' location={window.outerHeight}/>

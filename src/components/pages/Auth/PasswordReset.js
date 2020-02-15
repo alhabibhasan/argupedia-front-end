@@ -5,6 +5,7 @@ import Button from '../../atoms/Button';
 import firebase from '../../../data/auth/fire'
 import errorMessages from './error-messages';
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
+import Title from '../../molecules/Title';
 
 const Input = styled.input`
     width: 30%;
@@ -47,6 +48,7 @@ const PasswordResetView = (props) => {
 
     return (
         <div style={passwordResetStyles}>
+            <Title title={'Password Reset'}/>
             <h1 style={headerStyles}>Locked out? We can help...</h1>
             <form onKeyDown={e => e.key === 'Enter' ? sendPasswordResetEmail(e) : false}>
                 <Input type="email"

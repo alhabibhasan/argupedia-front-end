@@ -11,6 +11,7 @@ import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
 import { redirectTo } from '../../util/redirect'
 import { auth } from '../../data/routes'
 import authListener from '../../data/auth/auth-listener'
+import Title from '../molecules/Title'
 
 const GuidanceText = styled.div`
     text-align: left;
@@ -34,6 +35,7 @@ const CreateArg = (props) => {
 
     return (
         <Page>
+            <Title title={'Create argument'}/>
             <ReactCSSTransitionGroup
             transitionName="Add-Argument"
             transitionAppear={true}

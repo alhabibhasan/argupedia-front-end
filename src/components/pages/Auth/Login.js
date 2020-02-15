@@ -3,6 +3,7 @@ import { redirectTo } from '../../../util/redirect';
 import Google from './AuthMethods/Google';
 import Email from './AuthMethods/Email';
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
+import Title from '../../molecules/Title';
 
 const methodStyles = {
     marginTop: '5%'
@@ -25,6 +26,7 @@ const LoginView = (props) => {
 
     return (
         <div>
+            <Title title={'Login'}/>
             <h1 style={welcomeStyles}>Welcome, login to join in!</h1>
             <div style={methodStyles}>
                 <Email history={props.history}/>

@@ -7,6 +7,7 @@ import errorMessages from './error-messages';
 import firebase from '../../../data/auth/fire'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
 import styled from 'styled-components'
+import Title from '../../molecules/Title';
 
 const registerStyles = {
     marginTop: '5%'
@@ -69,6 +70,7 @@ const RegisterView = (props) => {
 
     return (
         <div>
+            <Title title={'Register'}/>
             <h1 style={welcomeStyles}>Hey! Register to join in!</h1>
             <div style={registerStyles}>
                 <Input placeholder='Diplay name' 
