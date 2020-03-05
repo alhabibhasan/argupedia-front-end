@@ -1,21 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react'
 
-import { redirectTo } from '../../../util/redirect';
-import EmailPasswordForm from '../../molecules/Auth/EmailPasswordForm';
-import { withRouter } from 'react-router-dom';
-import errorMessages from './error-messages';
+import { redirectTo } from '../../../util/redirect'
+import EmailPasswordForm from '../../molecules/Auth/EmailPasswordForm'
+import { withRouter } from 'react-router-dom'
+import errorMessages from './error-messages'
 import firebase from '../../../data/auth/fire'
-import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
+import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks'
 import styled from 'styled-components'
-import Title from '../../molecules/Title';
-import { createUser } from '../../../data/api/requests/create';
+import Title from '../../molecules/Title'
+import { createUser } from '../../../data/api/requests/create'
+import ReCAPTCHA from "react-google-recaptcha";
 
 const registerStyles = {
-    marginTop: '5%'
+    marginTop: '5%',
+}
+
+const captchaStyles = {
+    margin: 'auto',
+    width: 'fit-content'
 }
 
 const welcomeStyles = {
-    margin: '5%'
 }
 
 const Input = styled.input`
@@ -29,10 +34,11 @@ const RegisterView = (props) => {
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [displayName, setDisplayName] = useState('')
     const [info, setInfo] = useState('')
+    const [humanVerified, setHumanVerified] = useState(false)
 
     useEffect(() => {
         if (userLoggedInAndEmailVerified( props.user)) {
-            redirectTo(props.history, '/');
+            redirectTo(props.history, '/')
         }
     })
 
@@ -83,11 +89,18 @@ const RegisterView = (props) => {
                     setPassword={setPassword}
                     setPasswordConfirm={setPasswordConfirm}
                     onSubmit={registerUser}
-                    buttonText={'Register'}/>
+                    buttonText={'Register'}
+                    enabled={humanVerified}/>
+                <div style={captchaStyles}>
+                    <ReCAPTCHA
+                        sitekey="6LccG98UAAAAAJtjBaWNAY5J6Vke3JHq5pJOtHYd"
+                        onChange={() => setHumanVerified(true)}
+                    />
+                </div>
                 {info.length > 0 ? <div>{info}</div> : ''}
             </div>
         </div>
     );
 }
 
-export default withRouter(RegisterView);
+export default withRouter(RegisterView)

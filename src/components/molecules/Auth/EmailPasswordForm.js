@@ -7,6 +7,16 @@ const Input = styled.input`
 `
 
 const EmailPasswordForm = (props) => {
+
+    const getEnabled = () => {
+        if (!('enabled' in props) || props.enabled) {
+            return ''
+        } 
+        if (!props.enabled) {
+            return 'none'
+        }
+    }
+
     return (
         <form onKeyDown={e => e.key === 'Enter' ? props.onSubmit(e) : false}>
             <p>
@@ -39,7 +49,8 @@ const EmailPasswordForm = (props) => {
                         marginTop: '1%',
                         marginBottom: '1%',
                         fontSize: '14pt',
-                        backgroundColor: 'rgb(230, 230, 230)'
+                        backgroundColor: 'rgb(230, 230, 230)',
+                        display: getEnabled()
                     }}>
                 </Button>
             </div> 
