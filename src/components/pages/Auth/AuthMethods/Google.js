@@ -4,18 +4,13 @@ import { redirectTo } from '../../../../util/redirect';
 import Button from '../../../atoms/Button';
 import './Styles/Google.scss'
 import { createUser } from '../../../../data/api/requests/create';
-import { checkIfUserExist } from '../../../../data/api/requests/get';
+import { userChecks } from '../../../../data/api/requests/get';
 
 const Google = (props) => {
     const loginWithGoogle = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then((userCred) => {
-            checkIfUserExist(userCred.user.uid).then(check => {
-                if(!check.userExists) {
-                    createUser(userCred.user.uid, userCred.user.email, userCred.user.displayName)
-                }
-            })
-            redirectTo(props.history, '/');
+            props.postSignInActions(userCred)
         }).catch((err) => {
             console.log(err);
         });

@@ -6,8 +6,6 @@ import { auth } from '../../../../data/routes';
 import { withRouter } from 'react-router-dom';
 import errorMessages from '../error-messages';
 import EmailPasswordForm from '../../../molecules/Auth/EmailPasswordForm';
-import { createUser } from '../../../../data/api/requests/create';
-import { checkIfUserExist } from '../../../../data/api/requests/get';
 
 const Email = (props) => {
     const [email, setEmail] = useState('')
@@ -15,21 +13,9 @@ const Email = (props) => {
     const [info, setInfo] = useState('')
 
     const loginWithEmail = (e) => {
-        setInfo('Checking...')
         e.preventDefault()
         return firebase.auth().signInWithEmailAndPassword(email, password).then((userCred) => {
-            if (!userCred.user.emailVerified) {
-                setInfo('You need to verify your account using the email link sent to you. Please check your inbox and junk folder.')
-                return firebase.auth().currentUser.sendEmailVerification().then(() => firebase.auth().signOut())
-            } else {
-                setInfo('')
-                checkIfUserExist(userCred.user.uid).then(check => {
-                    if(!check.userExists) {
-                        createUser(userCred.user.uid, userCred.user.email, userCred.user.displayName)
-                    }
-                })
-                redirectTo(props.history, '/');
-            }
+            props.postSignInActions(userCred)
         }).catch((err) => {
             let errorMessage = errorMessages[err.code]
             if (errorMessage) {
