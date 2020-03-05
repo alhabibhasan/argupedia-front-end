@@ -1,7 +1,7 @@
 import axios from 'axios'
 import getAuthToken from '../util'
 
-const checkIfUserExist = (uid) => {
+const userChecks = (uid) => {
     return axios.post(process.env.REACT_APP_API_BASE_URL+ '/user/check/', {'uid': uid})
         .then(res => res.data)
         .catch(err => {
@@ -54,6 +54,6 @@ export {
     getArgumentRoots,
     getThread,
     getNumberOfVotes,
-    checkIfUserExist,
+    userChecks,
     getUserPosts,
 }
