@@ -46,7 +46,7 @@ function App() {
           <Route exact path={auth.logout.use} render={(props) => <LogoutView user={user} {...props} ></LogoutView>}></Route>
           <Route exact path={auth.register.use} render={(props) => <RegisterView user={user} {...props} ></RegisterView>}></Route>
           <Route exact path={auth.passwordReset.use} render={(props) => <PasswordResetView user={user} {...props} ></PasswordResetView>}></Route>
-          <Route exact path={auth.profile.use} render={(props) => <Profile user={user} {...props} ></Profile>}></Route>
+          <Route exact path={auth.profile.use} render={(props) => <Profile user={user} {...props} checkingAuth={checkingAuth}></Profile>}></Route>
           <Route render={() => <Redirect to={index.defintion} />}></Route>
         </Switch>
         <Footer/>
