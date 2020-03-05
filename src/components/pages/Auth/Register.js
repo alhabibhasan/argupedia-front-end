@@ -8,6 +8,7 @@ import firebase from '../../../data/auth/fire'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks';
 import styled from 'styled-components'
 import Title from '../../molecules/Title';
+import { createUser } from '../../../data/api/requests/create';
 
 const registerStyles = {
     marginTop: '5%'
@@ -54,6 +55,7 @@ const RegisterView = (props) => {
                 firebase.auth().currentUser.updateProfile({
                     displayName: displayName
                 }).then(() => {
+                    createUser(userCred.user.uid, userCred.user.email, userCred.user.displayName)
                     firebase.auth().signOut()
                 })
             })
