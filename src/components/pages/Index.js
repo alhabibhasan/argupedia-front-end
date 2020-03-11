@@ -25,7 +25,7 @@ const GetStarted = styled.button`
 const Index = (props) => {
     
     return (
-        <div>
+        <div role="main">
             <Title title={'Home'}/>
             <Jumbotron>
                 <Header>

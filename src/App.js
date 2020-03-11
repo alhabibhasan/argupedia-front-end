@@ -36,8 +36,8 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Navigation user={user}/>
-        <Switch>
+        <Navigation role="navigation" user={user}/>
+        <Switch role="main">
           <Route exact path={roots.defintion} render={(props) => <RootArgs user={user} {...props} />}></Route>
           <Route exact path='/argument/:id(\d+)' render={(props) => <ViewArgument user={user} {...props}/>}></Route>
           <Route exact path={createArgument.defintion} render={(props) => <CreateArgument user={user} {...props}/>}></Route>

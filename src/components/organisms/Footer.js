@@ -15,7 +15,7 @@ const Foot = styled.div`
 const Footer = (props) => {
 
   return (
-    <Foot>
+    <Foot role="contentinfo">
       Designed and developed by Muhammed Hasan in London, UK
     </Foot>
   );

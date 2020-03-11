@@ -17,6 +17,7 @@ import {redirectTo} from '../../util/redirect'
 import { withRouter } from 'react-router-dom'
 import {index, roots, auth, createArgument} from '../../data/routes'
 import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
+import './Styles/Nav.scss'
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -33,14 +34,14 @@ const Navigation = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink onClick={() => redirectTo(props.history, index.use)}>Home</NavLink>
+              <NavLink className='Nav-Link' onClick={() => redirectTo(props.history, index.use)}>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={() => redirectTo(props.history, createArgument.use)}>Add argument</NavLink>
+              <NavLink className='Nav-Link' onClick={() => redirectTo(props.history, createArgument.use)}>Add argument</NavLink>
             </NavItem>
             
             <NavItem>
-              <NavLink onClick={() => redirectTo(props.history, roots.use)}>View roots</NavLink>
+              <NavLink className='Nav-Link' onClick={() => redirectTo(props.history, roots.use)}>View roots</NavLink>
             </NavItem>
 
             {userLoggedInAndEmailVerified(props.user) ? 
@@ -53,8 +54,8 @@ const Navigation = (props) => {
                     <DropdownItem>
                       <NavbarText>Hey, {props.user.displayName}</NavbarText>
                     </DropdownItem> :''}
-                    <DropdownItem onClick={() => redirectTo(props.history, auth.profile.use)}>Profile</DropdownItem>
-                  <DropdownItem onClick={() => redirectTo(props.history, auth.logout.use)}>Sign out</DropdownItem>
+                    <DropdownItem className='Nav-Link' onClick={() => redirectTo(props.history, auth.profile.use)}>Profile</DropdownItem>
+                  <DropdownItem className='Nav-Link' onClick={() => redirectTo(props.history, auth.logout.use)}>Sign out</DropdownItem>
                   
                 </DropdownMenu>
             </Dropdown>
