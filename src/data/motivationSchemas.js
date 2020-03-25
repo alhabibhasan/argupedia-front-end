@@ -36,7 +36,17 @@ const getSchemes = () => {
     })
 }
 
+const getScheme = (schemeName) => {
+    if (!Boolean(schemeName)) return Promise.reject('Need to supply a scheme name')
+    return getSchemes()
+    .then(schemes => {
+        let schemeWithName = schemes.filter(scheme => scheme.label === schemeName)[0]
+        return schemeWithName.fields
+    })
+}
+
 export { 
     getSchemes,
+    getScheme,
     getDefaultCriticalQuestions,
 }

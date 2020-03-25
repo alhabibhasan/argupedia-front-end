@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {argumentFields, EXCLUDED_FIELDS} from '../../data/argumentFields'
-import { camelCaseToSentenceCase } from '../../util/formatting'
-
+import {
+    ARGUMENT_FIELDS, 
+    EXCLUDED_FIELDS,
+    ARGUMENT_START_FORMAT,
+    ARGUMENT_END_FORMAT
+} from '../../data/argumentFields'
+import { camelCaseToSentenceCase, camelize } from '../../util/formatting'
+import {getScheme} from '../../data/motivationSchemas'
 
 const Arg = styled.div`
     text-align: left;
-    white-space: pre-wrap;
     background-color: #f7f7f7;
 `
 const Label = styled.div`
@@ -15,6 +19,7 @@ const Label = styled.div`
 
 const Argument = (props) => {
     const [cleanedArg, setCleanedArg] = useState(props.arg)
+    const [argumentOrder, setArgumentOrder] = useState([])
     useEffect(() => {
         let cleanArg = {}
         let currentObjKeys = Object.keys(props.arg)
@@ -26,23 +31,33 @@ const Argument = (props) => {
         setCleanedArg(cleanArg)
     }, [props.arg])
 
-
-    let fields = argumentFields.map((field, indexI) => {
-        if (field.render && field.show) {
-            return <Arg key={indexI}>{field.render(cleanedArg[field.id])}</Arg>
+    useEffect(() => {
+        if (cleanedArg.argumentBasis) {
+            getScheme(cleanedArg.argumentBasis)
+            .then(schemeFields => {
+                let desiredOrder = [...ARGUMENT_START_FORMAT, ...schemeFields, ...ARGUMENT_END_FORMAT]
+                setArgumentOrder(desiredOrder)
+            })
         }
-    })
+    }, [props.arg])
 
     const renderArg = () => {
-        let argKeys = Object.keys(cleanedArg)
-        let renderedArgFields = argKeys.map((argKey, index) => {
-            let customRender = argumentFields.filter(field => field.id === argKey)[0]
-            if (Boolean(customRender)) return <div key={index}> {customRender.render(cleanedArg[argKey])} </div>
-            return <div key={index}>
-                <Label>{camelCaseToSentenceCase(argKey)}</Label>
-                {cleanedArg[argKey]}
-            </div>
+        let argFieldOrderOfRender = Object.keys(cleanedArg)
+        if (Boolean(argumentOrder)) {
+            argFieldOrderOfRender = argumentOrder
+        }
+
+        let renderedArgFields = argFieldOrderOfRender.map((argKey, index) => {
+            if (cleanedArg[camelize(argKey)]) {
+                let customRender = ARGUMENT_FIELDS.filter(field => field.id === argKey)[0]
+                if (Boolean(customRender)) return <div key={index}> {customRender.render(cleanedArg[camelize(argKey)])} </div>
+                return <div key={index}>
+                    <Label>{camelCaseToSentenceCase(argKey)}</Label>
+                    {cleanedArg[camelize(argKey)]}
+                </div>
+            }
         })
+
         return <Arg>
             {renderedArgFields}
         </Arg>

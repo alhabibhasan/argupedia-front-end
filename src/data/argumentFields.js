@@ -3,18 +3,17 @@ import { ExpandCollapse } from '../components/atoms/ExpandCollapse'
 import styled from 'styled-components'
 
 const Arg = styled.div`
-    text-align: left;
     white-space: pre-wrap;
 `
 const Label = styled.div`
     font-weight: 600;
 `
 
-const DateTime = styled.div`
+const DateTime = styled.span`
     font-weight: 300;
 `
 
-const argumentFields = [
+const ARGUMENT_FIELDS = [
     {
         id: 'updatedAt',
         label: 'Updated at: ',
@@ -43,7 +42,6 @@ const argumentFields = [
             return (
                 <div>
                     <ExpandCollapse
-                    style={{textAlign: 'left'}} 
                     openIcon={show}
                     closeIcon={hide} 
                     render={renderedSources}/>
@@ -61,4 +59,20 @@ const EXCLUDED_FIELDS = [
     'index','validated_uid', 'parentId'
 ]
 
-export { argumentFields, EXCLUDED_FIELDS }
+const ARGUMENT_START_FORMAT = [
+    'statement',
+    'criticalQuestion',
+]
+
+const ARGUMENT_END_FORMAT = [
+    'status',
+    'sourceList',
+    'updatedAt',
+]
+
+export { 
+    ARGUMENT_FIELDS, 
+    EXCLUDED_FIELDS,
+    ARGUMENT_START_FORMAT,
+    ARGUMENT_END_FORMAT
+}
