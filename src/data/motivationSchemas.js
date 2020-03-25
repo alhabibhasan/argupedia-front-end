@@ -24,6 +24,7 @@ const getSchemes = () => {
             let record = {
                     label: values.schemes[field].label,
                     criticalQuestions:  values.schemes[field].criticalQuestions,
+                    fields: values.schemes[field].schemeFields,
             }
             formattedValues.push(record)
         }
