@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { DropdownList } from '../../atoms/DropdownList'
 import ArgumentForm from '../../organisms/ArgumentForm'
-import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 import {withRouter} from 'react-router-dom'
 import {sendCreateResponseRequest} from '../../../data/argRequests'
 import {getSchemes, getDefaultCriticalQuestions} from '../../../data/motivationSchemas'
@@ -48,7 +47,6 @@ const Response = (props) => {
         if (!hasCriticalQuestion()) return;
 
         return <ArgumentForm
-            schema={ResponseSchema} 
             statement={getQuote()}
             onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                 let metadata = {

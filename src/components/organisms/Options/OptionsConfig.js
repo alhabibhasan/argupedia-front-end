@@ -5,7 +5,6 @@ import { sendUpdateArgRequest } from '../../../data/argRequests'
 import { deleteArgument } from '../../../data/api/requests/delete'
 import { upvote, downvote } from '../../../data/api/requests/create'
 import { userLoggedInAndEmailVerified } from '../../../data/auth/user-checks'
-import { ResponseSchema } from '../../../data/validators/ArgumentSchema'
 
 const CALLABLE = 'callable'
 const RENDERABLE = 'renderable'
@@ -41,7 +40,6 @@ const options = [
             return <ArgumentForm arg={props.root} 
                 edit={true}
                 history={props.history}
-                schema={ResponseSchema} 
                 onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
                     let valuesCopy = JSON.parse(JSON.stringify(values))
                     valuesCopy['root'] = true
