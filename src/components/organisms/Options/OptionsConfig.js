@@ -39,6 +39,7 @@ const options = [
                 updateArgument: props.updateArgument
             }
             return <ArgumentForm arg={props.root} 
+                edit={true}
                 history={props.history}
                 schema={ResponseSchema} 
                 onSubmit={(values, setArgumentStatus, setArgumentStatusMessage) => {
