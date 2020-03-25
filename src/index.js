@@ -33,7 +33,7 @@ ReactDOM.render(<Root/>, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-if (process.env.NODE_ENV !== 'production') {
-  let axe = require('react-axe');
-  axe(React, ReactDOM, 1000);
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   let axe = require('react-axe');
+//   axe(React, ReactDOM, 1000);
+// }
