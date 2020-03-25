@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ArgumentForm from '../organisms/ArgumentForm'
 import styled from 'styled-components'
-import Tooltip from '../atoms/Tooltip'
 import {Link} from 'react-router-dom'
 
 import './styles/CreateArgs.scss'
@@ -10,7 +9,6 @@ import { sendCreateArgRequest } from '../../data/argRequests'
 import { userLoggedInAndEmailVerified } from '../../data/auth/user-checks'
 import { redirectTo } from '../../util/redirect'
 import { auth } from '../../data/routes'
-import authListener from '../../data/auth/auth-listener'
 import Title from '../molecules/Title'
 
 const GuidanceText = styled.div`
