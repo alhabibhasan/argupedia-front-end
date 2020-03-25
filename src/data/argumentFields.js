@@ -10,53 +10,27 @@ const Label = styled.div`
     font-weight: 600;
 `
 
+const DateTime = styled.div`
+    font-weight: 300;
+`
+
 const argumentFields = [
     {
-        id: 'statement',
-        label: 'Statement',
-        quotable: true,
+        id: 'updatedAt',
+        label: 'Updated at: ',
+        render: (date) => {
+            return <Arg>
+                <DateTime> Updated at: {new Date(date).toLocaleString()}</DateTime>
+            </Arg>
+            
+        }
     },
     {
-        id: 'circumstance',
-        label: 'Current circumstance',
-        quotable: true
-    }, 
-    {
-        id: 'action',
-        label: 'Required action',
-        quotable: true
-    }, 
-    {
-        id: 'newCircumstance',
-        label: 'New circumstance',
-        quotable: true
-    }, 
-    {
-        id: 'goal',
-        label: 'Goal achieved',
-        quotable: true
-    }, 
-    {
-        id: 'value',
-        label: 'Values promoted',
-        quotable: true
-    }, 
-    {
-        id: 'argumentBasis',
-        label: 'Argument based on'
-    }, 
-    {
         id: 'sourceList',
+        show: true,
         label: 'Extra reading',
-        render: (sourceList) => {
+        render: (sourceList = []) => {
             let renderedSources = <div>None</div>
-            
-            try {
-                sourceList = JSON.parse(sourceList)
-            } catch (err) {
-                sourceList = []
-            }
-
             if (sourceList.length > 0) {
                 renderedSources = sourceList.map((source, indexJ) => {
                     return <div key={indexJ}>
@@ -77,21 +51,14 @@ const argumentFields = [
             )
         }
     },
-    {
-        id: 'status',
-        label: 'Status'
-    },
-    {
-        id: 'updatedAt',
-        label: 'Updated at: ',
-        render: (date) => {
-            return <Arg>
-                <Label> Updated at: </Label> 
-                {new Date(date).toLocaleString()}
-            </Arg>
-            
-        }
-    }
 ]
 
-export default argumentFields
+const EXCLUDED_FIELDS = [
+    'type', 'id', 'root', 'creatorUID', 
+    'createdAt', 'uid', 'deleted', 
+    'configCode', '__indexColor', 
+    'x', 'y', 'vx', 'vy', 
+    'index','validated_uid', 'parentId'
+]
+
+export { argumentFields, EXCLUDED_FIELDS }
