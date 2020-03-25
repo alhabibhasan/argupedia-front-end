@@ -6,6 +6,9 @@ import {getSchemes} from '../../data/motivationSchemas'
 import { DropdownList } from '../atoms/DropdownList'
 import SourceList from '../molecules/SourceList/SourceList'
 import { camelize } from '../../util/formatting'
+import { validateArgFormNotEmpty } from '../../data/validators/ArgFormValidator'
+
+const OPTIONAL_FIELDS = ['sourceList']
 
 const ArgumentForm = (props) => {
   const argStatusValues = {
@@ -73,11 +76,17 @@ const ArgumentForm = (props) => {
 
   const formSubmit = (evt) => {
     evt.preventDefault()
+    setArgumentStatusMessage('')
     form['statement'] = statement
     form['argumentBasis'] = argumentBasis
     form['sourceList'] = sourceList
-    // need to do validation
-    props.onSubmit(form, setArgumentStatus, setArgumentStatusMessage)
+
+    let formValidation = validateArgFormNotEmpty(form, OPTIONAL_FIELDS)
+    if (formValidation.isValid) {
+      props.onSubmit(form, setArgumentStatus, setArgumentStatusMessage)
+    } else {
+      setArgumentStatusMessage(formValidation.msg)
+    }
   }
 
   const getBasisSpecificFields = () => {
