@@ -30,7 +30,8 @@ const sendCreateResponseRequest = (values, setArgumentStatus, setArgumentStatusM
             setArgumentStatus('NOT_ATTEMPTED')
             window.scrollTo({ top: 0, behavior: 'smooth'})
             metadata.updateArgument()
-        }, 1000)
+            metadata.toggleOption({name: 'respond'})
+        }, 2000)
     })
     .catch(() => {
         setArgumentStatus('ERROR')
@@ -47,7 +48,7 @@ const sendUpdateArgRequest = (values, setArgumentStatus, setArgumentStatusMessag
         setTimeout(() => {
             setArgumentStatus('NOT_ATTEMPTED')
             metadata.updateArgument()
-            metadata.toggleOption({name: 'Respond'})
+            metadata.toggleOption({name: 'edit'})
         }, 2000)
     })
     .catch((err) => {

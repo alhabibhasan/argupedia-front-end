@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom'
 import {sendCreateResponseRequest} from '../../../data/argRequests'
 import {getSchemes, getDefaultCriticalQuestions} from '../../../data/motivationSchemas'
 
-const defaultSuccessMessage = 'Your response was created successfully.'
+const defaultSuccessMessage = 'Your response was created successfully, this form will close automatically.'
 
 const Response = (props) => {
     const [criticalQuestion, setCriticalQuestion] = useState('default')

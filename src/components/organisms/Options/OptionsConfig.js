@@ -21,7 +21,7 @@ const options = [
                 successMessage={props.successMessage}
                 parent={props.root} 
                 updateArgument={props.updateArgument}
-                metadata={metadata.toggleOption}/>
+                metadata={metadata}/>
         },
         permissions: (user) => {
             return userLoggedInAndEmailVerified(user)
@@ -36,7 +36,7 @@ const options = [
             let updatedMetadata = {
                 id: props.root.id,
                 toggleOption: () => metadata.toggleOption('edit'),
-                updateArgument: props.updateArgument
+                updateArgument: props.updateArgument,
             }
             return <ArgumentForm arg={props.root} 
                 edit={true}
