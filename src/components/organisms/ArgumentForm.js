@@ -99,7 +99,10 @@ const ArgumentForm = (props) => {
               <label htmlFor={field}>
                 {field}
                 <br/>
-                <textarea value={form[camelize(field)]} onChange={e => updateForm(field, e.target.value)}/>
+                <textarea
+                    className='Create-Arg-Input' 
+                    value={form[camelize(field)]} 
+                    onChange={e => updateForm(field, e.target.value)}/>
               </label>
             </p>
           )
@@ -115,7 +118,10 @@ const ArgumentForm = (props) => {
       <p>
         <label htmlFor='statement'>Statement
           <br/>
-          <textarea name='statement' value={statement} onChange={e => setStatement(e.target.value)}/>
+          <textarea className='Create-Arg-Input'
+                    name='statement' 
+                    value={statement} 
+                    onChange={e => setStatement(e.target.value)}/>
         </label>
       </p>
       {props.edit ? '' : 
