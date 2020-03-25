@@ -34,7 +34,10 @@ const DropdownFormInput = (props) => {
                 <DropdownList 
                     valuesToRender={props.renderedProperties}
                     selectedValue={value}
-                    setSelectedValue={value => setFieldValue(props.fieldName,value)}/>
+                    setSelectedValue={value => {
+                        if (props.setValue) props.setValue(value)
+                        setFieldValue(props.fieldName,value)}
+                    }/>
             </div>
         )}
         </Field>

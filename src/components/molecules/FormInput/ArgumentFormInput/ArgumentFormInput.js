@@ -25,13 +25,12 @@ const CustomErrorMessage = (error) => {
 
 const ArgumentFormInput = ({field, form}) => {
     return (<div>
-            <label htmlFor={field.name}>{argumentFormConfig[field.name].label}</label>
+            <label htmlFor={field.name}>{field.name}</label>
             <ErrorMessage name={field.name} component={CustomErrorMessage}/>
             <br/>
             <textarea 
             className='Create-Arg-Input'
-            placeholder={argumentFormConfig[field.name].placeholder} {...field}
-            disabled={argumentFormConfig[field.name].disabled} 
+            placeholder={field.name} {...field} 
             style={getStyles(form, field)} />
         </div>)
 }
