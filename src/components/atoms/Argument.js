@@ -20,16 +20,6 @@ const Label = styled.div`
 const Argument = (props) => {
     const [cleanedArg, setCleanedArg] = useState(props.arg)
     const [argumentOrder, setArgumentOrder] = useState([])
-    useEffect(() => {
-        let cleanArg = {}
-        let currentObjKeys = Object.keys(props.arg)
-        currentObjKeys.forEach(key => {
-            if (!EXCLUDED_FIELDS.includes(key)) {
-                cleanArg[key] = props.arg[key]
-            }
-        })
-        setCleanedArg(cleanArg)
-    }, [props.arg])
 
     useEffect(() => {
         if (cleanedArg.argumentBasis) {

@@ -62,6 +62,7 @@ const EXCLUDED_FIELDS = [
 const ARGUMENT_START_FORMAT = [
     'statement',
     'criticalQuestion',
+    'argumentBasis',
 ]
 
 const ARGUMENT_END_FORMAT = [
