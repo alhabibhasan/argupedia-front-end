@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {
     ARGUMENT_FIELDS, 
-    EXCLUDED_FIELDS,
     ARGUMENT_START_FORMAT,
     ARGUMENT_END_FORMAT
 } from '../../data/argumentFields'
@@ -12,6 +11,7 @@ import {getScheme} from '../../data/motivationSchemas'
 const Arg = styled.div`
     text-align: left;
     background-color: #f7f7f7;
+    white-space: pre-line;
 `
 const Label = styled.div`
     font-weight: 600;
