@@ -12,7 +12,7 @@ If you've already set up the firebase instance by following the steps from the R
 
 You will need to set up and connect to your own instance of firebase. Steps to do this can be found here: https://firebase.google.com/
 
-You will need to add the credentials into the ```admin/firebase/auth/firebase.js``` file.
+You will need to add the credentials into the ```src/data/auth/fire.js``` file.
 
 Your firebase instance will need to have auth and realtime DB enabled.
 
